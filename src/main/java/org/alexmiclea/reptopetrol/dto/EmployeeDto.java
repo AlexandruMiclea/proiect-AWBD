@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
+import org.alexmiclea.reptopetrol.model.EmployeeRole;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -15,10 +16,6 @@ import java.util.UUID;
 @Getter
 @Setter
 public class EmployeeDto {
-
-    private enum EmployeeRole {
-        CASHIER, ATTENDANT
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

@@ -17,10 +17,6 @@ import java.util.UUID;
 @Setter
 public class Employee {
 
-    private enum EmployeeRole {
-        CASHIER, ATTENDANT
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
