@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {StationMapper.class})
 public interface EmployeeMapper {
     EmployeeDto toEmployeeDto(Employee employee);
     Employee toEmployee(EmployeeDto employeeDto);
