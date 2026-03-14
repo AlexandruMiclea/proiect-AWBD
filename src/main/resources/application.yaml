@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: reptopetrol-backend
+  datasource:
+    url: jdbc:postgresql://localhost:5432/reptopetrol
+    username: reptopetrol
+    password: reptopetrol
+    driver-class-name: org.postgresql.Driver
+  docker:
+    compose:
+      enabled: true
+      file: compose.yaml
+  jpa:
+    hibernate:
+      ddl-auto: update
