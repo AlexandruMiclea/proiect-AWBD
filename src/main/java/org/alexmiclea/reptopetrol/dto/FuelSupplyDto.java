@@ -1,4 +1,4 @@
-package org.alexmiclea.reptopetrol.model.composites;
+package org.alexmiclea.reptopetrol.dto;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -17,7 +17,7 @@ import java.time.Instant;
 @Getter
 @Setter
 @Table(name = "fuel_supply")
-public class FuelSupply {
+public class FuelSupplyDto {
     @EmbeddedId
     private FuelSupplyKey id;
 
