@@ -6,9 +6,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses =
-        {StationMapper.class, SupplierMapper.class, TransportMapper.class}
-)
+@Mapper(componentModel = "spring")
 public interface ContractMapper {
     ContractDto toContractDto(Contract contract);
     Contract toContract(ContractDto contractDto);

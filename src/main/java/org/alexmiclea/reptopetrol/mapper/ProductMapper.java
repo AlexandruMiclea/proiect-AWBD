@@ -3,9 +3,11 @@ package org.alexmiclea.reptopetrol.mapper;
 import org.alexmiclea.reptopetrol.dto.ProductDto;
 import org.alexmiclea.reptopetrol.model.Product;
 import org.mapstruct.Mapper;
+import org.springframework.core.annotation.Order;
 
 import java.util.List;
 
+@Order(1)
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
     ProductDto toProductDto(Product product);

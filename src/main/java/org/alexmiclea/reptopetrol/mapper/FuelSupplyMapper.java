@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {FuelMapper.class, StationMapper.class})
 public interface FuelSupplyMapper {
     FuelSupplyDto toFuelSupplyDto(FuelSupply fuelSupply);
     FuelSupply toFuelSupply(FuelSupplyDto fuelSupplyDto);
