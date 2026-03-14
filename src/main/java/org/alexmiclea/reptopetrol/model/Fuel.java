@@ -15,10 +15,6 @@ import java.util.UUID;
 @Setter
 public class Fuel {
 
-    private enum FuelType {
-        GAS, DIESEL, LPG
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;

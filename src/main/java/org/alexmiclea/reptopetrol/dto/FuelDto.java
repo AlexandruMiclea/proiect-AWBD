@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
+import org.alexmiclea.reptopetrol.model.FuelType;
 import org.alexmiclea.reptopetrol.model.composites.FuelSupply;
 
 import java.util.Set;
@@ -14,10 +15,6 @@ import java.util.UUID;
 @Getter
 @Setter
 public class FuelDto {
-
-    private enum FuelType {
-        GAS, DIESEL, LPG
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
