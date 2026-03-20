@@ -1,9 +1,8 @@
 package org.alexmiclea.reptopetrol.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.alexmiclea.reptopetrol.dto.SupplierDto;
-import org.alexmiclea.reptopetrol.mapper.SupplierMapper;
-import org.alexmiclea.reptopetrol.model.Supplier;
+import org.alexmiclea.reptopetrol.dto.creation.SupplierCreationDto;
+import org.alexmiclea.reptopetrol.dto.retrieval.SupplierRetrievalDto;
 import org.alexmiclea.reptopetrol.service.SupplierService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,33 +16,32 @@ import java.util.UUID;
 public class SupplierController {
 
     private final SupplierService supplierService;
-    private final SupplierMapper supplierMapper;
 
     @GetMapping("/all")
-    public ResponseEntity<List<Supplier>> getSuppliers() {
+    public ResponseEntity<List<SupplierRetrievalDto>> getSuppliers() {
         return ResponseEntity.ok(supplierService.getAll());
     }
 
     @GetMapping("/{uuid}")
-    public ResponseEntity<Supplier> getSupplier(@RequestParam UUID uuid) {
+    public ResponseEntity<SupplierRetrievalDto> getSupplier(@RequestParam UUID uuid) {
         return ResponseEntity.ok(supplierService.getSupplierById(uuid));
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Void> addSupplier(@RequestBody SupplierDto supplierDto) {
+    public ResponseEntity<Void> addSupplier(@RequestBody SupplierCreationDto supplierDto) {
         supplierService.addSupplier(supplierDto);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/bulkAdd")
-    public ResponseEntity<Void> bulkAddSuppliers(@RequestBody List<SupplierDto> supplierDtos) {
+    public ResponseEntity<Void> bulkAddSuppliers(@RequestBody List<SupplierCreationDto> supplierDtos) {
         supplierService.bulkAddSuppliers(supplierDtos);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<Void> updateSupplier(@RequestBody SupplierDto supplierDto) {
-        supplierService.updateSupplier(supplierDto, supplierDto.getId());
+    @PutMapping("/update/{uuid}")
+    public ResponseEntity<Void> updateSupplier(@RequestBody SupplierCreationDto supplierDto, @RequestParam UUID uuid) {
+        supplierService.updateSupplier(supplierDto, uuid);
         return ResponseEntity.ok().build();
     }
 

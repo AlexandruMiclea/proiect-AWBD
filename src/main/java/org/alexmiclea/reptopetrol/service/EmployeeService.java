@@ -1,11 +1,12 @@
 package org.alexmiclea.reptopetrol.service;
 
 import lombok.RequiredArgsConstructor;
-import org.alexmiclea.reptopetrol.dto.EmployeeDto;
-import org.alexmiclea.reptopetrol.mapper.EmployeeMapper;
+import org.alexmiclea.reptopetrol.dto.creation.EmployeeCreationDto;
+import org.alexmiclea.reptopetrol.dto.retrieval.EmployeeRetrievalDto;
+import org.alexmiclea.reptopetrol.mapper.creation.EmployeeCreationMapper;
+import org.alexmiclea.reptopetrol.mapper.retrieval.EmployeeRetrievalMapper;
 import org.alexmiclea.reptopetrol.model.Employee;
 import org.alexmiclea.reptopetrol.repository.EmployeeRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,29 +17,28 @@ import java.util.UUID;
 public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
-    private final EmployeeMapper employeeMapper;
+    private final EmployeeCreationMapper employeeCreationMapper;
+    private final EmployeeRetrievalMapper employeeRetrievalMapper;
 
-    public List<Employee> getAll() {
-        return employeeRepository.findAll();
+    public List<EmployeeRetrievalDto> getAll() {
+        return employeeRetrievalMapper.toEmployeeDtos(employeeRepository.findAll());
     }
 
-    public Employee getEmployeeById(UUID uuid) {
-        return employeeRepository.findById(uuid).orElseThrow();
+    public EmployeeRetrievalDto getEmployeeById(UUID uuid) {
+        return employeeRetrievalMapper.toEmployeeDto(employeeRepository.findById(uuid).orElseThrow());
     }
 
-    public ResponseEntity<Void> addEmployee(EmployeeDto employeeDto) {
-        Employee employee = employeeMapper.toEmployee(employeeDto);
+    public void addEmployee(EmployeeCreationDto employeeDto) {
+        Employee employee = employeeCreationMapper.toEmployee(employeeDto);
         employeeRepository.save(employee);
-        return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<Void> bulkAddEmployees(List<EmployeeDto> employeeDtos) {
-        List<Employee> employees = employeeMapper.toEmployees(employeeDtos);
+    public void bulkAddEmployees(List<EmployeeCreationDto> employeeDtos) {
+        List<Employee> employees = employeeCreationMapper.toEmployees(employeeDtos);
         employeeRepository.saveAll(employees);
-        return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<Void> updateEmployee(EmployeeDto employeeDto, UUID uuid) {
+    public void updateEmployee(EmployeeCreationDto employeeDto, UUID uuid) {
         Employee currentEmployee = employeeRepository.getReferenceById(uuid);
         currentEmployee.setFirstName(employeeDto.getFirstName());
         currentEmployee.setLastName(employeeDto.getLastName());
@@ -47,12 +47,10 @@ public class EmployeeService {
         currentEmployee.setWage(employeeDto.getWage());
         currentEmployee.setRole(employeeDto.getRole());
         employeeRepository.save(currentEmployee);
-        return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<Void> deleteEmployee(UUID uuid) {
+    public void deleteEmployee(UUID uuid) {
         Employee employee = employeeRepository.findById(uuid).orElseThrow();
         employeeRepository.delete(employee);
-        return ResponseEntity.ok().build();
     }
 }
