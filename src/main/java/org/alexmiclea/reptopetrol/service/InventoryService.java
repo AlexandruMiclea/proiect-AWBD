@@ -1,12 +1,13 @@
 package org.alexmiclea.reptopetrol.service;
 
 import lombok.RequiredArgsConstructor;
-import org.alexmiclea.reptopetrol.dto.InventoryDto;
-import org.alexmiclea.reptopetrol.mapper.InventoryMapper;
+import org.alexmiclea.reptopetrol.dto.creation.InventoryCreationDto;
+import org.alexmiclea.reptopetrol.dto.retrieval.InventoryRetrievalDto;
+import org.alexmiclea.reptopetrol.mapper.creation.InventoryCreationMapper;
+import org.alexmiclea.reptopetrol.mapper.retrieval.InventoryRetreivalMapper;
 import org.alexmiclea.reptopetrol.model.composites.Inventory;
 import org.alexmiclea.reptopetrol.model.composites.keys.InventoryKey;
 import org.alexmiclea.reptopetrol.repository.InventoryRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,39 +17,36 @@ import java.util.List;
 public class InventoryService {
 
     private final InventoryRepository inventoryRepository;
-    private final InventoryMapper inventoryMapper;
+    private final InventoryCreationMapper inventoryCreationMapper;
+    private final InventoryRetreivalMapper inventoryRetreivalMapper;
 
-    public List<Inventory> getAll() {
-        return inventoryRepository.findAll();
+    public List<InventoryRetrievalDto> getAll() {
+        return inventoryRetreivalMapper.toInventoryDtos(inventoryRepository.findAll());
     }
 
-    public Inventory getInventoryById(InventoryKey key) {
-        return inventoryRepository.findById(key).orElseThrow();
+    public InventoryRetrievalDto getInventoryById(InventoryKey key) {
+        return inventoryRetreivalMapper.toInventoryDto(inventoryRepository.findById(key).orElseThrow());
     }
 
-    public ResponseEntity<Void> addInventory(InventoryDto inventoryDto) {
-        Inventory inventory = inventoryMapper.toInventory(inventoryDto);
+    public void addInventory(InventoryCreationDto inventoryDto) {
+        Inventory inventory = inventoryCreationMapper.toInventory(inventoryDto);
         inventoryRepository.save(inventory);
-        return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<Void> bulkAddInventories(List<InventoryDto> inventoryDtos) {
-        List<Inventory> inventories = inventoryMapper.toInventories(inventoryDtos);
+    public void bulkAddInventories(List<InventoryCreationDto> inventoryDtos) {
+        List<Inventory> inventories = inventoryCreationMapper.toInventories(inventoryDtos);
         inventoryRepository.saveAll(inventories);
-        return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<Void> updateInventory(InventoryDto inventoryDto, InventoryKey key) {
+    public void updateInventory(InventoryCreationDto inventoryDto, InventoryKey key) {
         Inventory currentInventory = inventoryRepository.getReferenceById(key);
         currentInventory.setQuantity(inventoryDto.getQuantity());
         currentInventory.setPrice(inventoryDto.getPrice());
         inventoryRepository.save(currentInventory);
-        return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<Void> deleteInventory(InventoryKey key) {
+    public void deleteInventory(InventoryKey key) {
         Inventory inventory = inventoryRepository.findById(key).orElseThrow();
         inventoryRepository.delete(inventory);
-        return ResponseEntity.ok().build();
     }
 }

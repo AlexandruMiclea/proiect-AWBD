@@ -1,9 +1,8 @@
 package org.alexmiclea.reptopetrol.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.alexmiclea.reptopetrol.dto.StationDto;
-import org.alexmiclea.reptopetrol.mapper.StationMapper;
-import org.alexmiclea.reptopetrol.model.Station;
+import org.alexmiclea.reptopetrol.dto.creation.StationCreationDto;
+import org.alexmiclea.reptopetrol.dto.retrieval.StationRetrievalDto;
 import org.alexmiclea.reptopetrol.service.StationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,33 +16,32 @@ import java.util.UUID;
 public class StationController {
 
     private final StationService stationService;
-    private final StationMapper stationMapper;
 
     @GetMapping("/all")
-    public ResponseEntity<List<Station>> getStations() {
+    public ResponseEntity<List<StationRetrievalDto>> getStations() {
         return ResponseEntity.ok(stationService.getAll());
     }
 
     @GetMapping("/{uuid}")
-    public ResponseEntity<Station> getStation(@RequestParam UUID uuid) {
+    public ResponseEntity<StationRetrievalDto> getStation(@RequestParam UUID uuid) {
         return ResponseEntity.ok(stationService.getStationById(uuid));
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Void> addStation(@RequestBody StationDto stationDto) {
+    public ResponseEntity<Void> addStation(@RequestBody StationCreationDto stationDto) {
         stationService.addStation(stationDto);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/bulkAdd")
-    public ResponseEntity<Void> bulkAddStations(@RequestBody List<StationDto> stationDtos) {
+    public ResponseEntity<Void> bulkAddStations(@RequestBody List<StationCreationDto> stationDtos) {
         stationService.bulkAddStations(stationDtos);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<Void> updateStation(@RequestBody StationDto stationDto) {
-        stationService.updateStation(stationDto, stationDto.getId());
+    @PutMapping("/update/{uuid}")
+    public ResponseEntity<Void> updateStation(@RequestBody StationCreationDto stationDto, @RequestParam UUID uuid) {
+        stationService.updateStation(stationDto, uuid);
         return ResponseEntity.ok().build();
     }
 

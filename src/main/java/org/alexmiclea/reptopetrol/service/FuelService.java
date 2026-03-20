@@ -1,8 +1,10 @@
 package org.alexmiclea.reptopetrol.service;
 
 import lombok.RequiredArgsConstructor;
-import org.alexmiclea.reptopetrol.dto.FuelDto;
-import org.alexmiclea.reptopetrol.mapper.FuelMapper;
+import org.alexmiclea.reptopetrol.dto.creation.FuelCreationDto;
+import org.alexmiclea.reptopetrol.dto.retrieval.FuelRetrievalDto;
+import org.alexmiclea.reptopetrol.mapper.creation.FuelCreationMapper;
+import org.alexmiclea.reptopetrol.mapper.retrieval.FuelRetrievalMapper;
 import org.alexmiclea.reptopetrol.model.Fuel;
 import org.alexmiclea.reptopetrol.repository.FuelRepository;
 import org.springframework.http.ResponseEntity;
@@ -16,39 +18,36 @@ import java.util.UUID;
 public class FuelService {
 
     private final FuelRepository fuelRepository;
-    private final FuelMapper fuelMapper;
+    private final FuelCreationMapper fuelCreationMapper;
+    private final FuelRetrievalMapper fuelRetrievalMapper;
 
-    public List<Fuel> getAll() {
-        return fuelRepository.findAll();
+    public List<FuelRetrievalDto> getAll() {
+        return fuelRetrievalMapper.toFuelDtos(fuelRepository.findAll());
     }
 
-    public Fuel getFuelById(UUID uuid) {
-        return fuelRepository.findById(uuid).orElseThrow();
+    public FuelRetrievalDto getFuelById(UUID uuid) {
+        return fuelRetrievalMapper.toFuelDto(fuelRepository.findById(uuid).orElseThrow());
     }
 
-    public ResponseEntity<Void> addFuel(FuelDto fuelDto) {
-        Fuel fuel = fuelMapper.toFuel(fuelDto);
+    public void addFuel(FuelCreationDto fuelDto) {
+        Fuel fuel = fuelCreationMapper.toFuel(fuelDto);
         fuelRepository.save(fuel);
-        return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<Void> bulkAddFuels(List<FuelDto> fuelDtos) {
-        List<Fuel> fuels = fuelMapper.toFuels(fuelDtos);
+    public void bulkAddFuels(List<FuelCreationDto> fuelDtos) {
+        List<Fuel> fuels = fuelCreationMapper.toFuels(fuelDtos);
         fuelRepository.saveAll(fuels);
-        return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<Void> updateFuel(FuelDto fuelDto, UUID uuid) {
+    public void updateFuel(FuelCreationDto fuelDto, UUID uuid) {
         Fuel currentFuel = fuelRepository.getReferenceById(uuid);
         currentFuel.setName(fuelDto.getName());
         currentFuel.setType(fuelDto.getType());
         fuelRepository.save(currentFuel);
-        return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<Void> deleteFuel(UUID uuid) {
+    public void deleteFuel(UUID uuid) {
         Fuel fuel = fuelRepository.findById(uuid).orElseThrow();
         fuelRepository.delete(fuel);
-        return ResponseEntity.ok().build();
     }
 }

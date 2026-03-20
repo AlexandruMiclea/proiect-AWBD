@@ -1,9 +1,8 @@
 package org.alexmiclea.reptopetrol.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.alexmiclea.reptopetrol.dto.TransportDto;
-import org.alexmiclea.reptopetrol.mapper.TransportMapper;
-import org.alexmiclea.reptopetrol.model.Transport;
+import org.alexmiclea.reptopetrol.dto.creation.TransportCreationDto;
+import org.alexmiclea.reptopetrol.dto.retrieval.TransportRetrievalDto;
 import org.alexmiclea.reptopetrol.service.TransportService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,33 +16,32 @@ import java.util.UUID;
 public class TransportController {
 
     private final TransportService transportService;
-    private final TransportMapper transportMapper;
 
     @GetMapping("/all")
-    public ResponseEntity<List<Transport>> getTransports() {
+    public ResponseEntity<List<TransportRetrievalDto>> getTransports() {
         return ResponseEntity.ok(transportService.getAll());
     }
 
     @GetMapping("/{uuid}")
-    public ResponseEntity<Transport> getTransport(@RequestParam UUID uuid) {
+    public ResponseEntity<TransportRetrievalDto> getTransport(@RequestParam UUID uuid) {
         return ResponseEntity.ok(transportService.getTransportById(uuid));
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Void> addTransport(@RequestBody TransportDto transportDto) {
+    public ResponseEntity<Void> addTransport(@RequestBody TransportCreationDto transportDto) {
         transportService.addTransport(transportDto);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/bulkAdd")
-    public ResponseEntity<Void> bulkAddTransports(@RequestBody List<TransportDto> transportDtos) {
+    public ResponseEntity<Void> bulkAddTransports(@RequestBody List<TransportCreationDto> transportDtos) {
         transportService.bulkAddTransports(transportDtos);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<Void> updateTransport(@RequestBody TransportDto transportDto) {
-        transportService.updateTransport(transportDto, transportDto.getId());
+    @PutMapping("/update/{uuid}")
+    public ResponseEntity<Void> updateTransport(@RequestBody TransportCreationDto transportDto, @RequestParam UUID uuid) {
+        transportService.updateTransport(transportDto, uuid);
         return ResponseEntity.ok().build();
     }
 

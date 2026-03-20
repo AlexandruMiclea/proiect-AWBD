@@ -1,9 +1,8 @@
 package org.alexmiclea.reptopetrol.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.alexmiclea.reptopetrol.dto.FuelDto;
-import org.alexmiclea.reptopetrol.mapper.FuelMapper;
-import org.alexmiclea.reptopetrol.model.Fuel;
+import org.alexmiclea.reptopetrol.dto.creation.FuelCreationDto;
+import org.alexmiclea.reptopetrol.dto.retrieval.FuelRetrievalDto;
 import org.alexmiclea.reptopetrol.service.FuelService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,33 +16,32 @@ import java.util.UUID;
 public class FuelController {
 
     private final FuelService fuelService;
-    private final FuelMapper fuelMapper;
 
     @GetMapping("/all")
-    public ResponseEntity<List<Fuel>> getFuels() {
+    public ResponseEntity<List<FuelRetrievalDto>> getFuels() {
         return ResponseEntity.ok(fuelService.getAll());
     }
 
     @GetMapping("/{uuid}")
-    public ResponseEntity<Fuel> getFuel(@RequestParam UUID uuid) {
+    public ResponseEntity<FuelRetrievalDto> getFuel(@RequestParam UUID uuid) {
         return ResponseEntity.ok(fuelService.getFuelById(uuid));
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Void> addFuel(@RequestBody FuelDto fuelDto) {
+    public ResponseEntity<Void> addFuel(@RequestBody FuelCreationDto fuelDto) {
         fuelService.addFuel(fuelDto);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/bulkAdd")
-    public ResponseEntity<Void> bulkAddFuels(@RequestBody List<FuelDto> fuelDtos) {
+    public ResponseEntity<Void> bulkAddFuels(@RequestBody List<FuelCreationDto> fuelDtos) {
         fuelService.bulkAddFuels(fuelDtos);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<Void> updateFuel(@RequestBody FuelDto fuelDto) {
-        fuelService.updateFuel(fuelDto, fuelDto.getId());
+    @PutMapping("/update/{uuid}")
+    public ResponseEntity<Void> updateFuel(@RequestBody FuelCreationDto fuelDto, @RequestParam UUID uuid) {
+        fuelService.updateFuel(fuelDto, uuid);
         return ResponseEntity.ok().build();
     }
 

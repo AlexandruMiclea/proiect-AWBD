@@ -1,11 +1,13 @@
 package org.alexmiclea.reptopetrol.service;
 
 import lombok.RequiredArgsConstructor;
-import org.alexmiclea.reptopetrol.dto.StoreDto;
-import org.alexmiclea.reptopetrol.mapper.StoreMapper;
+import org.alexmiclea.reptopetrol.dto.creation.StoreCreationDto;
+import org.alexmiclea.reptopetrol.dto.retrieval.StoreRetrievalDto;
+import org.alexmiclea.reptopetrol.mapper.creation.StoreCreationMapper;
+import org.alexmiclea.reptopetrol.mapper.retrieval.StationRetrievalMapper;
+import org.alexmiclea.reptopetrol.mapper.retrieval.StoreRetrievalMapper;
 import org.alexmiclea.reptopetrol.model.Store;
 import org.alexmiclea.reptopetrol.repository.StoreRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,38 +18,35 @@ import java.util.UUID;
 public class StoreService {
 
     private final StoreRepository storeRepository;
-    private final StoreMapper storeMapper;
+    private final StoreCreationMapper storeCreationMapper;
+    private final StoreRetrievalMapper storeRetrievalMapper;
 
-    public List<Store> getAll() {
-        return storeRepository.findAll();
+    public List<StoreRetrievalDto> getAll() {
+        return storeRetrievalMapper.toStoreDtos(storeRepository.findAll());
     }
 
-    public Store getStoreById(UUID uuid) {
-        return storeRepository.findById(uuid).orElseThrow();
+    public StoreRetrievalDto getStoreById(UUID uuid) {
+        return storeRetrievalMapper.toStoreDto(storeRepository.findById(uuid).orElseThrow());
     }
 
-    public ResponseEntity<Void> addStore(StoreDto storeDto) {
-        Store store = storeMapper.toStore(storeDto);
+    public void addStore(StoreCreationDto storeDto) {
+        Store store = storeCreationMapper.toStore(storeDto);
         storeRepository.save(store);
-        return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<Void> bulkAddStores(List<StoreDto> storeDtos) {
-        List<Store> stores = storeMapper.toStores(storeDtos);
+    public void bulkAddStores(List<StoreCreationDto> storeDtos) {
+        List<Store> stores = storeCreationMapper.toStores(storeDtos);
         storeRepository.saveAll(stores);
-        return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<Void> updateStore(StoreDto storeDto, UUID uuid) {
+    public void updateStore(StoreCreationDto storeDto, UUID uuid) {
         Store currentStore = storeRepository.getReferenceById(uuid);
-        currentStore.setStation(storeMapper.toStore(storeDto).getStation());
+        currentStore.setStation(storeCreationMapper.toStore(storeDto).getStation());
         storeRepository.save(currentStore);
-        return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<Void> deleteStore(UUID uuid) {
+    public void deleteStore(UUID uuid) {
         Store store = storeRepository.findById(uuid).orElseThrow();
         storeRepository.delete(store);
-        return ResponseEntity.ok().build();
     }
 }
