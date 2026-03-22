@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Instant;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -22,14 +22,14 @@ public class Contract {
     private UUID id;
 
     @OneToMany(mappedBy = "contract")
-    private Set<Transport> transports;
+    private List<Transport> transports;
 
     @ManyToOne
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;
 
     @ManyToMany
-    private Set<Fuel> fuels;
+    private List<Fuel> fuels;
 
     @PastOrPresent
     @NotNull

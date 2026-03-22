@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -18,5 +18,5 @@ public class SupplierCreationDto {
     private String name;
     private String address;
     private String homeCountry;
-    private Set<ContractCreationDto> contracts;
+    private List<UUID> contractIds;
 }

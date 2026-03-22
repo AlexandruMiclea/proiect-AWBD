@@ -4,9 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.alexmiclea.reptopetrol.model.composites.FuelSupply;
+import org.alexmiclea.reptopetrol.dto.keys.FuelSupplyKeyDto;
 
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -15,10 +15,10 @@ import java.util.UUID;
 @AllArgsConstructor
 public class StationCreationDto {
     private UUID id;
-    private Set<FuelSupply> fuelSupplies;
-    private Set<EmployeeCreationDto> employees;
-    private StoreCreationDto store;
-    private Set<TransportCreationDto> transports;
+    private List<FuelSupplyKeyDto> fuelSuppliesIds;
+    private List<UUID> employeeIds;
+    private UUID storeId;
+    private List<UUID> transportIds;
     private String name;
     private String address;
     private Integer pumpNo;

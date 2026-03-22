@@ -7,10 +7,10 @@ import org.mapstruct.Mapper;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface ProductCreationMapper {
-    ProductCreationDto toProductDto(Product product);
-    Product toProduct(ProductCreationDto productDto);
+public abstract class ProductCreationMapper {
+    public abstract ProductCreationDto toProductDto(Product product);
+    public abstract Product toProduct(ProductCreationDto productDto);
 
-    List<ProductCreationDto> toProductDtos(List<Product> products);
-    List<Product> toProducts(List<ProductCreationDto> productDtos);
+    public abstract List<ProductCreationDto> toProductDtos(List<Product> products);
+    public abstract List<Product> toProducts(List<ProductCreationDto> productDtos);
 }

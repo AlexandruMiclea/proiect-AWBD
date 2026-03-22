@@ -4,10 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.alexmiclea.reptopetrol.dto.keys.FuelSupplyKeyDto;
 import org.alexmiclea.reptopetrol.model.FuelType;
-import org.alexmiclea.reptopetrol.model.composites.FuelSupply;
 
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -17,8 +17,8 @@ import java.util.UUID;
 public class FuelCreationDto {
 
     private UUID id;
-    private Set<FuelSupply> fuelSupplies;
-    private Set<ContractCreationDto> contracts;
+    private List<FuelSupplyKeyDto> fuelSuppliesIds;
+    private List<UUID> contractIds;
     private String name;
     private FuelType type;
 }

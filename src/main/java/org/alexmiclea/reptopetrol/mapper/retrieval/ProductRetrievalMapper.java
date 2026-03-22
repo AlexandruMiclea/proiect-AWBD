@@ -7,10 +7,10 @@ import org.mapstruct.Mapper;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface ProductRetrievalMapper {
-    ProductRetrievalDto toProductDto(Product product);
-    Product toProduct(ProductRetrievalDto productDto);
+public abstract class ProductRetrievalMapper {
+    public abstract ProductRetrievalDto toProductDto(Product product);
+    public abstract Product toProduct(ProductRetrievalDto productDto);
 
-    List<ProductRetrievalDto> toProductDtos(List<Product> products);
-    List<Product> toProducts(List<ProductRetrievalDto> productDtos);
+    public abstract List<ProductRetrievalDto> toProductDtos(List<Product> products);
+    public abstract List<Product> toProducts(List<ProductRetrievalDto> productDtos);
 }

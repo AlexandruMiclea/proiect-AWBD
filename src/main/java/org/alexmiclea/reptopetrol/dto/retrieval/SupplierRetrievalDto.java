@@ -3,7 +3,7 @@ package org.alexmiclea.reptopetrol.dto.retrieval;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -14,5 +14,5 @@ public class SupplierRetrievalDto {
     private String name;
     private String address;
     private String homeCountry;
-    private Set<UUID> contractIds;
+    private List<UUID> contractIds;
 }

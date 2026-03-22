@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.alexmiclea.reptopetrol.model.composites.FuelSupply;
 
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -20,10 +20,10 @@ public class Fuel {
     private UUID id;
 
     @OneToMany(mappedBy = "fuel")
-    Set<FuelSupply> fuelSupplies;
+    private List<FuelSupply> fuelSupplies;
 
     @ManyToMany
-    private Set<Contract> contracts;
+    private List<Contract> contracts;
 
     @NotBlank
     private String name;

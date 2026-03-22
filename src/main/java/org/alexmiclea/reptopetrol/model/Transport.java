@@ -8,7 +8,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.Instant;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -26,7 +26,7 @@ public class Transport {
     private Contract contract;
 
     @ManyToMany
-    private Set<Station> stations;
+    private List<Station> stations;
 
     @CreatedDate
     private Instant creationDate;

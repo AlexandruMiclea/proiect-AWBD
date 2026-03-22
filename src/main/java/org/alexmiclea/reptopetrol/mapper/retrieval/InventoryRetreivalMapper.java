@@ -7,10 +7,10 @@ import org.mapstruct.Mapper;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface InventoryRetreivalMapper {
-    InventoryRetrievalDto toInventoryDto(Inventory inventory);
-    Inventory toInventory(InventoryRetrievalDto inventoryDto);
+public abstract class InventoryRetreivalMapper {
+    public abstract InventoryRetrievalDto toInventoryDto(Inventory inventory);
+    public abstract Inventory toInventory(InventoryRetrievalDto inventoryDto);
 
-    List<InventoryRetrievalDto> toInventoryDtos(List<Inventory> inventories);
-    List<Inventory> toInventories(List<InventoryRetrievalDto> inventoryDtos);
+    public abstract List<InventoryRetrievalDto> toInventoryDtos(List<Inventory> inventories);
+    public abstract List<Inventory> toInventories(List<InventoryRetrievalDto> inventoryDtos);
 }
