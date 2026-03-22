@@ -3,8 +3,10 @@ package org.alexmiclea.reptopetrol.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.alexmiclea.reptopetrol.dto.creation.FuelSupplyCreationDto;
+import org.alexmiclea.reptopetrol.dto.keys.FuelSupplyKeyDto;
 import org.alexmiclea.reptopetrol.dto.retrieval.FuelSupplyRetrievalDto;
 import org.alexmiclea.reptopetrol.mapper.creation.FuelSupplyCreationMapper;
+import org.alexmiclea.reptopetrol.mapper.keys.FuelSupplyKeyMapper;
 import org.alexmiclea.reptopetrol.mapper.retrieval.FuelSupplyRetrievalMapper;
 import org.alexmiclea.reptopetrol.model.composites.FuelSupply;
 import org.alexmiclea.reptopetrol.model.composites.keys.FuelSupplyKey;
@@ -21,6 +23,7 @@ public class FuelSupplyService {
     private final FuelSupplyRepository fuelSupplyRepository;
     private final FuelSupplyCreationMapper fuelSupplyCreationMapper;
     private final FuelSupplyRetrievalMapper fuelSupplyRetrievalMapper;
+    private final FuelSupplyKeyMapper fuelSupplyKeyMapper;
 
     public List<FuelSupplyRetrievalDto> getAll() {
         return fuelSupplyRetrievalMapper.toFuelSupplyDtos(fuelSupplyRepository.findAll());
@@ -49,8 +52,9 @@ public class FuelSupplyService {
     }
 
     @Transactional
-    public void updateFuelSupply(FuelSupplyCreationDto fuelSupplyDto, FuelSupplyKey key) {
-        FuelSupply currentFuelSupply = fuelSupplyRepository.getReferenceById(key);
+    public void updateFuelSupply(FuelSupplyCreationDto fuelSupplyDto, FuelSupplyKeyDto key) {
+        FuelSupplyKey fuelSupplyKey = fuelSupplyKeyMapper.toFuelSupplyKey(key);
+        FuelSupply currentFuelSupply = fuelSupplyRepository.getReferenceById(fuelSupplyKey);
         currentFuelSupply.setQuantity(fuelSupplyDto.getQuantity());
         currentFuelSupply.setPrice(fuelSupplyDto.getPrice());
         fuelSupplyRepository.save(currentFuelSupply);

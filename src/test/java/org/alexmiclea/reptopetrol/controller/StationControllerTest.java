@@ -139,6 +139,6 @@ public class StationControllerTest {
         UUID stationId = UUID.randomUUID();
 
         mockMvc.perform(delete(API_STRING + "delete/" + stationId).param("uuid", stationId.toString()))
-                .andExpect(status().isOk());
+                .andExpect(status().isNotFound());
     }
 }

@@ -1,15 +1,12 @@
 package org.alexmiclea.reptopetrol.dto.creation;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.alexmiclea.reptopetrol.model.Product;
-import org.alexmiclea.reptopetrol.model.Store;
-import org.alexmiclea.reptopetrol.model.composites.keys.InventoryKey;
+import org.alexmiclea.reptopetrol.dto.keys.InventoryKeyDto;
 
 import java.time.Instant;
 
@@ -20,7 +17,7 @@ import java.time.Instant;
 public class InventoryCreationDto {
 
     @NotNull
-    private InventoryKey id;
+    private InventoryKeyDto id;
 
     @NotNull
     @Positive

@@ -4,10 +4,13 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.PastOrPresent;
 import lombok.RequiredArgsConstructor;
 import org.alexmiclea.reptopetrol.dto.creation.InventoryCreationDto;
+import org.alexmiclea.reptopetrol.dto.keys.InventoryKeyDto;
 import org.alexmiclea.reptopetrol.dto.retrieval.InventoryRetrievalDto;
 import org.alexmiclea.reptopetrol.mapper.creation.InventoryCreationMapper;
+import org.alexmiclea.reptopetrol.mapper.keys.InventoryKeyMapper;
 import org.alexmiclea.reptopetrol.mapper.retrieval.InventoryRetreivalMapper;
 import org.alexmiclea.reptopetrol.model.composites.Inventory;
+import org.alexmiclea.reptopetrol.model.composites.keys.FuelSupplyKey;
 import org.alexmiclea.reptopetrol.model.composites.keys.InventoryKey;
 import org.alexmiclea.reptopetrol.repository.InventoryRepository;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,7 @@ public class InventoryService {
     private final InventoryRepository inventoryRepository;
     private final InventoryCreationMapper inventoryCreationMapper;
     private final InventoryRetreivalMapper inventoryRetreivalMapper;
+    private final InventoryKeyMapper inventoryKeyMapper;
 
     public List<InventoryRetrievalDto> getAll() {
         return inventoryRetreivalMapper.toInventoryDtos(inventoryRepository.findAll());
@@ -49,8 +53,9 @@ public class InventoryService {
     }
 
     @Transactional
-    public void updateInventory(InventoryCreationDto inventoryDto, InventoryKey key) {
-        Inventory currentInventory = inventoryRepository.getReferenceById(key);
+    public void updateInventory(InventoryCreationDto inventoryDto, InventoryKeyDto key) {
+        InventoryKey inventoryKey = inventoryKeyMapper.toInventoryKey(key);
+        Inventory currentInventory = inventoryRepository.getReferenceById(inventoryKey);
         currentInventory.setQuantity(inventoryDto.getQuantity());
         currentInventory.setPrice(inventoryDto.getPrice());
         inventoryRepository.save(currentInventory);

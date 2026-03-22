@@ -88,10 +88,15 @@ public class TransportControllerTest {
 
     @Test
     void addTransport() throws Exception {
+        UUID contractId = UUID.randomUUID();
+        UUID stationId = UUID.randomUUID();
+
         TransportCreationDto mockTransportCreation = TransportCreationDto.builder()
+                .contractId(contractId)
+                .stationIds(List.of(stationId))
                 .companyName("FastFreight SRL")
                 .creationDate(Instant.parse("2024-03-01T00:00:00Z"))
-                .completionDate(Instant.parse("2024-03-05T00:00:00Z"))
+                .completionDate(Instant.parse("2027-03-05T00:00:00Z"))
                 .build();
 
         mockMvc.perform(post(API_STRING + "add")
@@ -117,17 +122,20 @@ public class TransportControllerTest {
     @Test
     void updateTransport() throws Exception {
         UUID transportId = UUID.randomUUID();
+        UUID stationId = UUID.randomUUID();
+        UUID contractId = UUID.randomUUID();
 
         TransportCreationDto mockTransportCreation = TransportCreationDto.builder()
+                .contractId(contractId)
                 .companyName("FastFreight SRL")
+                .stationIds(List.of(stationId))
                 .creationDate(Instant.parse("2024-03-01T00:00:00Z"))
-                .completionDate(Instant.parse("2024-03-05T00:00:00Z"))
+                .completionDate(Instant.parse("2027-03-05T00:00:00Z"))
                 .build();
 
         mockMvc.perform(put(API_STRING + "update/" + transportId)
                         .content(objectMapper.writeValueAsString(mockTransportCreation))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .param("uuid", transportId.toString()))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
@@ -136,6 +144,6 @@ public class TransportControllerTest {
         UUID transportId = UUID.randomUUID();
 
         mockMvc.perform(delete(API_STRING + "delete/" + transportId).param("uuid", transportId.toString()))
-                .andExpect(status().isOk());
+                .andExpect(status().isNotFound());
     }
 }

@@ -27,7 +27,7 @@ public class TransportCreationDto {
     private List<UUID> stationIds;
 
     @PastOrPresent
-    @NotEmpty
+    @NotNull
     private Instant creationDate;
 
     @FutureOrPresent

@@ -153,8 +153,18 @@ public class EmployeeControllerTest {
     }
 
     @Test
-    void deleteEmployee() throws Exception {
+    void deleteEmployee_notFound() throws Exception {
         UUID employeeId = UUID.randomUUID();
+
+        mockMvc.perform(delete(API_STRING + "delete/" + employeeId).param("uuid", employeeId.toString()))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void deleteEmployee_found() throws Exception {
+        UUID employeeId = UUID.randomUUID();
+
+        Mockito.when(employeeService.deleteEmployee(employeeId)).thenReturn(Optional.of(employeeId));
 
         mockMvc.perform(delete(API_STRING + "delete/" + employeeId).param("uuid", employeeId.toString()))
                 .andExpect(status().isOk());

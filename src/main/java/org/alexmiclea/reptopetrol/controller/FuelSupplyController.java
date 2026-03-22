@@ -8,13 +8,13 @@ import org.alexmiclea.reptopetrol.dto.retrieval.FuelSupplyRetrievalDto;
 import org.alexmiclea.reptopetrol.mapper.keys.FuelSupplyKeyMapper;
 import org.alexmiclea.reptopetrol.model.composites.keys.FuelSupplyKey;
 import org.alexmiclea.reptopetrol.service.FuelSupplyService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/fuel-supplies")
@@ -24,6 +24,7 @@ public class FuelSupplyController {
 
     private final FuelSupplyService fuelSupplyService;
 
+    @Autowired
     private final FuelSupplyKeyMapper fuelSupplyKeyMapper;
 
     @GetMapping("/all")
