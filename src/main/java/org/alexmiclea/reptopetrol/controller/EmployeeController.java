@@ -23,7 +23,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{uuid}")
-    public ResponseEntity<EmployeeRetrievalDto> getEmployee(@RequestParam UUID uuid) {
+    public ResponseEntity<EmployeeRetrievalDto> getEmployee(@PathVariable UUID uuid) {
         return ResponseEntity.ok(employeeService.getEmployeeById(uuid));
     }
 
@@ -40,13 +40,13 @@ public class EmployeeController {
     }
 
     @PutMapping("/update/{uuid}")
-    public ResponseEntity<Void> updateEmployee(@RequestBody EmployeeCreationDto employeeDto, @RequestParam UUID uuid) {
+    public ResponseEntity<Void> updateEmployee(@RequestBody EmployeeCreationDto employeeDto, @PathVariable UUID uuid) {
         employeeService.updateEmployee(employeeDto, uuid);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/delete/{uuid}")
-    public ResponseEntity<Void> deleteEmployee(@RequestParam UUID uuid) {
+    public ResponseEntity<Void> deleteEmployee(@PathVariable UUID uuid) {
         employeeService.deleteEmployee(uuid);
         return ResponseEntity.ok().build();
     }

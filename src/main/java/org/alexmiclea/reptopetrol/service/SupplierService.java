@@ -1,5 +1,6 @@
 package org.alexmiclea.reptopetrol.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.alexmiclea.reptopetrol.dto.creation.SupplierCreationDto;
 import org.alexmiclea.reptopetrol.dto.retrieval.SupplierRetrievalDto;
@@ -10,6 +11,7 @@ import org.alexmiclea.reptopetrol.repository.SupplierRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -24,8 +26,12 @@ public class SupplierService {
         return supplierRetrievalMapper.toSupplierDtos(supplierRepository.findAll());
     }
 
-    public SupplierRetrievalDto getSupplierById(UUID uuid) {
-        return supplierRetrievalMapper.toSupplierDto(supplierRepository.findById(uuid).orElseThrow());
+    public Optional<SupplierRetrievalDto> getSupplierById(UUID uuid) {
+        if (supplierRepository.existsById(uuid)){
+            return Optional.of(supplierRetrievalMapper.toSupplierDto(supplierRepository.findById(uuid).orElseThrow()));
+        } else {
+            return Optional.empty();
+        }
     }
 
     public void addSupplier(SupplierCreationDto supplierDto) {
@@ -38,6 +44,7 @@ public class SupplierService {
         supplierRepository.saveAll(suppliers);
     }
 
+    @Transactional
     public void updateSupplier(SupplierCreationDto supplierDto, UUID uuid) {
         Supplier currentSupplier = supplierRepository.getReferenceById(uuid);
         currentSupplier.setName(supplierDto.getName());
@@ -46,8 +53,12 @@ public class SupplierService {
         supplierRepository.save(currentSupplier);
     }
 
-    public void deleteSupplier(UUID uuid) {
-        Supplier supplier = supplierRepository.findById(uuid).orElseThrow();
-        supplierRepository.delete(supplier);
+    public Optional<UUID> deleteSupplier(UUID uuid) {
+        if (supplierRepository.existsById(uuid)){
+            supplierRepository.deleteById(uuid);
+            return Optional.of(uuid);
+        } else {
+            return Optional.empty();
+        }
     }
 }

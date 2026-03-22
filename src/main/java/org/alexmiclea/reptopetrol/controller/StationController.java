@@ -23,7 +23,7 @@ public class StationController {
     }
 
     @GetMapping("/{uuid}")
-    public ResponseEntity<StationRetrievalDto> getStation(@RequestParam UUID uuid) {
+    public ResponseEntity<StationRetrievalDto> getStation(@PathVariable UUID uuid) {
         return ResponseEntity.ok(stationService.getStationById(uuid));
     }
 
@@ -40,13 +40,13 @@ public class StationController {
     }
 
     @PutMapping("/update/{uuid}")
-    public ResponseEntity<Void> updateStation(@RequestBody StationCreationDto stationDto, @RequestParam UUID uuid) {
+    public ResponseEntity<Void> updateStation(@RequestBody StationCreationDto stationDto, @PathVariable UUID uuid) {
         stationService.updateStation(stationDto, uuid);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/delete/{uuid}")
-    public ResponseEntity<Void> deleteStation(@RequestParam UUID uuid) {
+    public ResponseEntity<Void> deleteStation(@PathVariable UUID uuid) {
         stationService.deleteStation(uuid);
         return ResponseEntity.ok().build();
     }

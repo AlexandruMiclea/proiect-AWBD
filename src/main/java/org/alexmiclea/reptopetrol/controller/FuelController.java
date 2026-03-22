@@ -23,7 +23,7 @@ public class FuelController {
     }
 
     @GetMapping("/{uuid}")
-    public ResponseEntity<FuelRetrievalDto> getFuel(@RequestParam UUID uuid) {
+    public ResponseEntity<FuelRetrievalDto> getFuel(@PathVariable UUID uuid) {
         return ResponseEntity.ok(fuelService.getFuelById(uuid));
     }
 
@@ -40,13 +40,13 @@ public class FuelController {
     }
 
     @PutMapping("/update/{uuid}")
-    public ResponseEntity<Void> updateFuel(@RequestBody FuelCreationDto fuelDto, @RequestParam UUID uuid) {
+    public ResponseEntity<Void> updateFuel(@RequestBody FuelCreationDto fuelDto, @PathVariable UUID uuid) {
         fuelService.updateFuel(fuelDto, uuid);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/delete/{uuid}")
-    public ResponseEntity<Void> deleteFuel(@RequestParam UUID uuid) {
+    public ResponseEntity<Void> deleteFuel(@PathVariable UUID uuid) {
         fuelService.deleteFuel(uuid);
         return ResponseEntity.ok().build();
     }

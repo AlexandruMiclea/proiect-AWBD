@@ -23,7 +23,7 @@ public class TransportController {
     }
 
     @GetMapping("/{uuid}")
-    public ResponseEntity<TransportRetrievalDto> getTransport(@RequestParam UUID uuid) {
+    public ResponseEntity<TransportRetrievalDto> getTransport(@PathVariable UUID uuid) {
         return ResponseEntity.ok(transportService.getTransportById(uuid));
     }
 
@@ -40,13 +40,13 @@ public class TransportController {
     }
 
     @PutMapping("/update/{uuid}")
-    public ResponseEntity<Void> updateTransport(@RequestBody TransportCreationDto transportDto, @RequestParam UUID uuid) {
+    public ResponseEntity<Void> updateTransport(@RequestBody TransportCreationDto transportDto, @PathVariable UUID uuid) {
         transportService.updateTransport(transportDto, uuid);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/delete/{uuid}")
-    public ResponseEntity<Void> deleteTransport(@RequestParam UUID uuid) {
+    public ResponseEntity<Void> deleteTransport(@PathVariable UUID uuid) {
         transportService.deleteTransport(uuid);
         return ResponseEntity.ok().build();
     }

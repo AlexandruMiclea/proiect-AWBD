@@ -23,7 +23,7 @@ public class StoreController {
     }
 
     @GetMapping("/{uuid}")
-    public ResponseEntity<StoreRetrievalDto> getStore(@RequestParam UUID uuid) {
+    public ResponseEntity<StoreRetrievalDto> getStore(@PathVariable UUID uuid) {
         return ResponseEntity.ok(storeService.getStoreById(uuid));
     }
 
@@ -40,13 +40,13 @@ public class StoreController {
     }
 
     @PutMapping("/update/{uuid}")
-    public ResponseEntity<Void> updateStore(@RequestBody StoreCreationDto storeDto, @RequestParam UUID uuid) {
+    public ResponseEntity<Void> updateStore(@RequestBody StoreCreationDto storeDto, @PathVariable UUID uuid) {
         storeService.updateStore(storeDto, uuid);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/delete/{uuid}")
-    public ResponseEntity<Void> deleteStore(@RequestParam UUID uuid) {
+    public ResponseEntity<Void> deleteStore(@PathVariable UUID uuid) {
         storeService.deleteStore(uuid);
         return ResponseEntity.ok().build();
     }
