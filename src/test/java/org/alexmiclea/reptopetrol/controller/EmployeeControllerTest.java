@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -52,7 +53,7 @@ public class EmployeeControllerTest {
                 .dateOfHire(Instant.parse("2022-06-01T00:00:00Z"))
                 .build();
 
-        Mockito.when(employeeService.getEmployeeById(employeeId)).thenReturn(mockEmployeeRetrieval);
+        Mockito.when(employeeService.getEmployeeById(employeeId)).thenReturn(Optional.of(mockEmployeeRetrieval));
 
         mockMvc.perform(get(API_STRING + employeeId).param("uuid", employeeId.toString()))
                 .andExpect(status().isOk())
@@ -111,7 +112,7 @@ public class EmployeeControllerTest {
         mockMvc.perform(post(API_STRING + "add")
                         .content(objectMapper.writeValueAsString(mockEmployeeCreation))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test
@@ -128,7 +129,7 @@ public class EmployeeControllerTest {
         mockMvc.perform(post(API_STRING + "bulkAdd")
                         .content(objectMapper.writeValueAsString(List.of(mockEmployeeCreation)))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test

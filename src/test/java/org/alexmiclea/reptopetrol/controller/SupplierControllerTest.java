@@ -15,6 +15,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -47,7 +48,7 @@ public class SupplierControllerTest {
                 .homeCountry("RO")
                 .build();
 
-        Mockito.when(supplierService.getSupplierById(supplierId)).thenReturn(mockSupplierRetrieval);
+        Mockito.when(supplierService.getSupplierById(supplierId)).thenReturn(Optional.of(mockSupplierRetrieval));
 
         mockMvc.perform(get(API_STRING + supplierId))
                 .andExpect(status().isOk())

@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -48,7 +49,7 @@ public class ContractControllerTest {
                 .endDate(Instant.parse("2025-01-01T00:00:00Z"))
                 .build();
 
-        Mockito.when(contractService.getContractById(contractId)).thenReturn(mockContractRetrieval);
+        Mockito.when(contractService.getContractById(contractId)).thenReturn(Optional.of(mockContractRetrieval));
 
         mockMvc.perform(get(API_STRING + contractId).param("uuid", contractId.toString()))
                 .andExpect(status().isOk())
@@ -93,7 +94,7 @@ public class ContractControllerTest {
         mockMvc.perform(post(API_STRING + "add")
                         .content(objectMapper.writeValueAsString(mockContractCreation))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test
@@ -106,7 +107,7 @@ public class ContractControllerTest {
         mockMvc.perform(post(API_STRING + "bulkAdd")
                         .content(objectMapper.writeValueAsString(List.of(mockContractCreation)))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test

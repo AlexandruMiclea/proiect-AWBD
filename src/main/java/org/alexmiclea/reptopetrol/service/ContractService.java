@@ -1,5 +1,6 @@
 package org.alexmiclea.reptopetrol.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.alexmiclea.reptopetrol.dto.creation.ContractCreationDto;
 import org.alexmiclea.reptopetrol.dto.retrieval.ContractRetrievalDto;
@@ -10,6 +11,7 @@ import org.alexmiclea.reptopetrol.repository.ContractRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -24,8 +26,12 @@ public class ContractService {
         return contractRetrievalMapper.toContractDtos(contractRepository.findAll());
     }
 
-    public ContractRetrievalDto getContractById(UUID uuid) {
-        return contractRetrievalMapper.toContractDto(contractRepository.findById(uuid).orElseThrow());
+    public Optional<ContractRetrievalDto> getContractById(UUID uuid) {
+        if (contractRepository.existsById(uuid)) {
+            return Optional.of(contractRetrievalMapper.toContractDto(contractRepository.findById(uuid).orElseThrow()));
+        } else {
+            return Optional.empty();
+        }
     }
 
     public void addContract(ContractCreationDto contractDto) {
@@ -38,6 +44,7 @@ public class ContractService {
         contractRepository.saveAll(contracts);
     }
 
+    @Transactional
     public void updateContract(ContractCreationDto contractDto, UUID uuid) {
         Contract currentContract = contractRepository.getReferenceById(uuid);
         currentContract.setSupplier(contractCreationMapper.toContract(contractDto).getSupplier());
@@ -47,8 +54,12 @@ public class ContractService {
         contractRepository.save(currentContract);
     }
 
-    public void deleteContract(UUID uuid) {
-        Contract contract = contractRepository.findById(uuid).orElseThrow();
-        contractRepository.delete(contract);
+    public Optional<UUID> deleteContract(UUID uuid) {
+        if (contractRepository.existsById(uuid)) {
+            contractRepository.deleteById(uuid);
+            return Optional.of(uuid);
+        } else {
+            return Optional.empty();
+        }
     }
 }

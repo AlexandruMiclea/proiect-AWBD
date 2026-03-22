@@ -1,53 +1,73 @@
 package org.alexmiclea.reptopetrol.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.alexmiclea.reptopetrol.dto.creation.TransportCreationDto;
 import org.alexmiclea.reptopetrol.dto.retrieval.TransportRetrievalDto;
 import org.alexmiclea.reptopetrol.service.TransportService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/transports")
 @RequiredArgsConstructor
+@Slf4j
 public class TransportController {
 
     private final TransportService transportService;
 
     @GetMapping("/all")
     public ResponseEntity<List<TransportRetrievalDto>> getTransports() {
+        log.info("GET /all called");
+
         return ResponseEntity.ok(transportService.getAll());
     }
 
     @GetMapping("/{uuid}")
     public ResponseEntity<TransportRetrievalDto> getTransport(@PathVariable UUID uuid) {
-        return ResponseEntity.ok(transportService.getTransportById(uuid));
+        log.info("GET /{} called", uuid);
+        Optional<TransportRetrievalDto> transport = transportService.getTransportById(uuid);
+        log.debug("Database response for GET: {}", transport);
+
+        return transport.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Void> addTransport(@RequestBody TransportCreationDto transportDto) {
+    public ResponseEntity<Void> addTransport(@RequestBody @Validated TransportCreationDto transportDto) {
+        log.info("POST /add called with payload {}", transportDto);
         transportService.addTransport(transportDto);
-        return ResponseEntity.ok().build();
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/bulkAdd")
-    public ResponseEntity<Void> bulkAddTransports(@RequestBody List<TransportCreationDto> transportDtos) {
+    public ResponseEntity<Void> bulkAddTransports(@RequestBody @Validated List<TransportCreationDto> transportDtos) {
+        log.info("POST /bulkAdd called with payload {}", transportDtos);
         transportService.bulkAddTransports(transportDtos);
-        return ResponseEntity.ok().build();
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/update/{uuid}")
-    public ResponseEntity<Void> updateTransport(@RequestBody TransportCreationDto transportDto, @PathVariable UUID uuid) {
+    public ResponseEntity<Void> updateTransport(@RequestBody @Validated TransportCreationDto transportDto, @PathVariable UUID uuid) {
+        log.info("PUT /update called with payload {} for UUID {}", transportDto, uuid);
         transportService.updateTransport(transportDto, uuid);
+
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/delete/{uuid}")
-    public ResponseEntity<Void> deleteTransport(@PathVariable UUID uuid) {
-        transportService.deleteTransport(uuid);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<UUID> deleteTransport(@PathVariable UUID uuid) {
+        log.info("DELETE /delete called for UUID {}", uuid);
+        Optional<UUID> response = transportService.deleteTransport(uuid);
+        log.debug("Database response for DELETE: {}", response);
+
+        return response.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 }

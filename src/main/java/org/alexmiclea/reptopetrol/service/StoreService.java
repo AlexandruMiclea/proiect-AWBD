@@ -1,5 +1,6 @@
 package org.alexmiclea.reptopetrol.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.alexmiclea.reptopetrol.dto.creation.StoreCreationDto;
 import org.alexmiclea.reptopetrol.dto.retrieval.StoreRetrievalDto;
@@ -10,6 +11,7 @@ import org.alexmiclea.reptopetrol.repository.StoreRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -24,8 +26,12 @@ public class StoreService {
         return storeRetrievalMapper.toStoreDtos(storeRepository.findAll());
     }
 
-    public StoreRetrievalDto getStoreById(UUID uuid) {
-        return storeRetrievalMapper.toStoreDto(storeRepository.findById(uuid).orElseThrow());
+    public Optional<StoreRetrievalDto> getStoreById(UUID uuid) {
+        if (storeRepository.existsById(uuid)) {
+            return Optional.of(storeRetrievalMapper.toStoreDto(storeRepository.findById(uuid).orElseThrow()));
+        } else {
+            return Optional.empty();
+        }
     }
 
     public void addStore(StoreCreationDto storeDto) {
@@ -38,14 +44,19 @@ public class StoreService {
         storeRepository.saveAll(stores);
     }
 
+    @Transactional
     public void updateStore(StoreCreationDto storeDto, UUID uuid) {
         Store currentStore = storeRepository.getReferenceById(uuid);
         currentStore.setStation(storeCreationMapper.toStore(storeDto).getStation());
         storeRepository.save(currentStore);
     }
 
-    public void deleteStore(UUID uuid) {
-        Store store = storeRepository.findById(uuid).orElseThrow();
-        storeRepository.delete(store);
+    public Optional<UUID> deleteStore(UUID uuid) {
+        if (storeRepository.existsById(uuid)) {
+            storeRepository.deleteById(uuid);
+            return Optional.of(uuid);
+        } else {
+            return Optional.empty();
+        }
     }
 }

@@ -1,13 +1,14 @@
 package org.alexmiclea.reptopetrol.dto.creation.composites;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.alexmiclea.reptopetrol.dto.keys.InventoryKeyDto;
+import org.alexmiclea.reptopetrol.model.composites.keys.InventoryKey;
 
 import java.time.Instant;
-import java.util.UUID;
 
 @Data
 @Builder
@@ -15,10 +16,17 @@ import java.util.UUID;
 @AllArgsConstructor
 public class InventoryCreationDto {
 
-    private InventoryKeyDto id;
-    private UUID store;
-    private UUID product;
+    @NotNull
+    private InventoryKey id;
+
+    @NotNull
+    @Positive
     private Integer quantity;
+
+    @NotNull
+    @Positive
     private Float price;
+
+    @NotNull
     private Instant priceChange;
 }

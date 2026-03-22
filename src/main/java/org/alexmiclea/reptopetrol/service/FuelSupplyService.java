@@ -1,5 +1,6 @@
 package org.alexmiclea.reptopetrol.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.alexmiclea.reptopetrol.dto.creation.FuelSupplyCreationDto;
 import org.alexmiclea.reptopetrol.dto.retrieval.FuelSupplyRetrievalDto;
@@ -11,6 +12,7 @@ import org.alexmiclea.reptopetrol.repository.FuelSupplyRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,8 +26,16 @@ public class FuelSupplyService {
         return fuelSupplyRetrievalMapper.toFuelSupplyDtos(fuelSupplyRepository.findAll());
     }
 
-    public FuelSupplyRetrievalDto getFuelSupplyById(FuelSupplyKey key) {
-        return fuelSupplyRetrievalMapper.toFuelSupplyDto(fuelSupplyRepository.findById(key).orElseThrow());
+    public Optional<FuelSupplyRetrievalDto> getFuelSupplyById(FuelSupplyKey fuelSupplyKey) {
+        if (fuelSupplyRepository.existsById(fuelSupplyKey)) {
+            return Optional.of(
+                    fuelSupplyRetrievalMapper.toFuelSupplyDto(
+                            fuelSupplyRepository
+                                    .findById(fuelSupplyKey)
+                                    .orElseThrow()));
+        } else {
+            return Optional.empty();
+        }
     }
 
     public void addFuelSupply(FuelSupplyCreationDto fuelSupplyDto) {
@@ -38,6 +48,7 @@ public class FuelSupplyService {
         fuelSupplyRepository.saveAll(fuelSupplies);
     }
 
+    @Transactional
     public void updateFuelSupply(FuelSupplyCreationDto fuelSupplyDto, FuelSupplyKey key) {
         FuelSupply currentFuelSupply = fuelSupplyRepository.getReferenceById(key);
         currentFuelSupply.setQuantity(fuelSupplyDto.getQuantity());
@@ -45,8 +56,11 @@ public class FuelSupplyService {
         fuelSupplyRepository.save(currentFuelSupply);
     }
 
-    public void deleteFuelSupply(FuelSupplyKey key) {
-        FuelSupply fuelSupply = fuelSupplyRepository.findById(key).orElseThrow();
-        fuelSupplyRepository.delete(fuelSupply);
+    public Optional<FuelSupplyKey> deleteFuelSupply(FuelSupplyKey key) {
+        if (fuelSupplyRepository.existsById(key)) {
+            return Optional.of(key);
+        } else {
+            return Optional.empty();
+        }
     }
 }

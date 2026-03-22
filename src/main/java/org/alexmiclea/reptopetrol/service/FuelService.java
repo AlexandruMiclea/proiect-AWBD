@@ -1,5 +1,6 @@
 package org.alexmiclea.reptopetrol.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.alexmiclea.reptopetrol.dto.creation.FuelCreationDto;
 import org.alexmiclea.reptopetrol.dto.retrieval.FuelRetrievalDto;
@@ -10,6 +11,7 @@ import org.alexmiclea.reptopetrol.repository.FuelRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -24,8 +26,12 @@ public class FuelService {
         return fuelRetrievalMapper.toFuelDtos(fuelRepository.findAll());
     }
 
-    public FuelRetrievalDto getFuelById(UUID uuid) {
-        return fuelRetrievalMapper.toFuelDto(fuelRepository.findById(uuid).orElseThrow());
+    public Optional<FuelRetrievalDto> getFuelById(UUID uuid) {
+        if (fuelRepository.existsById(uuid)) {
+            return Optional.of(fuelRetrievalMapper.toFuelDto(fuelRepository.findById(uuid).orElseThrow()));
+        } else {
+            return Optional.empty();
+        }
     }
 
     public void addFuel(FuelCreationDto fuelDto) {
@@ -38,6 +44,7 @@ public class FuelService {
         fuelRepository.saveAll(fuels);
     }
 
+    @Transactional
     public void updateFuel(FuelCreationDto fuelDto, UUID uuid) {
         Fuel currentFuel = fuelRepository.getReferenceById(uuid);
         currentFuel.setName(fuelDto.getName());
@@ -45,8 +52,12 @@ public class FuelService {
         fuelRepository.save(currentFuel);
     }
 
-    public void deleteFuel(UUID uuid) {
-        Fuel fuel = fuelRepository.findById(uuid).orElseThrow();
-        fuelRepository.delete(fuel);
+    public Optional<UUID> deleteFuel(UUID uuid) {
+        if (fuelRepository.existsById(uuid)) {
+            fuelRepository.deleteById(uuid);
+            return Optional.of(uuid);
+        } else {
+            return Optional.empty();
+        }
     }
 }

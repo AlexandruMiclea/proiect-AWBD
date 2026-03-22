@@ -1,53 +1,79 @@
 package org.alexmiclea.reptopetrol.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.alexmiclea.reptopetrol.dto.creation.FuelSupplyCreationDto;
+import org.alexmiclea.reptopetrol.dto.keys.FuelSupplyKeyDto;
 import org.alexmiclea.reptopetrol.dto.retrieval.FuelSupplyRetrievalDto;
+import org.alexmiclea.reptopetrol.mapper.keys.FuelSupplyKeyMapper;
 import org.alexmiclea.reptopetrol.model.composites.keys.FuelSupplyKey;
 import org.alexmiclea.reptopetrol.service.FuelSupplyService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/fuel-supplies")
 @RequiredArgsConstructor
+@Slf4j
 public class FuelSupplyController {
 
     private final FuelSupplyService fuelSupplyService;
 
+    private final FuelSupplyKeyMapper fuelSupplyKeyMapper;
+
     @GetMapping("/all")
     public ResponseEntity<List<FuelSupplyRetrievalDto>> getFuelSupplies() {
+        log.info("GET /all called");
+
         return ResponseEntity.ok(fuelSupplyService.getAll());
     }
 
-    @GetMapping("/get")
-    public ResponseEntity<FuelSupplyRetrievalDto> getFuelSupply(@RequestBody FuelSupplyKey key) {
-        return ResponseEntity.ok(fuelSupplyService.getFuelSupplyById(key));
+    @GetMapping
+    public ResponseEntity<FuelSupplyRetrievalDto> getFuelSupply(@RequestBody FuelSupplyKeyDto key) {
+        log.info("GET called with composed key {}", key);
+        FuelSupplyKey fuelSupplyKey = fuelSupplyKeyMapper.toFuelSupplyKey(key);
+        Optional<FuelSupplyRetrievalDto> fuelSupply = fuelSupplyService.getFuelSupplyById(fuelSupplyKey);
+        log.debug("Database response for GET: {}", fuelSupply);
+
+        return fuelSupply.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping("/add")
     public ResponseEntity<Void> addFuelSupply(@RequestBody FuelSupplyCreationDto fuelSupplyDto) {
+        log.info("POST /add called with payload {}", fuelSupplyDto);
         fuelSupplyService.addFuelSupply(fuelSupplyDto);
-        return ResponseEntity.ok().build();
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/bulkAdd")
     public ResponseEntity<Void> bulkAddFuelSupplies(@RequestBody List<FuelSupplyCreationDto> fuelSupplyDtos) {
+        log.info("POST /bulkAdd called with payload {}", fuelSupplyDtos);
         fuelSupplyService.bulkAddFuelSupplies(fuelSupplyDtos);
-        return ResponseEntity.ok().build();
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/update")
     public ResponseEntity<Void> updateFuelSupply(@RequestBody FuelSupplyCreationDto fuelSupplyDto) {
+        log.info("PUT /update called with payload {}", fuelSupplyDto);
         fuelSupplyService.updateFuelSupply(fuelSupplyDto, fuelSupplyDto.getId());
+
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Void> deleteFuelSupply(@RequestBody FuelSupplyKey key) {
-        fuelSupplyService.deleteFuelSupply(key);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<FuelSupplyKey> deleteFuelSupply(@RequestBody FuelSupplyKeyDto key) {
+        log.info("DELETE called with composed key {}", key);
+        FuelSupplyKey fuelSupplyKey = fuelSupplyKeyMapper.toFuelSupplyKey(key);
+        Optional<FuelSupplyKey> fuelSupply = fuelSupplyService.deleteFuelSupply(fuelSupplyKey);
+        log.debug("Database response for DELETE: {}", fuelSupply);
+
+        return fuelSupply.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 }

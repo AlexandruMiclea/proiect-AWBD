@@ -1,5 +1,6 @@
 package org.alexmiclea.reptopetrol.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.alexmiclea.reptopetrol.dto.creation.EmployeeCreationDto;
 import org.alexmiclea.reptopetrol.dto.retrieval.EmployeeRetrievalDto;
@@ -10,6 +11,7 @@ import org.alexmiclea.reptopetrol.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -24,8 +26,12 @@ public class EmployeeService {
         return employeeRetrievalMapper.toEmployeeDtos(employeeRepository.findAll());
     }
 
-    public EmployeeRetrievalDto getEmployeeById(UUID uuid) {
-        return employeeRetrievalMapper.toEmployeeDto(employeeRepository.findById(uuid).orElseThrow());
+    public Optional<EmployeeRetrievalDto> getEmployeeById(UUID uuid) {
+        if (employeeRepository.existsById(uuid)) {
+            return Optional.of(employeeRetrievalMapper.toEmployeeDto(employeeRepository.findById(uuid).orElseThrow()));
+        } else {
+            return Optional.empty();
+        }
     }
 
     public void addEmployee(EmployeeCreationDto employeeDto) {
@@ -38,6 +44,7 @@ public class EmployeeService {
         employeeRepository.saveAll(employees);
     }
 
+    @Transactional
     public void updateEmployee(EmployeeCreationDto employeeDto, UUID uuid) {
         Employee currentEmployee = employeeRepository.getReferenceById(uuid);
         currentEmployee.setFirstName(employeeDto.getFirstName());
@@ -49,8 +56,12 @@ public class EmployeeService {
         employeeRepository.save(currentEmployee);
     }
 
-    public void deleteEmployee(UUID uuid) {
-        Employee employee = employeeRepository.findById(uuid).orElseThrow();
-        employeeRepository.delete(employee);
+    public Optional<UUID> deleteEmployee(UUID uuid) {
+        if (employeeRepository.existsById(uuid)) {
+            employeeRepository.deleteById(uuid);
+            return Optional.of(uuid);
+        } else {
+            return Optional.empty();
+        }
     }
 }

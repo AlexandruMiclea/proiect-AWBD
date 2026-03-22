@@ -15,6 +15,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -47,7 +48,7 @@ public class StationControllerTest {
                 .pumpNo(4)
                 .build();
 
-        Mockito.when(stationService.getStationById(stationId)).thenReturn(mockStationRetrieval);
+        Mockito.when(stationService.getStationById(stationId)).thenReturn(Optional.of(mockStationRetrieval));
 
         mockMvc.perform(get(API_STRING + stationId).param("uuid", stationId.toString()))
                 .andExpect(status().isOk())
@@ -99,7 +100,7 @@ public class StationControllerTest {
         mockMvc.perform(post(API_STRING + "add")
                         .content(objectMapper.writeValueAsString(mockStationCreation))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test
@@ -113,7 +114,7 @@ public class StationControllerTest {
         mockMvc.perform(post(API_STRING + "bulkAdd")
                         .content(objectMapper.writeValueAsString(List.of(mockStationCreation)))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test

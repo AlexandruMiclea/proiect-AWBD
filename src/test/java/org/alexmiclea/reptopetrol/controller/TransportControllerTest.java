@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -48,7 +49,7 @@ public class TransportControllerTest {
                 .completionDate(Instant.parse("2024-03-05T00:00:00Z"))
                 .build();
 
-        Mockito.when(transportService.getTransportById(transportId)).thenReturn(mockTransportRetrieval);
+        Mockito.when(transportService.getTransportById(transportId)).thenReturn(Optional.of(mockTransportRetrieval));
 
         mockMvc.perform(get(API_STRING + transportId).param("uuid", transportId.toString()))
                 .andExpect(status().isOk())
@@ -96,7 +97,7 @@ public class TransportControllerTest {
         mockMvc.perform(post(API_STRING + "add")
                         .content(objectMapper.writeValueAsString(mockTransportCreation))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test
@@ -110,7 +111,7 @@ public class TransportControllerTest {
         mockMvc.perform(post(API_STRING + "bulkAdd")
                         .content(objectMapper.writeValueAsString(List.of(mockTransportCreation)))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test

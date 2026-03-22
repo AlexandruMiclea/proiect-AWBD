@@ -1,11 +1,12 @@
 package org.alexmiclea.reptopetrol.dto.creation;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.alexmiclea.reptopetrol.model.Fuel;
-import org.alexmiclea.reptopetrol.model.Station;
 import org.alexmiclea.reptopetrol.model.composites.keys.FuelSupplyKey;
 
 import java.math.BigDecimal;
@@ -17,10 +18,17 @@ import java.time.Instant;
 @AllArgsConstructor
 public class FuelSupplyCreationDto {
 
+    @NotNull
     private FuelSupplyKey id;
-    private Station station;
-    private Fuel fuel;
+
+    @NotNull
+    @Positive
     private BigDecimal quantity;
+
+    @NotNull
+    @Positive
     private BigDecimal price;
+
+    @NotNull
     private Instant priceChange;
 }
