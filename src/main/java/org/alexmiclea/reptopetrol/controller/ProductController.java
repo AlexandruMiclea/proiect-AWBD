@@ -23,7 +23,7 @@ public class ProductController {
     }
 
     @GetMapping("/{uuid}")
-    public ResponseEntity<ProductRetrievalDto> getProduct(@RequestParam UUID uuid) {
+    public ResponseEntity<ProductRetrievalDto> getProduct(@PathVariable UUID uuid) {
         return ResponseEntity.ok(productService.getProductById(uuid));
     }
 
@@ -40,13 +40,13 @@ public class ProductController {
     }
 
     @PutMapping("/update/{uuid}")
-    public ResponseEntity<Void> updateProduct(@RequestBody ProductCreationDto productDto, @RequestParam UUID uuid) {
+    public ResponseEntity<Void> updateProduct(@RequestBody ProductCreationDto productDto, @PathVariable UUID uuid) {
         productService.updateProduct(productDto, uuid);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/delete/{uuid}")
-    public ResponseEntity<Void> deleteProduct(@RequestParam UUID uuid) {
+    public ResponseEntity<Void> deleteProduct(@PathVariable UUID uuid) {
         productService.deleteProduct(uuid);
         return ResponseEntity.ok().build();
     }
