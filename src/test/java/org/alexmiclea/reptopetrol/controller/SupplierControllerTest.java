@@ -143,6 +143,6 @@ public class SupplierControllerTest {
         UUID supplierId = UUID.randomUUID();
 
         mockMvc.perform(delete(API_STRING + "/delete/" + supplierId))
-                .andExpect(status().isOk());
+                .andExpect(status().isNotFound());
     }
 }

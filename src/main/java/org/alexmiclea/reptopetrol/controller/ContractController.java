@@ -45,6 +45,8 @@ public class ContractController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    // TODO -> validate list of elements at service level, Validated does nothing
+
     @PostMapping("/bulkAdd")
     public ResponseEntity<Void> bulkAddContracts(@RequestBody @Validated List<ContractCreationDto> contractDtos) {
         log.info("POST /bulkAdd called with payload {}", contractDtos);

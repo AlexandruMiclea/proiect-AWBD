@@ -8,6 +8,7 @@ import org.alexmiclea.reptopetrol.dto.retrieval.InventoryRetrievalDto;
 import org.alexmiclea.reptopetrol.mapper.keys.InventoryKeyMapper;
 import org.alexmiclea.reptopetrol.model.composites.keys.InventoryKey;
 import org.alexmiclea.reptopetrol.service.InventoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,7 @@ public class InventoryController {
 
     private final InventoryService inventoryService;
 
+    @Autowired
     private final InventoryKeyMapper inventoryKeyMapper;
 
     @GetMapping("/all")

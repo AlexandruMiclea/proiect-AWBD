@@ -1,10 +1,7 @@
 package org.alexmiclea.reptopetrol.dto.creation;
 
 import jakarta.annotation.Nullable;
-import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,7 +23,7 @@ public class ContractCreationDto {
     @Nullable
     private List<UUID> transportIds;
 
-    @NotEmpty
+    @NotNull
     private UUID supplierId;
 
     @NotEmpty

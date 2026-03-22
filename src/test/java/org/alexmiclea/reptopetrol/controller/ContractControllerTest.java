@@ -60,10 +60,12 @@ public class ContractControllerTest {
     @Test
     void getAllContracts() throws Exception {
         UUID contractId = UUID.randomUUID();
+        UUID fuelId = UUID.randomUUID();
 
         ContractRetrievalDto mockContractRetrieval = ContractRetrievalDto.builder()
                 .id(contractId)
                 .supplierId(UUID.randomUUID())
+                .fuelIds(List.of(fuelId))
                 .beginDate(Instant.parse("2024-01-01T00:00:00Z"))
                 .endDate(Instant.parse("2025-01-01T00:00:00Z"))
                 .build();
@@ -86,9 +88,14 @@ public class ContractControllerTest {
 
     @Test
     void addContract() throws Exception {
+        UUID supplierId = UUID.randomUUID();
+        UUID fuelId = UUID.randomUUID();
+
         ContractCreationDto mockContractCreation = ContractCreationDto.builder()
+                .supplierId(supplierId)
+                .fuelIds(List.of(fuelId))
                 .beginDate(Instant.parse("2024-01-01T00:00:00Z"))
-                .endDate(Instant.parse("2025-01-01T00:00:00Z"))
+                .endDate(Instant.parse("2027-01-01T00:00:00Z"))
                 .build();
 
         mockMvc.perform(post(API_STRING + "add")
@@ -113,10 +120,15 @@ public class ContractControllerTest {
     @Test
     void updateContract() throws Exception {
         UUID contractId = UUID.randomUUID();
+        UUID supplierId = UUID.randomUUID();
+        UUID fuelId = UUID.randomUUID();
 
         ContractCreationDto mockContractCreation = ContractCreationDto.builder()
+                .id(contractId)
+                .supplierId(supplierId)
+                .fuelIds(List.of(fuelId))
                 .beginDate(Instant.parse("2024-01-01T00:00:00Z"))
-                .endDate(Instant.parse("2025-01-01T00:00:00Z"))
+                .endDate(Instant.parse("2027-01-01T00:00:00Z"))
                 .build();
 
         mockMvc.perform(put(API_STRING + "update/" + contractId)
@@ -127,8 +139,18 @@ public class ContractControllerTest {
     }
 
     @Test
-    void deleteContract() throws Exception {
+    void deleteContract_notFound() throws Exception {
         UUID contractId = UUID.randomUUID();
+
+        mockMvc.perform(delete(API_STRING + "delete/" + contractId))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void deleteContract_ok() throws Exception {
+        UUID contractId = UUID.randomUUID();
+
+        Mockito.when(contractService.deleteContract(contractId)).thenReturn(Optional.of(contractId));
 
         mockMvc.perform(delete(API_STRING + "delete/" + contractId).param("uuid", contractId.toString()))
                 .andExpect(status().isOk());

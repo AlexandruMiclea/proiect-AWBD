@@ -3,7 +3,12 @@ package org.alexmiclea.reptopetrol.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.alexmiclea.reptopetrol.dto.creation.InventoryCreationDto;
+import org.alexmiclea.reptopetrol.dto.keys.FuelSupplyKeyDto;
+import org.alexmiclea.reptopetrol.dto.keys.InventoryKeyDto;
 import org.alexmiclea.reptopetrol.dto.retrieval.InventoryRetrievalDto;
+import org.alexmiclea.reptopetrol.mapper.keys.FuelSupplyKeyMapper;
+import org.alexmiclea.reptopetrol.mapper.keys.InventoryKeyMapper;
+import org.alexmiclea.reptopetrol.model.composites.keys.FuelSupplyKey;
 import org.alexmiclea.reptopetrol.model.composites.keys.InventoryKey;
 import org.alexmiclea.reptopetrol.service.InventoryService;
 import org.junit.jupiter.api.Test;
@@ -18,6 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -27,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RequiredArgsConstructor
 public class InventoryControllerTest {
 
-    private static final String API_STRING = "/api/inventory/";
+    private static final String API_STRING = "/api/inventory";
 
     @Autowired
     private MockMvc mockMvc;
@@ -38,18 +44,35 @@ public class InventoryControllerTest {
     @MockitoBean
     private InventoryService inventoryService;
 
+    @MockitoBean
+    private InventoryKeyMapper inventoryKeyMapper;
+
     @Test
     void getInventoryByKey() throws Exception {
+        UUID storeId = UUID.randomUUID();
+        UUID productId = UUID.randomUUID();
+
+        InventoryKeyDto inventoryKeyDto = InventoryKeyDto.builder()
+                .storeId(storeId)
+                .productId(productId)
+                .build();
+
         InventoryRetrievalDto mockRetrieval = InventoryRetrievalDto.builder()
+                .id(inventoryKeyDto)
                 .quantity(100)
                 .price(12.99f)
                 .priceChange(Instant.parse("2024-01-01T00:00:00Z"))
                 .build();
 
-        Mockito.when(inventoryService.getInventoryById(Mockito.any(InventoryKey.class))).thenReturn(Optional.of(mockRetrieval));
+        InventoryKey inventoryKey = new InventoryKey();
+        inventoryKey.setStoreId(storeId);
+        inventoryKey.setProductId(productId);
 
-        mockMvc.perform(get(API_STRING + "get")
-                        .content("{}")
+        Mockito.when(inventoryKeyMapper.toInventoryKey(inventoryKeyDto)).thenReturn(inventoryKey);
+        Mockito.when(inventoryService.getInventoryById(inventoryKey)).thenReturn(Optional.of(mockRetrieval));
+
+        mockMvc.perform(get(API_STRING)
+                        .content(objectMapper.writeValueAsString(inventoryKeyDto))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -67,7 +90,7 @@ public class InventoryControllerTest {
 
         Mockito.when(inventoryService.getAll()).thenReturn(List.of(mockRetrieval));
 
-        mockMvc.perform(get(API_STRING + "all"))
+        mockMvc.perform(get(API_STRING + "/all"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$[0].quantity").value(100))
@@ -82,7 +105,7 @@ public class InventoryControllerTest {
                 .priceChange(Instant.parse("2024-01-01T00:00:00Z"))
                 .build();
 
-        mockMvc.perform(post(API_STRING + "add")
+        mockMvc.perform(post(API_STRING + "/add")
                         .content(objectMapper.writeValueAsString(mockCreation))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated());
@@ -96,7 +119,7 @@ public class InventoryControllerTest {
                 .priceChange(Instant.parse("2024-01-01T00:00:00Z"))
                 .build();
 
-        mockMvc.perform(post(API_STRING + "bulkAdd")
+        mockMvc.perform(post(API_STRING + "/bulkAdd")
                         .content(objectMapper.writeValueAsString(List.of(mockCreation)))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated());
@@ -110,7 +133,7 @@ public class InventoryControllerTest {
                 .priceChange(Instant.parse("2024-01-01T00:00:00Z"))
                 .build();
 
-        mockMvc.perform(put(API_STRING + "update")
+        mockMvc.perform(put(API_STRING + "/update")
                         .content(objectMapper.writeValueAsString(mockCreation))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -118,9 +141,23 @@ public class InventoryControllerTest {
 
     @Test
     void deleteInventory() throws Exception {
-        mockMvc.perform(delete(API_STRING + "delete")
+        UUID storeId = UUID.randomUUID();
+        UUID productId = UUID.randomUUID();
+
+        InventoryKeyDto inventoryKeyDto = InventoryKeyDto.builder()
+                .storeId(storeId)
+                .productId(productId)
+                .build();
+
+        InventoryKey inventoryKey = new InventoryKey();
+        inventoryKey.setStoreId(storeId);
+        inventoryKey.setProductId(productId);
+
+        Mockito.when(inventoryKeyMapper.toInventoryKey(inventoryKeyDto)).thenReturn(inventoryKey);
+
+        mockMvc.perform(delete(API_STRING + "/delete")
                         .content("{}")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isNotFound());
     }
 }

@@ -129,8 +129,18 @@ public class FuelControllerTest {
     }
 
     @Test
-    void deleteFuel() throws Exception {
+    void deleteFuel_notFound() throws Exception {
         UUID fuelId = UUID.randomUUID();
+
+        mockMvc.perform(delete(API_STRING + "delete/" + fuelId).param("uuid", fuelId.toString()))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void deleteFuel_found() throws Exception {
+        UUID fuelId = UUID.randomUUID();
+
+        Mockito.when(fuelService.deleteFuel(fuelId)).thenReturn(Optional.of(fuelId));
 
         mockMvc.perform(delete(API_STRING + "delete/" + fuelId).param("uuid", fuelId.toString()))
                 .andExpect(status().isOk());

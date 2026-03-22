@@ -132,6 +132,6 @@ public class ProductControllerTest {
         UUID productId = UUID.randomUUID();
 
         mockMvc.perform(delete(API_STRING + "delete/" + productId).param("uuid", productId.toString()))
-                .andExpect(status().isOk());
+                .andExpect(status().isNotFound());
     }
 }

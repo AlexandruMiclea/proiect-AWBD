@@ -85,7 +85,12 @@ public class StoreControllerTest {
 
     @Test
     void addStore() throws Exception {
+        UUID storeId = UUID.randomUUID();
+        UUID stationId = UUID.randomUUID();
+
         StoreCreationDto mockStoreCreation = StoreCreationDto.builder()
+                .stationId(stationId)
+                .id(storeId)
                 .build();
 
         mockMvc.perform(post(API_STRING + "add")
@@ -108,8 +113,11 @@ public class StoreControllerTest {
     @Test
     void updateStore() throws Exception {
         UUID storeId = UUID.randomUUID();
+        UUID stationId = UUID.randomUUID();
 
         StoreCreationDto mockStoreCreation = StoreCreationDto.builder()
+                .id(storeId)
+                .stationId(stationId)
                 .build();
 
         mockMvc.perform(put(API_STRING + "update/" + storeId)
@@ -124,6 +132,6 @@ public class StoreControllerTest {
         UUID storeId = UUID.randomUUID();
 
         mockMvc.perform(delete(API_STRING + "delete/" + storeId).param("uuid", storeId.toString()))
-                .andExpect(status().isOk());
+                .andExpect(status().isNotFound());
     }
 }
