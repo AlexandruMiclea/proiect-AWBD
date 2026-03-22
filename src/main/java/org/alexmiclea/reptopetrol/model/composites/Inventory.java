@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.alexmiclea.reptopetrol.model.Product;
 import org.alexmiclea.reptopetrol.model.Store;
-import org.alexmiclea.reptopetrol.model.composites.keys.InventoryKey;
+import org.alexmiclea.reptopetrol.model.keys.InventoryKey;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.Instant;

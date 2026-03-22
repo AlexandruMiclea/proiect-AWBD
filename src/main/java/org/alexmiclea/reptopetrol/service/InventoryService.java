@@ -1,7 +1,6 @@
 package org.alexmiclea.reptopetrol.service;
 
 import jakarta.transaction.Transactional;
-import jakarta.validation.constraints.PastOrPresent;
 import lombok.RequiredArgsConstructor;
 import org.alexmiclea.reptopetrol.dto.creation.InventoryCreationDto;
 import org.alexmiclea.reptopetrol.dto.keys.InventoryKeyDto;
@@ -10,8 +9,7 @@ import org.alexmiclea.reptopetrol.mapper.creation.InventoryCreationMapper;
 import org.alexmiclea.reptopetrol.mapper.keys.InventoryKeyMapper;
 import org.alexmiclea.reptopetrol.mapper.retrieval.InventoryRetreivalMapper;
 import org.alexmiclea.reptopetrol.model.composites.Inventory;
-import org.alexmiclea.reptopetrol.model.composites.keys.FuelSupplyKey;
-import org.alexmiclea.reptopetrol.model.composites.keys.InventoryKey;
+import org.alexmiclea.reptopetrol.model.keys.InventoryKey;
 import org.alexmiclea.reptopetrol.repository.InventoryRepository;
 import org.springframework.stereotype.Service;
 

@@ -9,7 +9,7 @@ import org.alexmiclea.reptopetrol.mapper.creation.FuelSupplyCreationMapper;
 import org.alexmiclea.reptopetrol.mapper.keys.FuelSupplyKeyMapper;
 import org.alexmiclea.reptopetrol.mapper.retrieval.FuelSupplyRetrievalMapper;
 import org.alexmiclea.reptopetrol.model.composites.FuelSupply;
-import org.alexmiclea.reptopetrol.model.composites.keys.FuelSupplyKey;
+import org.alexmiclea.reptopetrol.model.keys.FuelSupplyKey;
 import org.alexmiclea.reptopetrol.repository.FuelSupplyRepository;
 import org.springframework.stereotype.Service;
 

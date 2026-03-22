@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Positive;
 import lombok.*;
 import org.alexmiclea.reptopetrol.model.Fuel;
 import org.alexmiclea.reptopetrol.model.Station;
-import org.alexmiclea.reptopetrol.model.composites.keys.FuelSupplyKey;
+import org.alexmiclea.reptopetrol.model.keys.FuelSupplyKey;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.math.BigDecimal;
