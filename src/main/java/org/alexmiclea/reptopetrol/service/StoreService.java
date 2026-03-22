@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.alexmiclea.reptopetrol.dto.creation.StoreCreationDto;
 import org.alexmiclea.reptopetrol.dto.retrieval.StoreRetrievalDto;
 import org.alexmiclea.reptopetrol.mapper.creation.StoreCreationMapper;
-import org.alexmiclea.reptopetrol.mapper.retrieval.StationRetrievalMapper;
 import org.alexmiclea.reptopetrol.mapper.retrieval.StoreRetrievalMapper;
 import org.alexmiclea.reptopetrol.model.Store;
 import org.alexmiclea.reptopetrol.repository.StoreRepository;

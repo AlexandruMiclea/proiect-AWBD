@@ -1,5 +1,6 @@
 package org.alexmiclea.reptopetrol.dto.retrieval;
 
+import lombok.Builder;
 import lombok.Data;
 import org.alexmiclea.reptopetrol.model.Fuel;
 import org.alexmiclea.reptopetrol.model.Station;
@@ -9,6 +10,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 
 @Data
+@Builder
 public class FuelSupplyRetrievalDto {
 
     private FuelSupplyKey id;

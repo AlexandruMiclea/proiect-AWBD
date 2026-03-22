@@ -1,14 +1,13 @@
-package org.alexmiclea.reptopetrol.dto.creation;
+package org.alexmiclea.reptopetrol.dto.creation.composites;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.alexmiclea.reptopetrol.model.Product;
-import org.alexmiclea.reptopetrol.model.Store;
-import org.alexmiclea.reptopetrol.model.composites.keys.InventoryKey;
+import org.alexmiclea.reptopetrol.dto.keys.InventoryKeyDto;
 
 import java.time.Instant;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -16,9 +15,9 @@ import java.time.Instant;
 @AllArgsConstructor
 public class InventoryCreationDto {
 
-    private InventoryKey id;
-    private Store store;
-    private Product product;
+    private InventoryKeyDto id;
+    private UUID store;
+    private UUID product;
     private Integer quantity;
     private Float price;
     private Instant priceChange;

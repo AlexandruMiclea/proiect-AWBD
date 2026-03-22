@@ -1,5 +1,6 @@
 package org.alexmiclea.reptopetrol.dto.retrieval;
 
+import lombok.Builder;
 import lombok.Data;
 import org.alexmiclea.reptopetrol.model.Product;
 import org.alexmiclea.reptopetrol.model.Store;
@@ -8,6 +9,7 @@ import org.alexmiclea.reptopetrol.model.composites.keys.InventoryKey;
 import java.time.Instant;
 
 @Data
+@Builder
 public class InventoryRetrievalDto {
 
     private InventoryKey id;

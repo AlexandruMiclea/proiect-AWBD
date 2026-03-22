@@ -3,14 +3,12 @@ package org.alexmiclea.reptopetrol.controller;
 import lombok.RequiredArgsConstructor;
 import org.alexmiclea.reptopetrol.dto.creation.FuelSupplyCreationDto;
 import org.alexmiclea.reptopetrol.dto.retrieval.FuelSupplyRetrievalDto;
-import org.alexmiclea.reptopetrol.mapper.creation.FuelSupplyCreationMapper;
 import org.alexmiclea.reptopetrol.model.composites.keys.FuelSupplyKey;
 import org.alexmiclea.reptopetrol.service.FuelSupplyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/fuel-supplies")

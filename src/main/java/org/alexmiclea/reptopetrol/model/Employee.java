@@ -3,10 +3,10 @@ package org.alexmiclea.reptopetrol.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.context.annotation.Configuration;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -15,6 +15,7 @@ import java.util.UUID;
 @Table(name = "employee")
 @Getter
 @Setter
+@Configuration
 public class Employee {
 
     @Id
