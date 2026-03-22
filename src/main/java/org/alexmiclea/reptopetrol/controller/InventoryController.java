@@ -6,7 +6,7 @@ import org.alexmiclea.reptopetrol.dto.creation.InventoryCreationDto;
 import org.alexmiclea.reptopetrol.dto.keys.InventoryKeyDto;
 import org.alexmiclea.reptopetrol.dto.retrieval.InventoryRetrievalDto;
 import org.alexmiclea.reptopetrol.mapper.keys.InventoryKeyMapper;
-import org.alexmiclea.reptopetrol.model.composites.keys.InventoryKey;
+import org.alexmiclea.reptopetrol.model.keys.InventoryKey;
 import org.alexmiclea.reptopetrol.service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

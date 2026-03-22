@@ -1,7 +1,7 @@
 package org.alexmiclea.reptopetrol.mapper.keys;
 
 import org.alexmiclea.reptopetrol.dto.keys.InventoryKeyDto;
-import org.alexmiclea.reptopetrol.model.composites.keys.InventoryKey;
+import org.alexmiclea.reptopetrol.model.keys.InventoryKey;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

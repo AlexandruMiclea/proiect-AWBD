@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.alexmiclea.reptopetrol.model.composites.keys.InventoryKey;
+import org.alexmiclea.reptopetrol.dto.keys.FuelSupplyKeyDto;
 
 import java.time.Instant;
 
@@ -17,7 +17,7 @@ import java.time.Instant;
 public class InventoryCreationDto {
 
     @NotNull
-    private InventoryKey id;
+    private FuelSupplyKeyDto id;
 
     @NotNull
     @Positive

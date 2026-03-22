@@ -1,4 +1,4 @@
-package org.alexmiclea.reptopetrol.model.composites.keys;
+package org.alexmiclea.reptopetrol.model.keys;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

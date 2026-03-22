@@ -6,7 +6,7 @@ import org.alexmiclea.reptopetrol.dto.creation.FuelSupplyCreationDto;
 import org.alexmiclea.reptopetrol.dto.keys.FuelSupplyKeyDto;
 import org.alexmiclea.reptopetrol.dto.retrieval.FuelSupplyRetrievalDto;
 import org.alexmiclea.reptopetrol.mapper.keys.FuelSupplyKeyMapper;
-import org.alexmiclea.reptopetrol.model.composites.keys.FuelSupplyKey;
+import org.alexmiclea.reptopetrol.model.keys.FuelSupplyKey;
 import org.alexmiclea.reptopetrol.service.FuelSupplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
