@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -45,7 +46,7 @@ public class InventoryControllerTest {
                 .priceChange(Instant.parse("2024-01-01T00:00:00Z"))
                 .build();
 
-        Mockito.when(inventoryService.getInventoryById(Mockito.any(InventoryKey.class))).thenReturn(mockRetrieval);
+        Mockito.when(inventoryService.getInventoryById(Mockito.any(InventoryKey.class))).thenReturn(Optional.of(mockRetrieval));
 
         mockMvc.perform(get(API_STRING + "get")
                         .content("{}")
@@ -84,7 +85,7 @@ public class InventoryControllerTest {
         mockMvc.perform(post(API_STRING + "add")
                         .content(objectMapper.writeValueAsString(mockCreation))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test
@@ -98,7 +99,7 @@ public class InventoryControllerTest {
         mockMvc.perform(post(API_STRING + "bulkAdd")
                         .content(objectMapper.writeValueAsString(List.of(mockCreation)))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test

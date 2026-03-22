@@ -15,6 +15,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -46,7 +47,7 @@ public class ProductControllerTest {
                 .price(25.99f)
                 .build();
 
-        Mockito.when(productService.getProductById(productId)).thenReturn(mockProductRetrieval);
+        Mockito.when(productService.getProductById(productId)).thenReturn(Optional.of(mockProductRetrieval));
 
         mockMvc.perform(get(API_STRING + productId).param("uuid", productId.toString()))
                 .andExpect(status().isOk())
@@ -94,7 +95,7 @@ public class ProductControllerTest {
         mockMvc.perform(post(API_STRING + "add")
                         .content(objectMapper.writeValueAsString(mockProductCreation))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test
@@ -107,7 +108,7 @@ public class ProductControllerTest {
         mockMvc.perform(post(API_STRING + "bulkAdd")
                         .content(objectMapper.writeValueAsString(List.of(mockProductCreation)))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test

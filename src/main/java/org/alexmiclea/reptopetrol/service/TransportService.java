@@ -1,5 +1,6 @@
 package org.alexmiclea.reptopetrol.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.alexmiclea.reptopetrol.dto.creation.TransportCreationDto;
 import org.alexmiclea.reptopetrol.dto.retrieval.TransportRetrievalDto;
@@ -10,6 +11,7 @@ import org.alexmiclea.reptopetrol.repository.TransportRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -24,8 +26,12 @@ public class TransportService {
         return transportRetrievalMapper.toTransportDtos(transportRepository.findAll());
     }
 
-    public TransportRetrievalDto getTransportById(UUID uuid) {
-        return transportRetrievalMapper.toTransportDto(transportRepository.findById(uuid).orElseThrow());
+    public Optional<TransportRetrievalDto> getTransportById(UUID uuid) {
+        if (transportRepository.existsById(uuid)) {
+            return Optional.of(transportRetrievalMapper.toTransportDto(transportRepository.findById(uuid).orElseThrow()));
+        } else {
+            return Optional.empty();
+        }
     }
 
     public void addTransport(TransportCreationDto transportDto) {
@@ -38,6 +44,7 @@ public class TransportService {
         transportRepository.saveAll(transports);
     }
 
+    @Transactional
     public void updateTransport(TransportCreationDto transportDto, UUID uuid) {
         Transport currentTransport = transportRepository.getReferenceById(uuid);
         currentTransport.setCompanyName(transportDto.getCompanyName());
@@ -45,8 +52,12 @@ public class TransportService {
         transportRepository.save(currentTransport);
     }
 
-    public void deleteTransport(UUID uuid) {
-        Transport transport = transportRepository.findById(uuid).orElseThrow();
-        transportRepository.delete(transport);
+    public Optional<UUID> deleteTransport(UUID uuid) {
+        if (transportRepository.existsById(uuid)) {
+            transportRepository.deleteById(uuid);
+            return Optional.of(uuid);
+        } else {
+            return Optional.empty();
+        }
     }
 }

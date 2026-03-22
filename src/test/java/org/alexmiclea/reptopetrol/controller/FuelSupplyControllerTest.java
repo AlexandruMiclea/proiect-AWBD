@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -46,7 +47,7 @@ public class FuelSupplyControllerTest {
                 .priceChange(Instant.parse("2024-01-01T00:00:00Z"))
                 .build();
 
-        Mockito.when(fuelSupplyService.getFuelSupplyById(Mockito.any(FuelSupplyKey.class))).thenReturn(mockRetrieval);
+        Mockito.when(fuelSupplyService.getFuelSupplyById(Mockito.any(FuelSupplyKey.class))).thenReturn(Optional.of(mockRetrieval));
 
         mockMvc.perform(get(API_STRING + "get")
                         .content("{}")

@@ -9,6 +9,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public abstract class FuelSupplyKeyMapper {
+
     @Mapping(target = "stationId", source = "fuelSupplyKey.stationId")
     @Mapping(target = "fuelId", source = "fuelSupplyKey.fuelId")
     public abstract FuelSupplyKeyDto toFuelSupplyKeyDto(FuelSupplyKey fuelSupplyKey);

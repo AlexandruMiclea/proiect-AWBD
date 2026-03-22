@@ -16,6 +16,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -47,7 +48,7 @@ public class FuelControllerTest {
                 .type(FuelType.DIESEL)
                 .build();
 
-        Mockito.when(fuelService.getFuelById(fuelId)).thenReturn(mockFuelRetrieval);
+        Mockito.when(fuelService.getFuelById(fuelId)).thenReturn(Optional.of(mockFuelRetrieval));
 
         mockMvc.perform(get(API_STRING + fuelId).param("uuid", fuelId.toString()))
                 .andExpect(status().isOk())
@@ -95,7 +96,7 @@ public class FuelControllerTest {
         mockMvc.perform(post(API_STRING + "add")
                         .content(objectMapper.writeValueAsString(mockFuelCreation))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test
@@ -108,7 +109,7 @@ public class FuelControllerTest {
         mockMvc.perform(post(API_STRING + "bulkAdd")
                         .content(objectMapper.writeValueAsString(List.of(mockFuelCreation)))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test

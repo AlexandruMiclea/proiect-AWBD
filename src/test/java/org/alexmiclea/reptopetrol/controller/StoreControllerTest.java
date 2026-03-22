@@ -15,6 +15,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -46,7 +47,7 @@ public class StoreControllerTest {
                 .stationId(stationId)
                 .build();
 
-        Mockito.when(storeService.getStoreById(storeId)).thenReturn(mockStoreRetrieval);
+        Mockito.when(storeService.getStoreById(storeId)).thenReturn(Optional.of(mockStoreRetrieval));
 
         mockMvc.perform(get(API_STRING + storeId).param("uuid", storeId.toString()))
                 .andExpect(status().isOk())
@@ -90,7 +91,7 @@ public class StoreControllerTest {
         mockMvc.perform(post(API_STRING + "add")
                         .content(objectMapper.writeValueAsString(mockStoreCreation))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test
@@ -101,7 +102,7 @@ public class StoreControllerTest {
         mockMvc.perform(post(API_STRING + "bulkAdd")
                         .content(objectMapper.writeValueAsString(List.of(mockStoreCreation)))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test

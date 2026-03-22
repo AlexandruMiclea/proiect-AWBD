@@ -1,5 +1,7 @@
 package org.alexmiclea.reptopetrol.service;
 
+import jakarta.transaction.Transactional;
+import jakarta.validation.constraints.PastOrPresent;
 import lombok.RequiredArgsConstructor;
 import org.alexmiclea.reptopetrol.dto.creation.InventoryCreationDto;
 import org.alexmiclea.reptopetrol.dto.retrieval.InventoryRetrievalDto;
@@ -11,6 +13,7 @@ import org.alexmiclea.reptopetrol.repository.InventoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,8 +27,15 @@ public class InventoryService {
         return inventoryRetreivalMapper.toInventoryDtos(inventoryRepository.findAll());
     }
 
-    public InventoryRetrievalDto getInventoryById(InventoryKey key) {
-        return inventoryRetreivalMapper.toInventoryDto(inventoryRepository.findById(key).orElseThrow());
+    public Optional<InventoryRetrievalDto> getInventoryById(InventoryKey key) {
+        if (inventoryRepository.existsById(key)) {
+            return Optional.of(
+                    inventoryRetreivalMapper.toInventoryDto(
+                            inventoryRepository.findById(key)
+                                    .orElseThrow()));
+        } else {
+            return Optional.empty();
+        }
     }
 
     public void addInventory(InventoryCreationDto inventoryDto) {
@@ -38,6 +48,7 @@ public class InventoryService {
         inventoryRepository.saveAll(inventories);
     }
 
+    @Transactional
     public void updateInventory(InventoryCreationDto inventoryDto, InventoryKey key) {
         Inventory currentInventory = inventoryRepository.getReferenceById(key);
         currentInventory.setQuantity(inventoryDto.getQuantity());
@@ -45,8 +56,11 @@ public class InventoryService {
         inventoryRepository.save(currentInventory);
     }
 
-    public void deleteInventory(InventoryKey key) {
-        Inventory inventory = inventoryRepository.findById(key).orElseThrow();
-        inventoryRepository.delete(inventory);
+    public Optional<InventoryKey> deleteInventory(InventoryKey key) {
+        if (inventoryRepository.existsById(key)){
+            return Optional.of(key);
+        } else {
+            return Optional.empty();
+        }
     }
 }

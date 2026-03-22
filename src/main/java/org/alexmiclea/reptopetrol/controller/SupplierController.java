@@ -25,6 +25,7 @@ public class SupplierController {
     @GetMapping("/all")
     public ResponseEntity<List<SupplierRetrievalDto>> getSuppliers() {
         log.info("GET /all called");
+
         return ResponseEntity.ok(supplierService.getAll());
     }
 
@@ -41,6 +42,7 @@ public class SupplierController {
     public ResponseEntity<Void> addSupplier(@RequestBody @Validated SupplierCreationDto supplierDto) {
         log.info("POST /add called with payload {}", supplierDto);
         supplierService.addSupplier(supplierDto);
+
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -48,6 +50,7 @@ public class SupplierController {
     public ResponseEntity<Void> bulkAddSuppliers(@RequestBody @Validated List<SupplierCreationDto> supplierDtos) {
         log.info("POST /bulkAdd called with payload {}", supplierDtos);
         supplierService.bulkAddSuppliers(supplierDtos);
+
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -55,6 +58,7 @@ public class SupplierController {
     public ResponseEntity<Void> updateSupplier(@RequestBody SupplierCreationDto supplierDto, @PathVariable UUID uuid) {
         log.info("PUT /update called with payload {} for UUID {}", supplierDto, uuid);
         supplierService.updateSupplier(supplierDto, uuid);
+
         return ResponseEntity.ok().build();
     }
 

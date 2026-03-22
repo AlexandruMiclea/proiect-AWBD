@@ -1,5 +1,6 @@
 package org.alexmiclea.reptopetrol.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.alexmiclea.reptopetrol.dto.creation.ProductCreationDto;
 import org.alexmiclea.reptopetrol.dto.retrieval.ProductRetrievalDto;
@@ -10,6 +11,7 @@ import org.alexmiclea.reptopetrol.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -24,8 +26,12 @@ public class ProductService {
         return productRetrievalMapper.toProductDtos(productRepository.findAll());
     }
 
-    public ProductRetrievalDto getProductById(UUID uuid) {
-        return productRetrievalMapper.toProductDto(productRepository.findById(uuid).orElseThrow());
+    public Optional<ProductRetrievalDto> getProductById(UUID uuid) {
+        if (productRepository.existsById(uuid)) {
+            return Optional.of(productRetrievalMapper.toProductDto(productRepository.findById(uuid).orElseThrow()));
+        } else {
+            return Optional.empty();
+        }
     }
 
     public void addProduct(ProductCreationDto productDto) {
@@ -38,6 +44,7 @@ public class ProductService {
         productRepository.saveAll(products);
     }
 
+    @Transactional
     public void updateProduct(ProductCreationDto productDto, UUID uuid) {
         Product currentProduct = productRepository.getReferenceById(uuid);
         currentProduct.setName(productDto.getName());
@@ -45,8 +52,12 @@ public class ProductService {
         productRepository.save(currentProduct);
     }
 
-    public void deleteProduct(UUID uuid) {
-        Product product = productRepository.findById(uuid).orElseThrow();
-        productRepository.delete(product);
+    public Optional<UUID> deleteProduct(UUID uuid) {
+        if (productRepository.existsById(uuid)) {
+            productRepository.deleteById(uuid);
+            return Optional.of(uuid);
+        } else {
+            return Optional.empty();
+        }
     }
 }
