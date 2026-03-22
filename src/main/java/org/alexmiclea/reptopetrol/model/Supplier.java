@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -19,7 +19,7 @@ public class Supplier {
     private UUID id;
 
     @OneToMany(mappedBy = "supplier")
-    private Set<Contract> contracts;
+    private List<Contract> contracts;
 
     @NotBlank
     private String name;

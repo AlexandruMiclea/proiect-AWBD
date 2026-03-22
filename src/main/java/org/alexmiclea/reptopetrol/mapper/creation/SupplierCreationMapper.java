@@ -2,15 +2,28 @@ package org.alexmiclea.reptopetrol.mapper.creation;
 
 import org.alexmiclea.reptopetrol.dto.creation.SupplierCreationDto;
 import org.alexmiclea.reptopetrol.model.Supplier;
+import org.alexmiclea.reptopetrol.repository.ContractRepository;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface SupplierCreationMapper {
-    SupplierCreationDto toSupplierDto(Supplier supplier);
-    Supplier toSupplier(SupplierCreationDto supplierDto);
+public abstract class SupplierCreationMapper {
 
-    List<SupplierCreationDto> toSupplierDtos(List<Supplier> suppliers);
-    List<Supplier> toSuppliers(List<SupplierCreationDto> supplierDtos);
+    @Autowired
+    protected ContractRepository contractRepository;
+
+    @Mapping(target = "contractIds", expression =
+            "java(supplier.getContracts().stream().map(x -> x.getId()).toList())")
+    public abstract SupplierCreationDto toSupplierDto(Supplier supplier);
+
+    @Mapping(target = "contracts", expression =
+            "java(contractRepository.findAllById(supplierDto.getContractIds()))")
+    @Mapping(target = "id", ignore = true)
+    public abstract Supplier toSupplier(SupplierCreationDto supplierDto);
+
+    public abstract List<SupplierCreationDto> toSupplierDtos(List<Supplier> suppliers);
+    public abstract List<Supplier> toSuppliers(List<SupplierCreationDto> supplierDtos);
 }

@@ -16,7 +16,7 @@ import java.util.UUID;
 public class EmployeeCreationDto {
 
     private UUID id;
-    private StationCreationDto station;
+    private UUID stationId;
     private String firstName;
     private String lastName;
     private Instant dateOfHire;

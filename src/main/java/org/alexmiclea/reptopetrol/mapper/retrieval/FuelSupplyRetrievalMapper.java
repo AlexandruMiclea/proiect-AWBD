@@ -7,10 +7,10 @@ import org.mapstruct.Mapper;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface FuelSupplyRetrievalMapper {
-    FuelSupplyRetrievalDto toFuelSupplyDto(FuelSupply fuelSupply);
-    FuelSupply toFuelSupply(FuelSupplyRetrievalDto fuelSupplyDto);
+public abstract class FuelSupplyRetrievalMapper {
+    public abstract FuelSupplyRetrievalDto toFuelSupplyDto(FuelSupply fuelSupply);
+    public abstract FuelSupply toFuelSupply(FuelSupplyRetrievalDto fuelSupplyDto);
 
-    List<FuelSupplyRetrievalDto> toFuelSupplyDtos(List<FuelSupply> fuelSupplies);
-    List<FuelSupply> toFuelSupplies(List<FuelSupplyRetrievalDto> fuelSupplyDtos);
+    public abstract List<FuelSupplyRetrievalDto> toFuelSupplyDtos(List<FuelSupply> fuelSupplies);
+    public abstract List<FuelSupply> toFuelSupplies(List<FuelSupplyRetrievalDto> fuelSupplyDtos);
 }

@@ -6,7 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
-import java.util.Set;
+import java.util.List;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -14,10 +15,9 @@ import java.util.Set;
 @AllArgsConstructor
 public class ContractCreationDto {
 
-//    private UUID id;
-//    private Set<TransportCreationDto> transports;
-    private SupplierCreationDto supplier;
-    private Set<FuelCreationDto> fuels;
+    private List<UUID> transportIds;
+    private UUID supplierId;
+    private List<UUID> fuelIds;
     private Instant beginDate;
     private Instant endDate;
 }

@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.Instant;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -12,9 +12,9 @@ import java.util.UUID;
 public class ContractRetrievalDto {
 
     private UUID id;
-    private Set<UUID> transportIds;
+    private List<UUID> transportIds;
     private UUID supplierId;
-    private Set<UUID> fuelIds;
+    private List<UUID> fuelIds;
     private Instant beginDate;
     private Instant endDate;
 }

@@ -16,7 +16,6 @@ import java.time.Instant;
 @Getter
 @Setter
 @Table(name = "fuel_supply")
-@Builder
 public class FuelSupply {
     @EmbeddedId
     private FuelSupplyKey id;

@@ -14,5 +14,5 @@ import java.util.UUID;
 public class StoreCreationDto {
 
     private UUID id;
-    private StationCreationDto station;
+    private UUID stationId;
 }

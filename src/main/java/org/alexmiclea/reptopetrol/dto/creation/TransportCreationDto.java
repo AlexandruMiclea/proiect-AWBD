@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -16,8 +16,8 @@ import java.util.UUID;
 public class TransportCreationDto {
 
     private UUID id;
-    private ContractCreationDto contract;
-    private Set<StationCreationDto> stations;
+    private UUID contractId;
+    private List<UUID> stationIds;
     private Instant creationDate;
     private Instant completionDate;
     private String companyName;
