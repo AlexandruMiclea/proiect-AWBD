@@ -1,5 +1,6 @@
 package org.alexmiclea.reptopetrol.dto.retrieval;
 
+import lombok.Builder;
 import lombok.Data;
 import org.alexmiclea.reptopetrol.model.EmployeeRole;
 
@@ -7,6 +8,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Data
+@Builder
 public class EmployeeRetrievalDto {
 
     private UUID id;

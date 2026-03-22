@@ -7,7 +7,6 @@ import org.alexmiclea.reptopetrol.mapper.creation.FuelCreationMapper;
 import org.alexmiclea.reptopetrol.mapper.retrieval.FuelRetrievalMapper;
 import org.alexmiclea.reptopetrol.model.Fuel;
 import org.alexmiclea.reptopetrol.repository.FuelRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
