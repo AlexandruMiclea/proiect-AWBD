@@ -3,6 +3,7 @@ package org.alexmiclea.reptopetrol.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,7 +33,7 @@ public class Employee {
     @NotBlank
     private String lastName;
 
-    @NotEmpty
+    @NotNull
     private Instant dateOfHire;
 
     @NotBlank

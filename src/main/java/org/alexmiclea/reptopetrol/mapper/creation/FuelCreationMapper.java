@@ -31,11 +31,9 @@ public abstract class FuelCreationMapper {
             "java(fuel.getContracts().stream().map(x -> x.getId()).toList())")
     public abstract FuelCreationDto toFuelDto(Fuel fuel);
 
-    @Mapping(target = "fuelSupplies", expression =
-            "java(fuelSupplyRepository.findAllById(fuelSupplyKeyMapper.toFuelSupplyKeys(fuelDto.getFuelSuppliesIds())))")
-    @Mapping(target = "contracts", expression =
-            "java(contractRepository.findAllById(fuelDto.getContractIds()))")
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "fuelSupplies", ignore = true)
+    @Mapping(target = "contracts", ignore = true)
     public abstract Fuel toFuel(FuelCreationDto fuelDto);
 
     public abstract List<FuelCreationDto> toFuelDtos(List<Fuel> fuels);

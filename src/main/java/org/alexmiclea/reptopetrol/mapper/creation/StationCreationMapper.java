@@ -1,6 +1,5 @@
 package org.alexmiclea.reptopetrol.mapper.creation;
 
-import com.netflix.discovery.converters.Auto;
 import org.alexmiclea.reptopetrol.dto.creation.StationCreationDto;
 import org.alexmiclea.reptopetrol.mapper.keys.FuelSupplyKeyMapper;
 import org.alexmiclea.reptopetrol.model.Station;
@@ -43,15 +42,19 @@ public abstract class StationCreationMapper {
     @Mapping(target = "storeId", source = "station.store.id")
     public abstract StationCreationDto toStationDto(Station station);
 
-    @Mapping(target = "fuelSupplies", expression =
-            "java(fuelSupplyRepository.findAllById(fuelSupplyKeyMapper.toFuelSupplyKeys(stationDto.getFuelSuppliesIds())))")
-    @Mapping(target = "transports", expression =
-            "java(transportRepository.findAllById(stationDto.getTransportIds()))")
-    @Mapping(target = "employees", expression =
-            "java(employeeRepository.findAllById(stationDto.getEmployeeIds()))")
-    @Mapping(target = "store", expression =
-            "java(storeRepository.findById(stationDto.getStoreId()).orElseThrow())")
+//    @Mapping(target = "fuelSupplies", expression =
+//            "java(fuelSupplyRepository.findAllById(fuelSupplyKeyMapper.toFuelSupplyKeys(stationDto.getFuelSuppliesIds())))")
+//    @Mapping(target = "transports", expression =
+//            "java(transportRepository.findAllById(stationDto.getTransportIds()))")
+//    @Mapping(target = "employees", expression =
+//            "java(employeeRepository.findAllById(stationDto.getEmployeeIds()))")
+//    @Mapping(target = "store", expression =
+//            "java(storeRepository.findById(stationDto.getStoreId()).orElseThrow())")
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "fuelSupplies", ignore = true)
+    @Mapping(target = "transports", ignore = true)
+    @Mapping(target = "employees", ignore = true)
+    @Mapping(target = "store", ignore = true)
     public abstract Station toStation(StationCreationDto stationDto);
 
     public abstract List<StationCreationDto> toStationDtos(List<Station> stations);

@@ -19,9 +19,10 @@ public abstract class SupplierCreationMapper {
             "java(supplier.getContracts().stream().map(x -> x.getId()).toList())")
     public abstract SupplierCreationDto toSupplierDto(Supplier supplier);
 
-    @Mapping(target = "contracts", expression =
-            "java(contractRepository.findAllById(supplierDto.getContractIds()))")
+//    @Mapping(target = "contracts", expression =
+//            "java(contractRepository.findAllById(supplierDto.getContractIds()))")
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "contracts", ignore = true)
     public abstract Supplier toSupplier(SupplierCreationDto supplierDto);
 
     public abstract List<SupplierCreationDto> toSupplierDtos(List<Supplier> suppliers);

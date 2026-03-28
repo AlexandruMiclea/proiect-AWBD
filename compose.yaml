@@ -16,3 +16,5 @@ services:
       - POSTGRES_USER=reptopetrol
       - POSTGRES_PASSWORD=reptopetrol
       - POSTGRES_DB=reptopetrol
+    volumes:
+      - ./data:/var/lib/postgresql/data
