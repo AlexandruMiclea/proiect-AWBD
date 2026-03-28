@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.alexmiclea.reptopetrol.model.Product;
 import org.alexmiclea.reptopetrol.model.Store;
 import org.alexmiclea.reptopetrol.model.keys.InventoryKey;
@@ -16,6 +17,7 @@ import java.time.Instant;
 @Getter
 @Setter
 @Table(name = "inventory")
+@ToString
 public class Inventory {
     @EmbeddedId
     private InventoryKey id;

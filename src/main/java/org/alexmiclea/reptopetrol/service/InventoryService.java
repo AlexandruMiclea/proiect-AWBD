@@ -2,6 +2,7 @@ package org.alexmiclea.reptopetrol.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.alexmiclea.reptopetrol.dto.creation.InventoryCreationDto;
 import org.alexmiclea.reptopetrol.dto.keys.InventoryKeyDto;
 import org.alexmiclea.reptopetrol.dto.retrieval.InventoryRetrievalDto;
@@ -18,6 +19,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j // TODO remove
 public class InventoryService {
 
     private final InventoryRepository inventoryRepository;
@@ -42,6 +44,7 @@ public class InventoryService {
 
     public void addInventory(InventoryCreationDto inventoryDto) {
         Inventory inventory = inventoryCreationMapper.toInventory(inventoryDto);
+        log.info("{}", inventory.toString());
         inventoryRepository.save(inventory);
     }
 

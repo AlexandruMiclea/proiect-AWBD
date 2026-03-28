@@ -32,9 +32,8 @@ public abstract class ContractCreationMapper {
             "java(supplierRepository.findById(contractDto.getSupplierId()).orElseThrow())")
     @Mapping(target = "fuels", expression =
             "java(fuelRepository.findAllById(contractDto.getFuelIds()))")
-    @Mapping(target = "transports", expression =
-            "java(transportRepository.findAllById(contractDto.getTransportIds()))")
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "transports", ignore = true)
     public abstract Contract toContract(ContractCreationDto contractDto);
 
     public abstract List<ContractCreationDto> toContractDtos(List<Contract> contracts);

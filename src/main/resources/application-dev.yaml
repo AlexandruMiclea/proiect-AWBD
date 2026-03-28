@@ -18,4 +18,4 @@ spring:
 logging:
   level:
     org:
-      alexmiclea: INFO
+      alexmiclea: DEBUG
