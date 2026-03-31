@@ -7,14 +7,16 @@ import org.alexmiclea.reptopetrol.dto.retrieval.StationRetrievalDto;
 import org.alexmiclea.reptopetrol.service.StationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@RestController
+@Controller
 @RequestMapping("/api/stations")
 @RequiredArgsConstructor
 @Slf4j
@@ -23,10 +25,12 @@ public class StationController {
     private final StationService stationService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<StationRetrievalDto>> getStations() {
+    public String getStations(Model model) {
         log.info("GET /all called");
-
-        return ResponseEntity.ok(stationService.getAll());
+        log.debug("{}",stationService.getAll());
+        model.addAttribute("stations", stationService.getAll());
+        return "index";
+//        return ResponseEntity.ok(stationService.getAll());
     }
 
     @GetMapping("/{uuid}")
