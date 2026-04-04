@@ -8,6 +8,7 @@ import org.alexmiclea.reptopetrol.service.ContractService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/api/contracts")
+@RequestMapping("/api/contract")
 @RequiredArgsConstructor
 @Slf4j
 public class ContractController {
@@ -24,9 +25,10 @@ public class ContractController {
     private final ContractService contractService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<ContractRetrievalDto>> getContracts() {
+    public String getContracts(Model model) {
         log.info("GET /all called");
-        return ResponseEntity.ok(contractService.getAll());
+        model.addAttribute("contracts", contractService.getAll());
+        return "contracts/index";
     }
 
     @GetMapping("/{uuid}")

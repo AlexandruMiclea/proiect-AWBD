@@ -8,6 +8,7 @@ import org.alexmiclea.reptopetrol.service.EmployeeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/api/employees")
+@RequestMapping("/api/employee")
 @RequiredArgsConstructor
 @Slf4j
 public class EmployeeController {
@@ -24,10 +25,10 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<EmployeeRetrievalDto>> getEmployees() {
+    public String getEmployees(Model model) {
         log.info("GET /all called");
-
-        return ResponseEntity.ok(employeeService.getAll());
+        model.addAttribute("employees", employeeService.getAll());
+        return "employees/index";
     }
 
     @GetMapping("/{uuid}")

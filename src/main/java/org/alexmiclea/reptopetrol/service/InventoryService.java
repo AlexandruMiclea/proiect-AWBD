@@ -19,7 +19,6 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j // TODO remove
 public class InventoryService {
 
     private final InventoryRepository inventoryRepository;
@@ -44,7 +43,6 @@ public class InventoryService {
 
     public void addInventory(InventoryCreationDto inventoryDto) {
         Inventory inventory = inventoryCreationMapper.toInventory(inventoryDto);
-        log.info("{}", inventory.toString());
         inventoryRepository.save(inventory);
     }
 

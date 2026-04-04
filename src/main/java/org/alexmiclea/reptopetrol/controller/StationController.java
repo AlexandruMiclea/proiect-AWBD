@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/api/stations")
+@RequestMapping("/api/station")
 @RequiredArgsConstructor
 @Slf4j
 public class StationController {
@@ -27,10 +27,8 @@ public class StationController {
     @GetMapping("/all")
     public String getStations(Model model) {
         log.info("GET /all called");
-        log.debug("{}",stationService.getAll());
         model.addAttribute("stations", stationService.getAll());
-        return "index";
-//        return ResponseEntity.ok(stationService.getAll());
+        return "stations/index";
     }
 
     @GetMapping("/{uuid}")

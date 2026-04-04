@@ -8,6 +8,7 @@ import org.alexmiclea.reptopetrol.service.TransportService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/api/transports")
+@RequestMapping("/api/transport")
 @RequiredArgsConstructor
 @Slf4j
 public class TransportController {
@@ -24,10 +25,10 @@ public class TransportController {
     private final TransportService transportService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<TransportRetrievalDto>> getTransports() {
+    public String getTransports(Model model) {
         log.info("GET /all called");
-
-        return ResponseEntity.ok(transportService.getAll());
+        model.addAttribute("transports", transportService.getAll());
+        return "transports/index";
     }
 
     @GetMapping("/{uuid}")
