@@ -7,18 +7,20 @@ import org.alexmiclea.reptopetrol.dto.keys.FuelSupplyKeyDto;
 import org.alexmiclea.reptopetrol.dto.retrieval.FuelSupplyRetrievalDto;
 import org.alexmiclea.reptopetrol.mapper.keys.FuelSupplyKeyMapper;
 import org.alexmiclea.reptopetrol.model.keys.FuelSupplyKey;
+import org.alexmiclea.reptopetrol.service.FuelService;
 import org.alexmiclea.reptopetrol.service.FuelSupplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/api/fuel-supplies")
+@RequestMapping("/api/fuelSupply")
 @RequiredArgsConstructor
 @Slf4j
 public class FuelSupplyController {
@@ -29,10 +31,10 @@ public class FuelSupplyController {
     private final FuelSupplyKeyMapper fuelSupplyKeyMapper;
 
     @GetMapping("/all")
-    public ResponseEntity<List<FuelSupplyRetrievalDto>> getFuelSupplies() {
+    public String getFuelSupplies(Model model) {
         log.info("GET /all called");
-
-        return ResponseEntity.ok(fuelSupplyService.getAll());
+        model.addAttribute("fuelSupplies", fuelSupplyService.getAll());
+        return "fuelSupplies/index";
     }
 
     @GetMapping

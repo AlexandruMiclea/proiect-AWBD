@@ -8,6 +8,7 @@ import org.alexmiclea.reptopetrol.service.FuelService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/api/fuels")
+@RequestMapping("/api/fuel")
 @RequiredArgsConstructor
 @Slf4j
 public class FuelController {
@@ -24,10 +25,10 @@ public class FuelController {
     private final FuelService fuelService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<FuelRetrievalDto>> getFuels() {
+    public String getFuels(Model model) {
         log.info("GET /all called");
-
-        return ResponseEntity.ok(fuelService.getAll());
+        model.addAttribute("fuels", fuelService.getAll());
+        return "fuels/index";
     }
 
     @GetMapping("/{uuid}")

@@ -8,6 +8,7 @@ import org.alexmiclea.reptopetrol.service.SupplierService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/api/suppliers")
+@RequestMapping("/api/supplier")
 @RequiredArgsConstructor
 @Slf4j
 public class SupplierController {
@@ -24,10 +25,10 @@ public class SupplierController {
     private final SupplierService supplierService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<SupplierRetrievalDto>> getSuppliers() {
+    public String getSuppliers(Model model) {
         log.info("GET /all called");
-
-        return ResponseEntity.ok(supplierService.getAll());
+        model.addAttribute("suppliers", supplierService.getAll());
+        return "suppliers/index";
     }
 
     @GetMapping("/{uuid}")

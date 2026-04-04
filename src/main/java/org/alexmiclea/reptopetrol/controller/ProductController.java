@@ -8,6 +8,7 @@ import org.alexmiclea.reptopetrol.service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/api/products")
+@RequestMapping("/api/product")
 @RequiredArgsConstructor
 @Slf4j
 public class ProductController {
@@ -24,10 +25,10 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<ProductRetrievalDto>> getProducts() {
+    public String getProducts(Model model) {
         log.info("GET /all called");
-
-        return ResponseEntity.ok(productService.getAll());
+        model.addAttribute("products", productService.getAll());
+        return "products/index";
     }
 
     @GetMapping("/{uuid}")
