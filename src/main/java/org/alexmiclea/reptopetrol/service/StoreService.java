@@ -39,8 +39,8 @@ public class StoreService {
 
     public void addStore(StoreCreationDto storeDto) {
         Store store = storeCreationMapper.toStore(storeDto);
-        updateStationStoreID(storeDto.getStationId(), store);
         storeRepository.save(store);
+        updateStationStoreID(storeDto.getStationId(), store);
     }
 
     public void bulkAddStores(List<StoreCreationDto> storeDtos) {

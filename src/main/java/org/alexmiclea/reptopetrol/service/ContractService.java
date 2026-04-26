@@ -42,10 +42,10 @@ public class ContractService {
 
     public void addContract(ContractCreationDto contractDto) {
         Contract contract = contractCreationMapper.toContract(contractDto);
+        contractRepository.save(contract);
         for (UUID fuelId : contractDto.getFuelIds()) {
             updateFuelContractID(fuelId, contract);
         }
-        contractRepository.save(contract);
     }
 
     public void bulkAddContracts(List<ContractCreationDto> contractDtos) {

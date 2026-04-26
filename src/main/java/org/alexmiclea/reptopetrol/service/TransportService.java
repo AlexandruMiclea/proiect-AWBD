@@ -41,10 +41,10 @@ public class TransportService {
 
     public void addTransport(TransportCreationDto transportDto) {
         Transport transport = transportCreationMapper.toTransport(transportDto);
+        transportRepository.save(transport);
         for (UUID stationId : transportDto.getStationIds()) {
             updateStationTransportID(stationId, transport);
         }
-        transportRepository.save(transport);
     }
 
     public void bulkAddTransports(List<TransportCreationDto> transportDtos) {
