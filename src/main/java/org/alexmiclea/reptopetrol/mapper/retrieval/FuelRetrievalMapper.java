@@ -23,21 +23,11 @@ public abstract class FuelRetrievalMapper {
     @Autowired
     protected FuelSupplyKeyMapper fuelSupplyKeyMapper;
 
-    @Mapping(target = "fuelSuppliesIds", expression =
-            "java(fuelSupplyKeyMapper.toFuelSupplyKeyDtos(" +
-                    "fuel.getFuelSupplies().stream().map(x -> x.getId()).toList())" +
-            ")")
+    @Mapping(target = "stationIds", expression =
+            "java(fuel.getFuelSupplies().stream().map(x -> x.getId().getStationId()).toList())")
     @Mapping(target = "contractIds", expression =
             "java(fuel.getContracts().stream().map(x -> x.getId()).toList())")
     public abstract FuelRetrievalDto toFuelDto(Fuel fuel);
 
-    @Mapping(target = "fuelSupplies", expression =
-            "java(fuelSupplyRepository.findAllById(fuelSupplyKeyMapper.toFuelSupplyKeys(fuelDto.getFuelSuppliesIds())))")
-    @Mapping(target = "contracts", expression =
-            "java(contractRepository.findAllById(fuelDto.getContractIds()))")
-    @Mapping(target = "id", ignore = true)
-    public abstract Fuel toFuel(FuelRetrievalDto fuelDto);
-
     public abstract List<FuelRetrievalDto> toFuelDtos(List<Fuel> fuels);
-    public abstract List<Fuel> toFuels(List<FuelRetrievalDto> fuelDtos);
 }

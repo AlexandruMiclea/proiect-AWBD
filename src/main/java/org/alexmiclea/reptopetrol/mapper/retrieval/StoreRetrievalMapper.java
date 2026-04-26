@@ -18,11 +18,5 @@ public abstract class StoreRetrievalMapper {
     @Mapping(target = "stationId", source = "store.station.id")
     public abstract StoreRetrievalDto toStoreDto(Store store);
 
-    @Mapping(target = "station", expression =
-            "java(stationRepository.findById(storeDto.getStationId()).orElseThrow())")
-    @Mapping(target = "id", ignore = true)
-    public abstract Store toStore(StoreRetrievalDto storeDto);
-
     public abstract List<StoreRetrievalDto> toStoreDtos(List<Store> stores);
-    public abstract List<Store> toStores(List<StoreRetrievalDto> storeDtos);
 }

@@ -13,8 +13,6 @@ import java.time.Instant;
 public class InventoryRetrievalDto {
 
     private InventoryKeyDto id;
-    private Store store;
-    private Product product;
     private Integer quantity;
     private Float price;
     private Instant priceChange;

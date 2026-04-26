@@ -11,7 +11,7 @@ import java.util.UUID;
 @Builder
 public class StationRetrievalDto {
     private UUID id;
-    private List<FuelSupplyKeyDto> fuelSuppliesIds;
+    private List<UUID> fuelIds;
     private List<UUID> employeeIds;
     private UUID storeId;
     private List<UUID> transportIds;

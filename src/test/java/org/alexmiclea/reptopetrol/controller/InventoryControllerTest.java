@@ -2,9 +2,9 @@ package org.alexmiclea.reptopetrol.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.alexmiclea.reptopetrol.dto.creation.InventoryCreationDto;
+import org.alexmiclea.reptopetrol.dto.creation.composites.InventoryCreationDto;
 import org.alexmiclea.reptopetrol.dto.keys.InventoryKeyDto;
-import org.alexmiclea.reptopetrol.dto.retrieval.InventoryRetrievalDto;
+import org.alexmiclea.reptopetrol.dto.retrieval.composites.InventoryRetrievalDto;
 import org.alexmiclea.reptopetrol.mapper.keys.InventoryKeyMapper;
 import org.alexmiclea.reptopetrol.model.keys.InventoryKey;
 import org.alexmiclea.reptopetrol.service.InventoryService;

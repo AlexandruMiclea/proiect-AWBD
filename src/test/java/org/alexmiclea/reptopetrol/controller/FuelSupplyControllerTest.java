@@ -2,9 +2,9 @@ package org.alexmiclea.reptopetrol.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.alexmiclea.reptopetrol.dto.creation.FuelSupplyCreationDto;
+import org.alexmiclea.reptopetrol.dto.creation.composites.FuelSupplyCreationDto;
 import org.alexmiclea.reptopetrol.dto.keys.FuelSupplyKeyDto;
-import org.alexmiclea.reptopetrol.dto.retrieval.FuelSupplyRetrievalDto;
+import org.alexmiclea.reptopetrol.dto.retrieval.composites.FuelSupplyRetrievalDto;
 import org.alexmiclea.reptopetrol.mapper.keys.FuelSupplyKeyMapper;
 import org.alexmiclea.reptopetrol.model.keys.FuelSupplyKey;
 import org.alexmiclea.reptopetrol.service.FuelSupplyService;

@@ -28,6 +28,5 @@ public class FuelSupplyCreationDto {
     @Positive
     private BigDecimal price;
 
-    @NotNull
     private Instant priceChange;
 }

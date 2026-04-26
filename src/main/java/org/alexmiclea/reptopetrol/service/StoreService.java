@@ -6,7 +6,9 @@ import org.alexmiclea.reptopetrol.dto.creation.StoreCreationDto;
 import org.alexmiclea.reptopetrol.dto.retrieval.StoreRetrievalDto;
 import org.alexmiclea.reptopetrol.mapper.creation.StoreCreationMapper;
 import org.alexmiclea.reptopetrol.mapper.retrieval.StoreRetrievalMapper;
+import org.alexmiclea.reptopetrol.model.Station;
 import org.alexmiclea.reptopetrol.model.Store;
+import org.alexmiclea.reptopetrol.repository.StationRepository;
 import org.alexmiclea.reptopetrol.repository.StoreRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ import java.util.UUID;
 public class StoreService {
 
     private final StoreRepository storeRepository;
+    private final StationRepository stationRepository;
     private final StoreCreationMapper storeCreationMapper;
     private final StoreRetrievalMapper storeRetrievalMapper;
 
@@ -36,12 +39,18 @@ public class StoreService {
 
     public void addStore(StoreCreationDto storeDto) {
         Store store = storeCreationMapper.toStore(storeDto);
+        updateStationStoreID(storeDto.getStationId(), store);
         storeRepository.save(store);
     }
 
     public void bulkAddStores(List<StoreCreationDto> storeDtos) {
         List<Store> stores = storeCreationMapper.toStores(storeDtos);
         storeRepository.saveAll(stores);
+
+        for (StoreCreationDto storeDto : storeDtos) {
+            Store store = storeCreationMapper.toStore(storeDto);
+            updateStationStoreID(storeDto.getStationId(), store);
+        }
     }
 
     @Transactional
@@ -49,6 +58,14 @@ public class StoreService {
         Store currentStore = storeRepository.getReferenceById(uuid);
         currentStore.setStation(storeCreationMapper.toStore(storeDto).getStation());
         storeRepository.save(currentStore);
+    }
+
+    // Method used to link storeId to the station
+    // TODO add exception handling
+    public void updateStationStoreID(UUID stationUuid, Store store) {
+        Station station = stationRepository.findById(stationUuid).get();
+        station.setStore(store);
+        stationRepository.save(station);
     }
 
     public Optional<UUID> deleteStore(UUID uuid) {

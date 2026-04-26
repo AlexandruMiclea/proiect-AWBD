@@ -2,18 +2,18 @@ package org.alexmiclea.reptopetrol.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.alexmiclea.reptopetrol.dto.creation.FuelSupplyCreationDto;
+import org.alexmiclea.reptopetrol.dto.creation.composites.FuelSupplyCreationDto;
 import org.alexmiclea.reptopetrol.dto.keys.FuelSupplyKeyDto;
-import org.alexmiclea.reptopetrol.dto.retrieval.FuelSupplyRetrievalDto;
+import org.alexmiclea.reptopetrol.dto.retrieval.composites.FuelSupplyRetrievalDto;
 import org.alexmiclea.reptopetrol.mapper.keys.FuelSupplyKeyMapper;
 import org.alexmiclea.reptopetrol.model.keys.FuelSupplyKey;
-import org.alexmiclea.reptopetrol.service.FuelService;
 import org.alexmiclea.reptopetrol.service.FuelSupplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,7 +48,7 @@ public class FuelSupplyController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Void> addFuelSupply(@RequestBody FuelSupplyCreationDto fuelSupplyDto) {
+    public ResponseEntity<Void> addFuelSupply(@RequestBody @Validated FuelSupplyCreationDto fuelSupplyDto) {
         log.info("POST /add called with payload {}", fuelSupplyDto);
         fuelSupplyService.addFuelSupply(fuelSupplyDto);
 
@@ -56,7 +56,7 @@ public class FuelSupplyController {
     }
 
     @PostMapping("/bulkAdd")
-    public ResponseEntity<Void> bulkAddFuelSupplies(@RequestBody List<FuelSupplyCreationDto> fuelSupplyDtos) {
+    public ResponseEntity<Void> bulkAddFuelSupplies(@RequestBody @Validated List<FuelSupplyCreationDto> fuelSupplyDtos) {
         log.info("POST /bulkAdd called with payload {}", fuelSupplyDtos);
         fuelSupplyService.bulkAddFuelSupplies(fuelSupplyDtos);
 
@@ -64,7 +64,7 @@ public class FuelSupplyController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Void> updateFuelSupply(@RequestBody FuelSupplyCreationDto fuelSupplyDto) {
+    public ResponseEntity<Void> updateFuelSupply(@RequestBody @Validated FuelSupplyCreationDto fuelSupplyDto) {
         log.info("PUT /update called with payload {}", fuelSupplyDto);
         fuelSupplyService.updateFuelSupply(fuelSupplyDto, fuelSupplyDto.getId());
 

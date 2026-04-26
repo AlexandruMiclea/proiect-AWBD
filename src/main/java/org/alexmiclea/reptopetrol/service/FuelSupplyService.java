@@ -2,9 +2,9 @@ package org.alexmiclea.reptopetrol.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.alexmiclea.reptopetrol.dto.creation.FuelSupplyCreationDto;
+import org.alexmiclea.reptopetrol.dto.creation.composites.FuelSupplyCreationDto;
 import org.alexmiclea.reptopetrol.dto.keys.FuelSupplyKeyDto;
-import org.alexmiclea.reptopetrol.dto.retrieval.FuelSupplyRetrievalDto;
+import org.alexmiclea.reptopetrol.dto.retrieval.composites.FuelSupplyRetrievalDto;
 import org.alexmiclea.reptopetrol.mapper.creation.FuelSupplyCreationMapper;
 import org.alexmiclea.reptopetrol.mapper.keys.FuelSupplyKeyMapper;
 import org.alexmiclea.reptopetrol.mapper.retrieval.FuelSupplyRetrievalMapper;
@@ -62,6 +62,7 @@ public class FuelSupplyService {
 
     public Optional<FuelSupplyKey> deleteFuelSupply(FuelSupplyKey key) {
         if (fuelSupplyRepository.existsById(key)) {
+            fuelSupplyRepository.deleteById(key);
             return Optional.of(key);
         } else {
             return Optional.empty();

@@ -40,6 +40,7 @@ public class Inventory {
     @NotNull
     private Float price;
 
+    // TODO de verificat, daca faci PUT, se modifica valoarea? (ea vine prima oara completata din creationDto)
     @LastModifiedDate
     private Instant priceChange;
 }

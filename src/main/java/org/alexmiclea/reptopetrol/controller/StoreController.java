@@ -3,7 +3,9 @@ package org.alexmiclea.reptopetrol.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.alexmiclea.reptopetrol.dto.creation.StoreCreationDto;
+import org.alexmiclea.reptopetrol.dto.retrieval.StationRetrievalDto;
 import org.alexmiclea.reptopetrol.dto.retrieval.StoreRetrievalDto;
+import org.alexmiclea.reptopetrol.service.StationService;
 import org.alexmiclea.reptopetrol.service.StoreService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+// TODO you need to add the station service and update the station to link the store id
+// for the POST and PUT instructions
+
 @Controller
 @RequestMapping("/api/store")
 @RequiredArgsConstructor
@@ -23,6 +28,8 @@ import java.util.UUID;
 public class StoreController {
 
     private final StoreService storeService;
+
+    private final StationService stationService;
 
     @GetMapping("/all")
     public String getStores(Model model) {
@@ -44,6 +51,11 @@ public class StoreController {
     public ResponseEntity<Void> addStore(@RequestBody @Validated StoreCreationDto storeDto) {
         log.info("POST /add called with payload {}", storeDto);
         storeService.addStore(storeDto);
+
+        // for the station in the storeDto, we need to add the storeId
+        // TODO do some exception handling here in the future
+        StationRetrievalDto retrievalDto = stationService.getStationById(storeDto.getStationId()).get();
+
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

@@ -31,10 +31,9 @@ public abstract class StationRetrievalMapper {
     @Autowired
     protected FuelSupplyKeyMapper fuelSupplyKeyMapper;
 
-    @Mapping(target = "fuelSuppliesIds", expression =
-            "java(fuelSupplyKeyMapper.toFuelSupplyKeyDtos(" +
-                    "station.getFuelSupplies().stream().map(x -> x.getId()).toList())" +
-            ")")
+    // TODO fuelIds -> map the
+    @Mapping(target = "fuelIds", expression =
+            "java(station.getFuelSupplies().stream().map(x -> x.getId().getFuelId()).toList())")
     @Mapping(target = "transportIds", expression =
             "java(station.getTransports().stream().map(x -> x.getId()).toList())")
     @Mapping(target = "employeeIds", expression =
@@ -42,17 +41,5 @@ public abstract class StationRetrievalMapper {
     @Mapping(target = "storeId", source = "station.store.id")
     public abstract StationRetrievalDto toStationDto(Station station);
 
-    @Mapping(target = "fuelSupplies", expression =
-            "java(fuelSupplyRepository.findAllById(fuelSupplyKeyMapper.toFuelSupplyKeys(stationDto.getFuelSuppliesIds())))")
-    @Mapping(target = "transports", expression =
-            "java(transportRepository.findAllById(stationDto.getTransportIds()))")
-    @Mapping(target = "employees", expression =
-            "java(employeeRepository.findAllById(stationDto.getEmployeeIds()))")
-    @Mapping(target = "store", expression =
-            "java(storeRepository.findById(stationDto.getStoreId()).orElseThrow())")
-    @Mapping(target = "id", ignore = true)
-    public abstract Station toStation(StationRetrievalDto stationDto);
-
     public abstract List<StationRetrievalDto> toStationDtos(List<Station> stations);
-    public abstract List<Station> toStations(List<StationRetrievalDto> stationDtos);
 }

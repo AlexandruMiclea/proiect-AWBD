@@ -13,7 +13,7 @@ import java.util.UUID;
 public class FuelRetrievalDto {
 
     private UUID id;
-    private List<FuelSupplyKeyDto> fuelSuppliesIds;
+    private List<UUID> stationIds;
     private List<UUID> contractIds;
     private String name;
     private FuelType type;

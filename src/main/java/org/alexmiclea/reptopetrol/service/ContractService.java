@@ -3,11 +3,16 @@ package org.alexmiclea.reptopetrol.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.alexmiclea.reptopetrol.dto.creation.ContractCreationDto;
+import org.alexmiclea.reptopetrol.dto.creation.TransportCreationDto;
 import org.alexmiclea.reptopetrol.dto.retrieval.ContractRetrievalDto;
 import org.alexmiclea.reptopetrol.mapper.creation.ContractCreationMapper;
 import org.alexmiclea.reptopetrol.mapper.retrieval.ContractRetrievalMapper;
 import org.alexmiclea.reptopetrol.model.Contract;
+import org.alexmiclea.reptopetrol.model.Fuel;
+import org.alexmiclea.reptopetrol.model.Station;
+import org.alexmiclea.reptopetrol.model.Transport;
 import org.alexmiclea.reptopetrol.repository.ContractRepository;
+import org.alexmiclea.reptopetrol.repository.FuelRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +24,7 @@ import java.util.UUID;
 public class ContractService {
 
     private final ContractRepository contractRepository;
+    private final FuelRepository fuelRepository;
     private final ContractCreationMapper contractCreationMapper;
     private final ContractRetrievalMapper contractRetrievalMapper;
 
@@ -36,11 +42,20 @@ public class ContractService {
 
     public void addContract(ContractCreationDto contractDto) {
         Contract contract = contractCreationMapper.toContract(contractDto);
+        for (UUID fuelId : contractDto.getFuelIds()) {
+            updateFuelContractID(fuelId, contract);
+        }
         contractRepository.save(contract);
     }
 
     public void bulkAddContracts(List<ContractCreationDto> contractDtos) {
         List<Contract> contracts = contractCreationMapper.toContracts(contractDtos);
+        for (ContractCreationDto contractDto : contractDtos) {
+            Contract contract = contractCreationMapper.toContract(contractDto);
+            for (UUID fuelId : contractDto.getFuelIds()) {
+                updateFuelContractID(fuelId, contract);
+            }
+        }
         contractRepository.saveAll(contracts);
     }
 
@@ -52,6 +67,17 @@ public class ContractService {
         currentContract.setBeginDate(contractDto.getBeginDate());
         currentContract.setEndDate(contractDto.getEndDate());
         contractRepository.save(currentContract);
+    }
+
+    // Method used to link contractIds to the fuel
+    // TODO add exception handling
+    // TODO test that transports get added and not replaced!
+    public void updateFuelContractID(UUID fuelUuid, Contract contract) {
+        Fuel fuel = fuelRepository.findById(fuelUuid).get();
+        List<Contract> contracts = fuel.getContracts();
+        contracts.add(contract);
+        fuel.setContracts(contracts);
+        fuelRepository.save(fuel);
     }
 
     public Optional<UUID> deleteContract(UUID uuid) {

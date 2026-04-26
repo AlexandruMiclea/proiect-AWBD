@@ -57,7 +57,7 @@ public class SupplierController {
     }
 
     @PutMapping("/update/{uuid}")
-    public ResponseEntity<Void> updateSupplier(@RequestBody SupplierCreationDto supplierDto, @PathVariable UUID uuid) {
+    public ResponseEntity<Void> updateSupplier(@RequestBody @Validated SupplierCreationDto supplierDto, @PathVariable UUID uuid) {
         log.info("PUT /update called with payload {} for UUID {}", supplierDto, uuid);
         supplierService.updateSupplier(supplierDto, uuid);
 
