@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.alexmiclea.reptopetrol.model.EmployeeRole;
+import org.alexmiclea.reptopetrol.model.management.EmployeeRole;
 
 import java.time.Instant;
 import java.util.UUID;

@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.alexmiclea.reptopetrol.dto.keys.FuelSupplyKeyDto;
-import org.alexmiclea.reptopetrol.model.FuelType;
+import org.alexmiclea.reptopetrol.model.management.FuelType;
 
 import java.util.List;
 import java.util.UUID;

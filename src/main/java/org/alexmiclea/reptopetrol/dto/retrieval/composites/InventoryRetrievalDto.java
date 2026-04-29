@@ -3,8 +3,6 @@ package org.alexmiclea.reptopetrol.dto.retrieval.composites;
 import lombok.Builder;
 import lombok.Data;
 import org.alexmiclea.reptopetrol.dto.keys.InventoryKeyDto;
-import org.alexmiclea.reptopetrol.model.Product;
-import org.alexmiclea.reptopetrol.model.Store;
 
 import java.time.Instant;
 

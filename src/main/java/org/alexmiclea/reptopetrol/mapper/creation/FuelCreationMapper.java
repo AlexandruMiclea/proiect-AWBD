@@ -2,9 +2,9 @@ package org.alexmiclea.reptopetrol.mapper.creation;
 
 import org.alexmiclea.reptopetrol.dto.creation.FuelCreationDto;
 import org.alexmiclea.reptopetrol.mapper.keys.FuelSupplyKeyMapper;
-import org.alexmiclea.reptopetrol.model.Fuel;
-import org.alexmiclea.reptopetrol.repository.ContractRepository;
-import org.alexmiclea.reptopetrol.repository.FuelSupplyRepository;
+import org.alexmiclea.reptopetrol.model.management.Fuel;
+import org.alexmiclea.reptopetrol.repository.management.ContractRepository;
+import org.alexmiclea.reptopetrol.repository.management.FuelSupplyRepository;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;

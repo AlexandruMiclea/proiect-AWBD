@@ -2,7 +2,7 @@ package org.alexmiclea.reptopetrol.dto.retrieval;
 
 import lombok.Builder;
 import lombok.Data;
-import org.alexmiclea.reptopetrol.model.EmployeeRole;
+import org.alexmiclea.reptopetrol.model.management.EmployeeRole;
 
 import java.time.Instant;
 import java.util.UUID;

@@ -1,8 +1,8 @@
 package org.alexmiclea.reptopetrol.mapper.retrieval;
 
 import org.alexmiclea.reptopetrol.dto.retrieval.EmployeeRetrievalDto;
-import org.alexmiclea.reptopetrol.model.Employee;
-import org.alexmiclea.reptopetrol.repository.StationRepository;
+import org.alexmiclea.reptopetrol.model.management.Employee;
+import org.alexmiclea.reptopetrol.repository.management.StationRepository;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;

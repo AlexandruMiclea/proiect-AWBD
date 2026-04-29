@@ -2,9 +2,10 @@ package org.alexmiclea.reptopetrol.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.alexmiclea.reptopetrol.controller.management.TransportController;
 import org.alexmiclea.reptopetrol.dto.creation.TransportCreationDto;
 import org.alexmiclea.reptopetrol.dto.retrieval.TransportRetrievalDto;
-import org.alexmiclea.reptopetrol.service.TransportService;
+import org.alexmiclea.reptopetrol.service.management.TransportService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;

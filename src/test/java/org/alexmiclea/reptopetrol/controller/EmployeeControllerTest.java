@@ -2,10 +2,11 @@ package org.alexmiclea.reptopetrol.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.alexmiclea.reptopetrol.controller.management.EmployeeController;
 import org.alexmiclea.reptopetrol.dto.creation.EmployeeCreationDto;
 import org.alexmiclea.reptopetrol.dto.retrieval.EmployeeRetrievalDto;
-import org.alexmiclea.reptopetrol.model.EmployeeRole;
-import org.alexmiclea.reptopetrol.service.EmployeeService;
+import org.alexmiclea.reptopetrol.model.management.EmployeeRole;
+import org.alexmiclea.reptopetrol.service.management.EmployeeService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;

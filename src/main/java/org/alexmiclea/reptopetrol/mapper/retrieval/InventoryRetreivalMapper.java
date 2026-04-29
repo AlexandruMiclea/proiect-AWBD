@@ -1,7 +1,7 @@
 package org.alexmiclea.reptopetrol.mapper.retrieval;
 
 import org.alexmiclea.reptopetrol.dto.retrieval.composites.InventoryRetrievalDto;
-import org.alexmiclea.reptopetrol.model.composites.Inventory;
+import org.alexmiclea.reptopetrol.model.management.composites.Inventory;
 import org.mapstruct.Mapper;
 
 import java.util.List;

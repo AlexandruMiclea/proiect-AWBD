@@ -1,9 +1,9 @@
 package org.alexmiclea.reptopetrol.mapper.creation;
 
 import org.alexmiclea.reptopetrol.dto.creation.TransportCreationDto;
-import org.alexmiclea.reptopetrol.model.Transport;
-import org.alexmiclea.reptopetrol.repository.ContractRepository;
-import org.alexmiclea.reptopetrol.repository.StationRepository;
+import org.alexmiclea.reptopetrol.model.management.Transport;
+import org.alexmiclea.reptopetrol.repository.management.ContractRepository;
+import org.alexmiclea.reptopetrol.repository.management.StationRepository;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;

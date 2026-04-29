@@ -1,9 +1,9 @@
 package org.alexmiclea.reptopetrol.mapper.creation;
 
 import org.alexmiclea.reptopetrol.dto.creation.composites.InventoryCreationDto;
-import org.alexmiclea.reptopetrol.model.composites.Inventory;
-import org.alexmiclea.reptopetrol.repository.ProductRepository;
-import org.alexmiclea.reptopetrol.repository.StoreRepository;
+import org.alexmiclea.reptopetrol.model.management.composites.Inventory;
+import org.alexmiclea.reptopetrol.repository.management.ProductRepository;
+import org.alexmiclea.reptopetrol.repository.management.StoreRepository;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;

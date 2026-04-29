@@ -1,8 +1,8 @@
 package org.alexmiclea.reptopetrol.mapper.retrieval;
 
 import org.alexmiclea.reptopetrol.dto.retrieval.SupplierRetrievalDto;
-import org.alexmiclea.reptopetrol.model.Supplier;
-import org.alexmiclea.reptopetrol.repository.ContractRepository;
+import org.alexmiclea.reptopetrol.model.management.Supplier;
+import org.alexmiclea.reptopetrol.repository.management.ContractRepository;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
