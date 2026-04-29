@@ -22,6 +22,6 @@ public class Product {
     private String name;
 
     @Positive
-    private Float price;
+    private String type;
 
 }
