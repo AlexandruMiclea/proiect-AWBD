@@ -11,5 +11,5 @@ public class ProductRetrievalDto {
 
     private UUID id;
     private String name;
-    private Float price;
+    private String type;
 }

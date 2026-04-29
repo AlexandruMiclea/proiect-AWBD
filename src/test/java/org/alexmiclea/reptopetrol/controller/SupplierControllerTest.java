@@ -1,6 +1,5 @@
 package org.alexmiclea.reptopetrol.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.alexmiclea.reptopetrol.controller.management.SupplierController;
 import org.alexmiclea.reptopetrol.dto.creation.SupplierCreationDto;
@@ -14,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RequiredArgsConstructor
 public class SupplierControllerTest {
 
-    private static final String API_STRING = "/api/suppliers/";
+    private static final String API_STRING = "/api/supplier/";
 
     @Autowired
     private MockMvc mockMvc;

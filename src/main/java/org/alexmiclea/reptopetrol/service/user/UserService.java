@@ -11,6 +11,6 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public User getUser() {}
+//    public User getUser() {}
 
 }

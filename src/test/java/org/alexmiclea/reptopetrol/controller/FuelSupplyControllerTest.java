@@ -1,6 +1,6 @@
 package org.alexmiclea.reptopetrol.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.alexmiclea.reptopetrol.controller.management.FuelSupplyController;
 import org.alexmiclea.reptopetrol.dto.creation.composites.FuelSupplyCreationDto;
@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RequiredArgsConstructor
 public class FuelSupplyControllerTest {
 
-    private static final String API_STRING = "/api/fuel-supplies";
+    private static final String API_STRING = "/api/fuelSupply";
 
     @Autowired
     private MockMvc mockMvc;

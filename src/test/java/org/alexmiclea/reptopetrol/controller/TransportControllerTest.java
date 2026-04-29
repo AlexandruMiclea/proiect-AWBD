@@ -1,6 +1,6 @@
 package org.alexmiclea.reptopetrol.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.alexmiclea.reptopetrol.controller.management.TransportController;
 import org.alexmiclea.reptopetrol.dto.creation.TransportCreationDto;
@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RequiredArgsConstructor
 public class TransportControllerTest {
 
-    private static final String API_STRING = "/api/transports/";
+    private static final String API_STRING = "/api/transport/";
 
     @Autowired
     private MockMvc mockMvc;

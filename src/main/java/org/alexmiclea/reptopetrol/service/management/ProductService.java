@@ -48,7 +48,7 @@ public class ProductService {
     public void updateProduct(ProductCreationDto productDto, UUID uuid) {
         Product currentProduct = productRepository.getReferenceById(uuid);
         currentProduct.setName(productDto.getName());
-        currentProduct.setPrice(productDto.getPrice());
+        currentProduct.setType(productDto.getType());
         productRepository.save(currentProduct);
     }
 

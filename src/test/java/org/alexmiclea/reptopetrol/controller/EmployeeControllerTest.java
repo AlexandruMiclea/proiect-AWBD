@@ -1,6 +1,6 @@
 package org.alexmiclea.reptopetrol.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.alexmiclea.reptopetrol.controller.management.EmployeeController;
 import org.alexmiclea.reptopetrol.dto.creation.EmployeeCreationDto;
@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RequiredArgsConstructor
 public class EmployeeControllerTest {
 
-    private static final String API_STRING = "/api/employees/";
+    private static final String API_STRING = "/api/employee/";
 
     @Autowired
     private MockMvc mockMvc;

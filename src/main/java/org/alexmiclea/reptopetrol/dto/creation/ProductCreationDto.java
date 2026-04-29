@@ -25,7 +25,7 @@ public class ProductCreationDto {
     @Size(max = 64)
     private String name;
 
-    @NotNull
-    @Positive
-    private Float price;
+    @NotBlank
+    @Size(max = 64)
+    private String type;
 }

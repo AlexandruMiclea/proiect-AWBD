@@ -1,6 +1,6 @@
 package org.alexmiclea.reptopetrol.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.alexmiclea.reptopetrol.controller.management.ProductController;
 import org.alexmiclea.reptopetrol.dto.creation.ProductCreationDto;
@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RequiredArgsConstructor
 public class ProductControllerTest {
 
-    private static final String API_STRING = "/api/products/";
+    private static final String API_STRING = "/api/product/";
 
     @Autowired
     private MockMvc mockMvc;
@@ -45,7 +45,7 @@ public class ProductControllerTest {
         ProductRetrievalDto mockProductRetrieval = ProductRetrievalDto.builder()
                 .id(productId)
                 .name("Motor Oil")
-                .price(25.99f)
+                .type("Car Accessory")
                 .build();
 
         Mockito.when(productService.getProductById(productId)).thenReturn(Optional.of(mockProductRetrieval));
@@ -65,7 +65,7 @@ public class ProductControllerTest {
         ProductRetrievalDto mockProductRetrieval = ProductRetrievalDto.builder()
                 .id(productId)
                 .name("Motor Oil")
-                .price(25.99f)
+                .type("Car Accessory")
                 .build();
 
         Mockito.when(productService.getAll()).thenReturn(List.of(mockProductRetrieval));
@@ -90,7 +90,7 @@ public class ProductControllerTest {
     void addProduct() throws Exception {
         ProductCreationDto mockProductCreation = ProductCreationDto.builder()
                 .name("Motor Oil")
-                .price(25.99f)
+                .type("Car Accessory")
                 .build();
 
         mockMvc.perform(post(API_STRING + "add")
@@ -103,7 +103,7 @@ public class ProductControllerTest {
     void bulkAddProducts() throws Exception {
         ProductCreationDto mockProductCreation = ProductCreationDto.builder()
                 .name("Motor Oil")
-                .price(25.99f)
+                .type("Car Accessory")
                 .build();
 
         mockMvc.perform(post(API_STRING + "bulkAdd")
@@ -118,7 +118,7 @@ public class ProductControllerTest {
 
         ProductCreationDto mockProductCreation = ProductCreationDto.builder()
                 .name("Motor Oil")
-                .price(25.99f)
+                .type("Car Accessory")
                 .build();
 
         mockMvc.perform(put(API_STRING + "update/" + productId)
