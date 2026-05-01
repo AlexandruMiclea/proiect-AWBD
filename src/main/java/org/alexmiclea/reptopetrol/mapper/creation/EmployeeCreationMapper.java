@@ -1,6 +1,6 @@
 package org.alexmiclea.reptopetrol.mapper.creation;
 
-import org.alexmiclea.reptopetrol.dto.creation.EmployeeCreationDto;
+import org.alexmiclea.reptopetrol.dto.management.creation.EmployeeCreationDto;
 import org.alexmiclea.reptopetrol.model.management.Employee;
 import org.alexmiclea.reptopetrol.repository.management.StationRepository;
 import org.mapstruct.Mapper;

@@ -2,9 +2,9 @@ package org.alexmiclea.reptopetrol.controller.management;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.alexmiclea.reptopetrol.dto.creation.composites.FuelSupplyCreationDto;
-import org.alexmiclea.reptopetrol.dto.keys.FuelSupplyKeyDto;
-import org.alexmiclea.reptopetrol.dto.retrieval.composites.FuelSupplyRetrievalDto;
+import org.alexmiclea.reptopetrol.dto.management.creation.composites.FuelSupplyCreationDto;
+import org.alexmiclea.reptopetrol.dto.management.keys.FuelSupplyKeyDto;
+import org.alexmiclea.reptopetrol.dto.management.retrieval.composites.FuelSupplyRetrievalDto;
 import org.alexmiclea.reptopetrol.mapper.keys.FuelSupplyKeyMapper;
 import org.alexmiclea.reptopetrol.model.management.keys.FuelSupplyKey;
 import org.alexmiclea.reptopetrol.service.management.FuelSupplyService;

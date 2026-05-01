@@ -1,6 +1,6 @@
 package org.alexmiclea.reptopetrol.mapper.retrieval;
 
-import org.alexmiclea.reptopetrol.dto.retrieval.TransportRetrievalDto;
+import org.alexmiclea.reptopetrol.dto.management.retrieval.TransportRetrievalDto;
 import org.alexmiclea.reptopetrol.model.management.Transport;
 import org.alexmiclea.reptopetrol.repository.management.ContractRepository;
 import org.alexmiclea.reptopetrol.repository.management.StationRepository;

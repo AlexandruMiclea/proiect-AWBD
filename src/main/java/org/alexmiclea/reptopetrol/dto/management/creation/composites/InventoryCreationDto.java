@@ -1,0 +1,31 @@
+package org.alexmiclea.reptopetrol.dto.management.creation.composites;
+
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.alexmiclea.reptopetrol.dto.management.keys.InventoryKeyDto;
+
+import java.time.Instant;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class InventoryCreationDto {
+
+    @NotNull
+    private InventoryKeyDto id;
+
+    @NotNull
+    @Positive
+    private Integer quantity;
+
+    @NotNull
+    @Positive
+    private Float price;
+
+    private Instant priceChange;
+}

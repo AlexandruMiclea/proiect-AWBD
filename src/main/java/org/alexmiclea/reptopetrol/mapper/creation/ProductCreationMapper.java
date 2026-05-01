@@ -1,6 +1,6 @@
 package org.alexmiclea.reptopetrol.mapper.creation;
 
-import org.alexmiclea.reptopetrol.dto.creation.ProductCreationDto;
+import org.alexmiclea.reptopetrol.dto.management.creation.ProductCreationDto;
 import org.alexmiclea.reptopetrol.model.management.Product;
 import org.mapstruct.Mapper;
 

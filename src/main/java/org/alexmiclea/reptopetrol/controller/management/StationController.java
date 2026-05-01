@@ -2,8 +2,8 @@ package org.alexmiclea.reptopetrol.controller.management;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.alexmiclea.reptopetrol.dto.creation.StationCreationDto;
-import org.alexmiclea.reptopetrol.dto.retrieval.StationRetrievalDto;
+import org.alexmiclea.reptopetrol.dto.management.creation.StationCreationDto;
+import org.alexmiclea.reptopetrol.dto.management.retrieval.StationRetrievalDto;
 import org.alexmiclea.reptopetrol.service.management.StationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

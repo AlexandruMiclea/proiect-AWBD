@@ -13,6 +13,6 @@ public class RootController {
     @GetMapping
     public String getMain() {
         log.info("GET / called");
-        return "index";
+        return "auth";
     }
 }

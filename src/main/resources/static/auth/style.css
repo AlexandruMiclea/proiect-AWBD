@@ -1,0 +1,425 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --ink: #1a1614;
+    --paper: #f5f0eb;
+    --accent: #c8472b;
+    --accent-dark: #a33620;
+    --muted: #8a7f79;
+    --border: #d6cec8;
+    --surface: #fff;
+    --error: #c8472b;
+}
+
+html, body {
+    height: 100%;
+    background-color: var(--paper);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--ink);
+}
+
+body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100vh;
+}
+
+/* ── Left panel ── */
+.panel-left {
+    background-color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 3rem 3.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.panel-left::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 20% 80%, #3b2a24 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 10%, #2e1f1a 0%, transparent 55%);
+}
+
+.brand {
+    position: relative;
+    z-index: 1;
+}
+
+.brand-logo {
+    width: 400px;
+    height: 80px;
+    /*background: var(--accent);*/
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+.brand-logo img {
+    width: 400px;
+    height: 80px;
+    /*fill: #fff;*/
+}
+
+.brand-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: #fff;
+    letter-spacing: 0.02em;
+}
+
+.panel-left-body {
+    position: relative;
+    z-index: 1;
+}
+
+.panel-left-body h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.2rem, 3.5vw, 3rem);
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 1.25rem;
+}
+
+.panel-left-body h1 em {
+    font-style: italic;
+    color: #e8b49e;
+}
+
+.panel-left-body p {
+    font-size: 0.95rem;
+    color: #a89d97;
+    line-height: 1.7;
+    max-width: 340px;
+}
+
+.panel-left-footer {
+    position: relative;
+    z-index: 1;
+    font-size: 0.8rem;
+    color: #5c504a;
+}
+
+/* ── Right panel ── */
+.panel-right {
+    background-color: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 400px;
+}
+
+/* ── Tabs ── */
+.tab-switcher {
+    display: flex;
+    gap: 0;
+    margin-bottom: 2.5rem;
+    border-bottom: 2px solid var(--border);
+}
+
+.tab-btn {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 0.75rem 0;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    position: relative;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+}
+
+.tab-btn::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transition: transform 0.25s ease;
+}
+
+.tab-btn.active {
+    color: var(--ink);
+}
+
+.tab-btn.active::after {
+    transform: scaleX(1);
+}
+
+/* ── Forms ── */
+.form-section {
+    display: none;
+}
+
+.form-section.visible {
+    display: block;
+}
+
+.form-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.75rem;
+    margin-bottom: 0.4rem;
+    color: var(--ink);
+}
+
+.form-subtitle {
+    font-size: 0.875rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+}
+
+.field {
+    margin-bottom: 1.25rem;
+}
+
+.field label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+}
+
+.field input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--ink);
+    background: var(--paper);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+}
+
+.field input:focus {
+    border-color: var(--ink);
+    box-shadow: 0 0 0 3px rgba(26, 22, 20, 0.07);
+}
+
+.field input.is-error {
+    border-color: var(--error);
+}
+
+.field-error {
+    font-size: 0.78rem;
+    color: var(--error);
+    margin-top: 0.35rem;
+}
+
+.field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.forgot-link {
+    display: block;
+    text-align: right;
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-decoration: none;
+    margin-top: -0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.forgot-link:hover {
+    color: var(--ink);
+}
+
+.checkbox-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    margin-bottom: 1.5rem;
+}
+
+.checkbox-row input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+    accent-color: var(--accent);
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.checkbox-row label {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.5;
+    cursor: pointer;
+}
+
+.checkbox-row label a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 0.9rem;
+    background: var(--ink);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.btn-primary:hover {
+    background: #2e2724;
+}
+
+.btn-primary:active {
+    transform: scale(0.99);
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    color: var(--border);
+    font-size: 0.78rem;
+    color: var(--muted);
+}
+
+.divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+}
+
+.btn-social {
+    width: 100%;
+    padding: 0.75rem;
+    background: transparent;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    color: var(--ink);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    transition: border-color 0.2s, background 0.2s;
+    margin-bottom: 0.75rem;
+}
+
+.btn-social:hover {
+    border-color: var(--ink);
+    background: var(--paper);
+}
+
+/* Alert messages from Thymeleaf */
+.alert {
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    margin-bottom: 1.25rem;
+}
+
+.alert-error {
+    background: #fdf0ed;
+    border: 1px solid #f5c4b8;
+    color: var(--error);
+}
+
+.alert-success {
+    background: #edf7f0;
+    border: 1px solid #b8e6c5;
+    color: #2a7a45;
+}
+
+/* ── Password strength ── */
+.strength-bar {
+    display: flex;
+    gap: 4px;
+    margin-top: 0.5rem;
+}
+
+.strength-bar span {
+    flex: 1;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--border);
+    transition: background 0.3s;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    body {
+        grid-template-columns: 1fr;
+    }
+
+    .panel-left {
+        display: none;
+    }
+
+    .panel-right {
+        padding: 2rem 1.25rem;
+    }
+}
+
+/* Fade in animation */
+.auth-container {
+    animation: fadeUp 0.4s ease both;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-section {
+    animation: fadeIn 0.25s ease both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

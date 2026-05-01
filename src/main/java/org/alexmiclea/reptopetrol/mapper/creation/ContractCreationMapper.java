@@ -1,6 +1,6 @@
 package org.alexmiclea.reptopetrol.mapper.creation;
 
-import org.alexmiclea.reptopetrol.dto.creation.ContractCreationDto;
+import org.alexmiclea.reptopetrol.dto.management.creation.ContractCreationDto;
 import org.alexmiclea.reptopetrol.model.management.Contract;
 import org.alexmiclea.reptopetrol.repository.management.FuelRepository;
 import org.alexmiclea.reptopetrol.repository.management.SupplierRepository;

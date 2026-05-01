@@ -2,8 +2,8 @@ package org.alexmiclea.reptopetrol.controller.management;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.alexmiclea.reptopetrol.dto.creation.SupplierCreationDto;
-import org.alexmiclea.reptopetrol.dto.retrieval.SupplierRetrievalDto;
+import org.alexmiclea.reptopetrol.dto.management.creation.SupplierCreationDto;
+import org.alexmiclea.reptopetrol.dto.management.retrieval.SupplierRetrievalDto;
 import org.alexmiclea.reptopetrol.service.management.SupplierService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

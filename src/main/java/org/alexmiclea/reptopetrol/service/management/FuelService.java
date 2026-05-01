@@ -2,8 +2,8 @@ package org.alexmiclea.reptopetrol.service.management;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.alexmiclea.reptopetrol.dto.creation.FuelCreationDto;
-import org.alexmiclea.reptopetrol.dto.retrieval.FuelRetrievalDto;
+import org.alexmiclea.reptopetrol.dto.management.creation.FuelCreationDto;
+import org.alexmiclea.reptopetrol.dto.management.retrieval.FuelRetrievalDto;
 import org.alexmiclea.reptopetrol.mapper.creation.FuelCreationMapper;
 import org.alexmiclea.reptopetrol.mapper.retrieval.FuelRetrievalMapper;
 import org.alexmiclea.reptopetrol.model.management.Fuel;

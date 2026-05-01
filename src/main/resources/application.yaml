@@ -9,7 +9,7 @@ spring:
   docker:
     compose:
       enabled: true
-      file: compose.yaml
+      file: docker_compose.yaml
   jpa:
     hibernate:
       ddl-auto: update
@@ -19,3 +19,10 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
     mode: HTML
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: password
+  mongodb:
+    uri: mongodb://mongouser:mongopassword@localhost:27017/teleleu?authSource=admin

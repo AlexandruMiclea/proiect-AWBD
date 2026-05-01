@@ -1,6 +1,6 @@
 package org.alexmiclea.reptopetrol.mapper.keys;
 
-import org.alexmiclea.reptopetrol.dto.keys.FuelSupplyKeyDto;
+import org.alexmiclea.reptopetrol.dto.management.keys.FuelSupplyKeyDto;
 import org.alexmiclea.reptopetrol.model.management.keys.FuelSupplyKey;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

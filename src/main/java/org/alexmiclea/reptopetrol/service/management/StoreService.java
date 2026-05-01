@@ -2,8 +2,8 @@ package org.alexmiclea.reptopetrol.service.management;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.alexmiclea.reptopetrol.dto.creation.StoreCreationDto;
-import org.alexmiclea.reptopetrol.dto.retrieval.StoreRetrievalDto;
+import org.alexmiclea.reptopetrol.dto.management.creation.StoreCreationDto;
+import org.alexmiclea.reptopetrol.dto.management.retrieval.StoreRetrievalDto;
 import org.alexmiclea.reptopetrol.mapper.creation.StoreCreationMapper;
 import org.alexmiclea.reptopetrol.mapper.retrieval.StoreRetrievalMapper;
 import org.alexmiclea.reptopetrol.model.management.Station;

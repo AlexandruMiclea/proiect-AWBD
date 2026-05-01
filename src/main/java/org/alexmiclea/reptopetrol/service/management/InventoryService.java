@@ -2,9 +2,9 @@ package org.alexmiclea.reptopetrol.service.management;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.alexmiclea.reptopetrol.dto.creation.composites.InventoryCreationDto;
-import org.alexmiclea.reptopetrol.dto.keys.InventoryKeyDto;
-import org.alexmiclea.reptopetrol.dto.retrieval.composites.InventoryRetrievalDto;
+import org.alexmiclea.reptopetrol.dto.management.creation.composites.InventoryCreationDto;
+import org.alexmiclea.reptopetrol.dto.management.keys.InventoryKeyDto;
+import org.alexmiclea.reptopetrol.dto.management.retrieval.composites.InventoryRetrievalDto;
 import org.alexmiclea.reptopetrol.mapper.creation.InventoryCreationMapper;
 import org.alexmiclea.reptopetrol.mapper.keys.InventoryKeyMapper;
 import org.alexmiclea.reptopetrol.mapper.retrieval.InventoryRetreivalMapper;

@@ -1,6 +1,6 @@
 package org.alexmiclea.reptopetrol.mapper.creation;
 
-import org.alexmiclea.reptopetrol.dto.creation.composites.InventoryCreationDto;
+import org.alexmiclea.reptopetrol.dto.management.creation.composites.InventoryCreationDto;
 import org.alexmiclea.reptopetrol.model.management.composites.Inventory;
 import org.alexmiclea.reptopetrol.repository.management.ProductRepository;
 import org.alexmiclea.reptopetrol.repository.management.StoreRepository;

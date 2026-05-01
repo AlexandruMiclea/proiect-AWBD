@@ -1,6 +1,6 @@
 package org.alexmiclea.reptopetrol.mapper.retrieval;
 
-import org.alexmiclea.reptopetrol.dto.retrieval.SupplierRetrievalDto;
+import org.alexmiclea.reptopetrol.dto.management.retrieval.SupplierRetrievalDto;
 import org.alexmiclea.reptopetrol.model.management.Supplier;
 import org.alexmiclea.reptopetrol.repository.management.ContractRepository;
 import org.mapstruct.Mapper;

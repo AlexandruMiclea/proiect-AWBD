@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@Document
 public class Purchase {
 
     @Id

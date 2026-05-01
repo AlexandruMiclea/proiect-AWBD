@@ -1,7 +1,7 @@
 package org.alexmiclea.reptopetrol.model.user;
 
 import jakarta.persistence.*;
-import org.jspecify.annotations.Nullable;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -10,7 +10,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "user")
+@Table(name = "app_user")
+@Builder
+@Getter
+@Setter
+@RequiredArgsConstructor
+@AllArgsConstructor
 public class User implements UserDetails {
 
     @Id
@@ -19,7 +24,7 @@ public class User implements UserDetails {
 
     private String firstname;
     private String lastname;
-    private String username;
+//    private String username;
     private String email;
     private String password;
 
@@ -35,6 +40,6 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 }

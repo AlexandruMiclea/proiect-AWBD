@@ -1,6 +1,6 @@
 package org.alexmiclea.reptopetrol.mapper.creation;
 
-import org.alexmiclea.reptopetrol.dto.creation.StationCreationDto;
+import org.alexmiclea.reptopetrol.dto.management.creation.StationCreationDto;
 import org.alexmiclea.reptopetrol.mapper.keys.FuelSupplyKeyMapper;
 import org.alexmiclea.reptopetrol.model.management.Station;
 import org.alexmiclea.reptopetrol.repository.management.EmployeeRepository;

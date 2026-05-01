@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${activeForm == 'register'} ? 'Create Account' : 'Sign In'">Sign In</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/auth/style.css">
+</head>
+<body>
+
+    <!-- ══ Left branding panel ══ -->
+    <aside class="panel-left">
+        <div class="brand">
+            <div class="brand-logo">
+                <img src="/static/common/main_logo.png" alt="Reptopetrol">
+            </div>
+        </div>
+
+        <div class="panel-left-body">
+            <h1>Welcome<br><em>back.</em></h1>
+            <p>Sign in to access your workspace, or create a new account to get started in seconds.</p>
+        </div>
+
+        <div class="panel-left-footer">
+            &copy; 2026 Reptopetrol. All rights reserved.
+        </div>
+    </aside>
+
+    <!-- ══ Right form panel ══ -->
+    <main class="panel-right">
+        <div class="auth-container">
+
+            <!-- Tab switcher -->
+            <nav class="tab-switcher" role="tablist">
+                <button
+                    class="tab-btn"
+                    th:classappend="${activeForm != 'register'} ? ' active' : ''"
+                    role="tab"
+                    onclick="switchTab('signin')"
+                    id="tab-signin"
+                    aria-controls="form-signin"
+                    th:attr="aria-selected=${activeForm != 'register'}"
+                >Sign In</button>
+                <button
+                    class="tab-btn"
+                    th:classappend="${activeForm == 'register'} ? ' active' : ''"
+                    role="tab"
+                    onclick="switchTab('register')"
+                    id="tab-register"
+                    aria-controls="form-register"
+                    th:attr="aria-selected=${activeForm == 'register'}"
+                >Register</button>
+            </nav>
+
+            <!-- ── SIGN IN FORM ── -->
+            <section
+                id="form-signin"
+                class="form-section"
+                th:classappend="${activeForm != 'register'} ? ' visible' : ''"
+                role="tabpanel"
+                aria-labelledby="tab-signin"
+            >
+                <h2 class="form-title">Sign in</h2>
+                <p class="form-subtitle">Enter your credentials to continue.</p>
+
+<!--                &lt;!&ndash; Error alert (Thymeleaf) &ndash;&gt;-->
+<!--                <div class="alert alert-error" th:if="${loginError}" th:text="${loginError}"></div>-->
+<!--                &lt;!&ndash; Success alert &ndash;&gt;-->
+<!--                <div class="alert alert-success" th:if="${loginSuccess}" th:text="${loginSuccess}"></div>-->
+
+                <form th:action="@{/api/user/authenticate}" method="post" novalidate>
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+                    <div class="field">
+                        <label for="signin-email">Email address</label>
+                        <input
+                            type="email"
+                            id="signin-email"
+                            name="username"
+                            autocomplete="email"
+                            placeholder="you@example.com"
+                            th:classappend="${#fields.hasErrors('username')} ? 'is-error'"
+                            required
+                        />
+                        <span class="field-error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+                    </div>
+
+                    <div class="field">
+                        <label for="signin-password">Password</label>
+                        <input
+                            type="password"
+                            id="signin-password"
+                            name="password"
+                            autocomplete="current-password"
+                            placeholder="••••••••"
+                            required
+                        />
+                    </div>
+
+                    <button type="submit" class="btn-primary">Sign in</button>
+                </form>
+            </section>
+
+            <!-- ── REGISTER FORM ── -->
+            <section
+                id="form-register"
+                class="form-section"
+                th:classappend="${activeForm == 'register'} ? ' visible' : ''"
+                role="tabpanel"
+                aria-labelledby="tab-register"
+            >
+                <h2 class="form-title">Create account</h2>
+                <p class="form-subtitle">Join us today — it only takes a moment.</p>
+
+<!--                &lt;!&ndash; Error / success alerts &ndash;&gt;-->
+<!--                <div class="alert alert-error" th:if="${registerError}" th:text="${registerError}"></div>-->
+<!--                <div class="alert alert-success" th:if="${registerSuccess}" th:text="${registerSuccess}"></div>-->
+
+                <form th:action="@{/api/auth/register}" th:object="${userCreationDto}" method="post" novalidate>
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+                    <div class="field-row">
+                        <div class="field">
+                            <label for="reg-firstname">First name</label>
+                            <input
+                                type="text"
+                                id="reg-firstname"
+                                th:field="*{firstName}"
+                                autocomplete="given-name"
+                                placeholder="Jane"
+                                th:classappend="${#fields.hasErrors('firstName')} ? 'is-error'"
+                                required
+                            />
+                            <span class="field-error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+                        </div>
+                        <div class="field">
+                            <label for="reg-lastname">Last name</label>
+                            <input
+                                type="text"
+                                id="reg-lastname"
+                                th:field="*{lastName}"
+                                autocomplete="family-name"
+                                placeholder="Doe"
+                                th:classappend="${#fields.hasErrors('lastName')} ? 'is-error'"
+                                required
+                            />
+                            <span class="field-error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="reg-email">Email address</label>
+                        <input
+                            type="email"
+                            id="reg-email"
+                            th:field="*{email}"
+                            autocomplete="email"
+                            placeholder="you@example.com"
+                            th:classappend="${#fields.hasErrors('email')} ? 'is-error'"
+                            required
+                        />
+                        <span class="field-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                    </div>
+
+                    <div class="field">
+                        <label for="reg-password">Password</label>
+                        <input
+                            type="password"
+                            id="reg-password"
+                            th:field="*{password}"
+                            autocomplete="new-password"
+                            placeholder="At least 8 characters"
+                            th:classappend="${#fields.hasErrors('password')} ? 'is-error'"
+                            oninput="updateStrength(this.value)"
+                            required
+                        />
+                        <div class="strength-bar" aria-hidden="true">
+                            <span id="sb1"></span>
+                            <span id="sb2"></span>
+                            <span id="sb3"></span>
+                            <span id="sb4"></span>
+                        </div>
+                        <span class="field-error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                    </div>
+
+                    <div class="field">
+                        <label for="reg-confirm">Confirm password</label>
+                        <input
+                            type="password"
+                            id="reg-confirm"
+                            th:field="*{confirmPassword}"
+                            autocomplete="new-password"
+                            placeholder="Repeat password"
+                            th:classappend="${#fields.hasErrors('confirmPassword')} ? 'is-error'"
+                            required
+                        />
+                        <span class="field-error" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></span>
+                    </div>
+
+                    <button type="submit" class="btn-primary">Create account</button>
+                </form>
+            </section>
+
+        </div>
+    </main>
+
+    <script src="/static/auth/script.js"></script>
+</body>
+</html>

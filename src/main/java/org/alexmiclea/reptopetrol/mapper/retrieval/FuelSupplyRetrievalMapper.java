@@ -1,6 +1,6 @@
 package org.alexmiclea.reptopetrol.mapper.retrieval;
 
-import org.alexmiclea.reptopetrol.dto.retrieval.composites.FuelSupplyRetrievalDto;
+import org.alexmiclea.reptopetrol.dto.management.retrieval.composites.FuelSupplyRetrievalDto;
 import org.alexmiclea.reptopetrol.model.management.composites.FuelSupply;
 import org.mapstruct.Mapper;
 

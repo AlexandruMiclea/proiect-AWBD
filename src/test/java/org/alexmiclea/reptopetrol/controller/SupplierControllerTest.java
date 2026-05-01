@@ -2,8 +2,8 @@ package org.alexmiclea.reptopetrol.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.alexmiclea.reptopetrol.controller.management.SupplierController;
-import org.alexmiclea.reptopetrol.dto.creation.SupplierCreationDto;
-import org.alexmiclea.reptopetrol.dto.retrieval.SupplierRetrievalDto;
+import org.alexmiclea.reptopetrol.dto.management.creation.SupplierCreationDto;
+import org.alexmiclea.reptopetrol.dto.management.retrieval.SupplierRetrievalDto;
 import org.alexmiclea.reptopetrol.service.management.SupplierService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

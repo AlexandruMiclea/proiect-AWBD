@@ -2,8 +2,8 @@ package org.alexmiclea.reptopetrol.service.management;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.alexmiclea.reptopetrol.dto.creation.EmployeeCreationDto;
-import org.alexmiclea.reptopetrol.dto.retrieval.EmployeeRetrievalDto;
+import org.alexmiclea.reptopetrol.dto.management.creation.EmployeeCreationDto;
+import org.alexmiclea.reptopetrol.dto.management.retrieval.EmployeeRetrievalDto;
 import org.alexmiclea.reptopetrol.mapper.creation.EmployeeCreationMapper;
 import org.alexmiclea.reptopetrol.mapper.retrieval.EmployeeRetrievalMapper;
 import org.alexmiclea.reptopetrol.model.management.Employee;
