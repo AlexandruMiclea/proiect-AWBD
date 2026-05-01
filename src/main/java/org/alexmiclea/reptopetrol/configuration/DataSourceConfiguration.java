@@ -7,4 +7,4 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableMongoRepositories(basePackages = {"org.alexmiclea.reptopetrol.repository.monitoring", "org.alexmiclea.reptopetrol.repository.payment"})
 @EnableJpaRepositories(basePackages = {"org.alexmiclea.reptopetrol.repository.management", "org.alexmiclea.reptopetrol.repository.user"})
 @Configuration
-public class DataSourceConfig { }
+public class DataSourceConfiguration { }

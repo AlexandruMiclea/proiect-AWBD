@@ -1,6 +1,7 @@
 package org.alexmiclea.reptopetrol.service.user;
 
 import lombok.RequiredArgsConstructor;
+import org.alexmiclea.reptopetrol.dto.user.TokenResponseDto;
 import org.alexmiclea.reptopetrol.dto.user.UserCreationDto;
 import org.alexmiclea.reptopetrol.model.user.User;
 import org.alexmiclea.reptopetrol.repository.user.UserRepository;
@@ -30,7 +31,8 @@ public class UserService {
         }
     }
 
-    public void addUser(UserCreationDto userCreationDto) {
+    // TODO refactor
+    public Optional<TokenResponseDto> addUser(UserCreationDto userCreationDto) {
 
         User user = User.builder()
             .id(UUID.randomUUID())
@@ -42,6 +44,9 @@ public class UserService {
             .build();
 
         userRepository.save(user);
+
+        // TODO return the optional of token
+        return Optional.empty();
     }
 
     public Optional<UUID> deleteUser(UUID uuid) {
@@ -52,4 +57,5 @@ public class UserService {
             return Optional.empty();
         }
     }
+
 }
