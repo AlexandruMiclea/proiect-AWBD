@@ -31,7 +31,6 @@ public abstract class StationRetrievalMapper {
     @Autowired
     protected FuelSupplyKeyMapper fuelSupplyKeyMapper;
 
-    // TODO fuelIds -> map the
     @Mapping(target = "fuelIds", expression =
             "java(station.getFuelSupplies().stream().map(x -> x.getId().getFuelId()).toList())")
     @Mapping(target = "transportIds", expression =

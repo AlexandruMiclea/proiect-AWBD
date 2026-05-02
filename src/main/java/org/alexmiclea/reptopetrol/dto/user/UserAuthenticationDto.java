@@ -3,7 +3,7 @@ package org.alexmiclea.reptopetrol.dto.user;
 import lombok.*;
 
 @Data
-@Builder
+//@Builder
 @Getter
 @Setter
 @RequiredArgsConstructor

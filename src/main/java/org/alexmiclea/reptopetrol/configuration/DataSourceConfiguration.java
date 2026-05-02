@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @EnableMongoRepositories(basePackages = {"org.alexmiclea.reptopetrol.repository.monitoring", "org.alexmiclea.reptopetrol.repository.payment"})
-@EnableJpaRepositories(basePackages = {"org.alexmiclea.reptopetrol.repository.management", "org.alexmiclea.reptopetrol.repository.user"})
+@EnableJpaRepositories(basePackages = {"org.alexmiclea.reptopetrol.repository.management", "org.alexmiclea.reptopetrol.repository.user", "org.alexmiclea.reptopetrol.repository.authentication"})
 @Configuration
 public class DataSourceConfiguration { }

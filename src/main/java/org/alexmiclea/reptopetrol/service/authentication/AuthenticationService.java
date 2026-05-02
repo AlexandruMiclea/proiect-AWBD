@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.alexmiclea.reptopetrol.dto.user.TokenResponseDto;
 import org.alexmiclea.reptopetrol.dto.user.UserAuthenticationDto;
 import org.alexmiclea.reptopetrol.dto.user.UserCreationDto;
+import org.alexmiclea.reptopetrol.repository.authentication.TokenRepository;
 import org.alexmiclea.reptopetrol.repository.user.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.util.Optional;
 public class AuthenticationService {
 
     private final UserRepository userRepository;
+    private final TokenRepository tokenRepository;
 
     public Optional<TokenResponseDto> registerAccount(UserCreationDto userCreationDto) {
 
