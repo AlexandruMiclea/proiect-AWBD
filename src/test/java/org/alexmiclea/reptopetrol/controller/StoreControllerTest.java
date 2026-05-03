@@ -101,17 +101,6 @@ public class StoreControllerTest {
     }
 
     @Test
-    void bulkAddStores() throws Exception {
-        StoreCreationDto mockStoreCreation = StoreCreationDto.builder()
-                .build();
-
-        mockMvc.perform(post(API_STRING + "bulkAdd")
-                        .content(objectMapper.writeValueAsString(List.of(mockStoreCreation)))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated());
-    }
-
-    @Test
     void updateStore() throws Exception {
         UUID storeId = UUID.randomUUID();
         UUID stationId = UUID.randomUUID();

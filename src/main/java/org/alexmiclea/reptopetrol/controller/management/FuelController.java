@@ -48,14 +48,6 @@ public class FuelController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PostMapping("/bulkAdd")
-    public ResponseEntity<Void> bulkAddFuels(@RequestBody @Validated List<FuelCreationDto> fuelDtos) {
-        log.info("POST /bulkAdd called with payload {}", fuelDtos);
-        fuelService.bulkAddFuels(fuelDtos);
-
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
     @PutMapping("/update/{uuid}")
     public ResponseEntity<Void> updateFuel(@RequestBody @Validated FuelCreationDto fuelDto, @PathVariable UUID uuid) {
         log.info("PUT /update called with payload {} for UUID {}", fuelDto, uuid);

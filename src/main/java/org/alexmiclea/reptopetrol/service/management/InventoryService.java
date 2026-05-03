@@ -45,11 +45,6 @@ public class InventoryService {
         inventoryRepository.save(inventory);
     }
 
-    public void bulkAddInventories(List<InventoryCreationDto> inventoryDtos) {
-        List<Inventory> inventories = inventoryCreationMapper.toInventories(inventoryDtos);
-        inventoryRepository.saveAll(inventories);
-    }
-
     @Transactional
     public void updateInventory(InventoryCreationDto inventoryDto, InventoryKeyDto key) {
         InventoryKey inventoryKey = inventoryKeyMapper.toInventoryKey(key);

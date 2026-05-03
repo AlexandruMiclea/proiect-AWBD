@@ -107,20 +107,6 @@ public class TransportControllerTest {
     }
 
     @Test
-    void bulkAddTransports() throws Exception {
-        TransportCreationDto mockTransportCreation = TransportCreationDto.builder()
-                .companyName("FastFreight SRL")
-                .creationDate(Instant.parse("2024-03-01T00:00:00Z"))
-                .completionDate(Instant.parse("2024-03-05T00:00:00Z"))
-                .build();
-
-        mockMvc.perform(post(API_STRING + "bulkAdd")
-                        .content(objectMapper.writeValueAsString(List.of(mockTransportCreation)))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated());
-    }
-
-    @Test
     void updateTransport() throws Exception {
         UUID transportId = UUID.randomUUID();
         UUID stationId = UUID.randomUUID();

@@ -39,11 +39,6 @@ public class StationService {
         stationRepository.save(station);
     }
 
-    public void bulkAddStations(List<StationCreationDto> stationDtos) {
-        List<Station> stations = stationCreationMapper.toStations(stationDtos);
-        stationRepository.saveAll(stations);
-    }
-
     @Transactional
     public void updateStation(StationCreationDto stationDto, UUID uuid) {
         Station currentStation = stationRepository.getReferenceById(uuid);

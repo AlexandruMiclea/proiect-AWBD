@@ -117,23 +117,6 @@ public class EmployeeControllerTest {
     }
 
     @Test
-    void bulkAddEmployees() throws Exception {
-        EmployeeCreationDto mockEmployeeCreation = EmployeeCreationDto.builder()
-                .firstName("John")
-                .lastName("Doe")
-                .identificationNumber("ID12345")
-                .wage(3000)
-                .role(EmployeeRole.CASHIER)
-                .dateOfHire(Instant.parse("2022-06-01T00:00:00Z"))
-                .build();
-
-        mockMvc.perform(post(API_STRING + "bulkAdd")
-                        .content(objectMapper.writeValueAsString(List.of(mockEmployeeCreation)))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated());
-    }
-
-    @Test
     void updateEmployee() throws Exception {
         UUID employeeId = UUID.randomUUID();
 

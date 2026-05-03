@@ -39,11 +39,6 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    public void bulkAddProducts(List<ProductCreationDto> productDtos) {
-        List<Product> products = productCreationMapper.toProducts(productDtos);
-        productRepository.saveAll(products);
-    }
-
     @Transactional
     public void updateProduct(ProductCreationDto productDto, UUID uuid) {
         Product currentProduct = productRepository.getReferenceById(uuid);

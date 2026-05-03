@@ -110,20 +110,6 @@ public class InventoryControllerTest {
     }
 
     @Test
-    void bulkAddInventories() throws Exception {
-        InventoryCreationDto mockCreation = InventoryCreationDto.builder()
-                .quantity(100)
-                .price(12.99f)
-                .priceChange(Instant.parse("2024-01-01T00:00:00Z"))
-                .build();
-
-        mockMvc.perform(post(API_STRING + "/bulkAdd")
-                        .content(objectMapper.writeValueAsString(List.of(mockCreation)))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated());
-    }
-
-    @Test
     void updateInventory() throws Exception {
         InventoryCreationDto mockCreation = InventoryCreationDto.builder()
                 .quantity(100)

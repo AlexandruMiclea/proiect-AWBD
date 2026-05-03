@@ -48,14 +48,6 @@ public class SupplierController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PostMapping("/bulkAdd")
-    public ResponseEntity<Void> bulkAddSuppliers(@RequestBody @Validated List<SupplierCreationDto> supplierDtos) {
-        log.info("POST /bulkAdd called with payload {}", supplierDtos);
-        supplierService.bulkAddSuppliers(supplierDtos);
-
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
     @PutMapping("/update/{uuid}")
     public ResponseEntity<Void> updateSupplier(@RequestBody @Validated SupplierCreationDto supplierDto, @PathVariable UUID uuid) {
         log.info("PUT /update called with payload {} for UUID {}", supplierDto, uuid);

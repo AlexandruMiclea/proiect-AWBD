@@ -45,17 +45,6 @@ public class TransportService {
         }
     }
 
-    public void bulkAddTransports(List<TransportCreationDto> transportDtos) {
-        List<Transport> transports = transportCreationMapper.toTransports(transportDtos);
-        for (TransportCreationDto transportDto : transportDtos) {
-            Transport transport = transportCreationMapper.toTransport(transportDto);
-            for (UUID stationId : transportDto.getStationIds()) {
-                updateStationTransportID(stationId, transport);
-            }
-        }
-        transportRepository.saveAll(transports);
-    }
-
     @Transactional
     public void updateTransport(TransportCreationDto transportDto, UUID uuid) {
         Transport currentTransport = transportRepository.getReferenceById(uuid);

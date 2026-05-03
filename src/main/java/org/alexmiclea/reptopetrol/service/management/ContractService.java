@@ -45,17 +45,6 @@ public class ContractService {
         }
     }
 
-    public void bulkAddContracts(List<ContractCreationDto> contractDtos) {
-        List<Contract> contracts = contractCreationMapper.toContracts(contractDtos);
-        for (ContractCreationDto contractDto : contractDtos) {
-            Contract contract = contractCreationMapper.toContract(contractDto);
-            for (UUID fuelId : contractDto.getFuelIds()) {
-                updateFuelContractID(fuelId, contract);
-            }
-        }
-        contractRepository.saveAll(contracts);
-    }
-
     @Transactional
     public void updateContract(ContractCreationDto contractDto, UUID uuid) {
         Contract currentContract = contractRepository.getReferenceById(uuid);

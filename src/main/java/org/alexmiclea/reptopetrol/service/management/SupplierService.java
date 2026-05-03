@@ -39,11 +39,6 @@ public class SupplierService {
         supplierRepository.save(supplier);
     }
 
-    public void bulkAddSuppliers(List<SupplierCreationDto> supplierDtos) {
-        List<Supplier> suppliers = supplierCreationMapper.toSuppliers(supplierDtos);
-        supplierRepository.saveAll(suppliers);
-    }
-
     @Transactional
     public void updateSupplier(SupplierCreationDto supplierDto, UUID uuid) {
         Supplier currentSupplier = supplierRepository.getReferenceById(uuid);

@@ -1,4 +1,4 @@
-package org.alexmiclea.reptopetrol.repository.user;
+package org.alexmiclea.reptopetrol.repository.authentication;
 
 import org.alexmiclea.reptopetrol.model.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;

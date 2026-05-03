@@ -39,11 +39,6 @@ public class EmployeeService {
         employeeRepository.save(employee);
     }
 
-    public void bulkAddEmployees(List<EmployeeCreationDto> employeeDtos) {
-        List<Employee> employees = employeeCreationMapper.toEmployees(employeeDtos);
-        employeeRepository.saveAll(employees);
-    }
-
     @Transactional
     public void updateEmployee(EmployeeCreationDto employeeDto, UUID uuid) {
         Employee currentEmployee = employeeRepository.getReferenceById(uuid);

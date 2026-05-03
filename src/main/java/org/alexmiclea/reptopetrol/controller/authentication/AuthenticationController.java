@@ -26,8 +26,8 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<TokenResponseDto> registerAccount(@ModelAttribute UserCreationDto userCreationDto) {
-        Optional<TokenResponseDto> response = authenticationService.registerAccount(userCreationDto);
+    public ResponseEntity<TokenResponseDto> registerUser(@ModelAttribute UserCreationDto userCreationDto) {
+        Optional<TokenResponseDto> response = authenticationService.registerUser(userCreationDto);
 
         if (response.isPresent()) {
             return ResponseEntity.ok(response.get());
@@ -37,8 +37,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<TokenResponseDto> authenticateAccount(@ModelAttribute UserAuthenticationDto userAuthenticationDto) {
-        Optional<TokenResponseDto> response = authenticationService.authenticateAccount(userAuthenticationDto);
+    public ResponseEntity<TokenResponseDto> authenticateUser(@ModelAttribute UserAuthenticationDto userAuthenticationDto) {
+        Optional<TokenResponseDto> response = authenticationService.authenticateUser(userAuthenticationDto);
 
         if (response.isPresent()){
             return  ResponseEntity.ok(response.get());

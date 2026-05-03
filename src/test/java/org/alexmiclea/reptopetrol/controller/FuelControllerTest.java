@@ -101,19 +101,6 @@ public class FuelControllerTest {
     }
 
     @Test
-    void bulkAddFuels() throws Exception {
-        FuelCreationDto mockFuelCreation = FuelCreationDto.builder()
-                .name("Diesel")
-                .type(FuelType.DIESEL)
-                .build();
-
-        mockMvc.perform(post(API_STRING + "bulkAdd")
-                        .content(objectMapper.writeValueAsString(List.of(mockFuelCreation)))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated());
-    }
-
-    @Test
     void updateFuel() throws Exception {
         UUID fuelId = UUID.randomUUID();
 

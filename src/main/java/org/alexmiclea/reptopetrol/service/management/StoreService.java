@@ -43,16 +43,6 @@ public class StoreService {
         updateStationStoreID(storeDto.getStationId(), store);
     }
 
-    public void bulkAddStores(List<StoreCreationDto> storeDtos) {
-        List<Store> stores = storeCreationMapper.toStores(storeDtos);
-        storeRepository.saveAll(stores);
-
-        for (StoreCreationDto storeDto : storeDtos) {
-            Store store = storeCreationMapper.toStore(storeDto);
-            updateStationStoreID(storeDto.getStationId(), store);
-        }
-    }
-
     @Transactional
     public void updateStore(StoreCreationDto storeDto, UUID uuid) {
         Store currentStore = storeRepository.getReferenceById(uuid);

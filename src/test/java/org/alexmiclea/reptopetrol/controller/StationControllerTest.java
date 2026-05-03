@@ -105,20 +105,6 @@ public class StationControllerTest {
     }
 
     @Test
-    void bulkAddStations() throws Exception {
-        StationCreationDto mockStationCreation = StationCreationDto.builder()
-                .name("Station Alpha")
-                .address("123 Main St")
-                .pumpNo(4)
-                .build();
-
-        mockMvc.perform(post(API_STRING + "bulkAdd")
-                        .content(objectMapper.writeValueAsString(List.of(mockStationCreation)))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated());
-    }
-
-    @Test
     void updateStation() throws Exception {
         UUID stationId = UUID.randomUUID();
 

@@ -106,21 +106,6 @@ public class SupplierControllerTest {
     }
 
     @Test
-    void bulkAddSuppliers() throws Exception {
-
-        SupplierCreationDto mockSupplierCreation = SupplierCreationDto.builder()
-                .address("Mock address")
-                .name("Mock name")
-                .homeCountry("RO")
-                .build();
-
-        mockMvc.perform(post(API_STRING + "/bulkAdd")
-                        .content(objectMapper.writeValueAsString(List.of(mockSupplierCreation)))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated());
-    }
-
-    @Test
     void updateSupplier() throws Exception {
         UUID supplierId = UUID.randomUUID();
 

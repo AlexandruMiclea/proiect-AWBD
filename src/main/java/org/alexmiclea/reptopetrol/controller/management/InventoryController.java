@@ -56,13 +56,6 @@ public class InventoryController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PostMapping("/bulkAdd")
-    public ResponseEntity<Void> bulkAddInventories(@RequestBody @Validated List<InventoryCreationDto> inventoryDtos) {
-        inventoryService.bulkAddInventories(inventoryDtos);
-
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
     @PutMapping("/update")
     public ResponseEntity<Void> updateInventory(@RequestBody @Validated InventoryCreationDto inventoryDto) {
         log.info("PUT /update called with payload {}", inventoryDto);

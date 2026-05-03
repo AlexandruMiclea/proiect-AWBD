@@ -48,14 +48,6 @@ public class TransportController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PostMapping("/bulkAdd")
-    public ResponseEntity<Void> bulkAddTransports(@RequestBody @Validated List<TransportCreationDto> transportDtos) {
-        log.info("POST /bulkAdd called with payload {}", transportDtos);
-        transportService.bulkAddTransports(transportDtos);
-
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
     @PutMapping("/update/{uuid}")
     public ResponseEntity<Void> updateTransport(@RequestBody @Validated TransportCreationDto transportDto, @PathVariable UUID uuid) {
         log.info("PUT /update called with payload {} for UUID {}", transportDto, uuid);

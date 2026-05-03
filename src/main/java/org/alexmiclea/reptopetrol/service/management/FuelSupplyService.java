@@ -46,11 +46,6 @@ public class FuelSupplyService {
         fuelSupplyRepository.save(fuelSupply);
     }
 
-    public void bulkAddFuelSupplies(List<FuelSupplyCreationDto> fuelSupplyDtos) {
-        List<FuelSupply> fuelSupplies = fuelSupplyCreationMapper.toFuelSupplies(fuelSupplyDtos);
-        fuelSupplyRepository.saveAll(fuelSupplies);
-    }
-
     @Transactional
     public void updateFuelSupply(FuelSupplyCreationDto fuelSupplyDto, FuelSupplyKeyDto key) {
         FuelSupplyKey fuelSupplyKey = fuelSupplyKeyMapper.toFuelSupplyKey(key);

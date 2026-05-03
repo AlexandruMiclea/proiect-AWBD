@@ -48,14 +48,6 @@ public class EmployeeController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PostMapping("/bulkAdd")
-    public ResponseEntity<Void> bulkAddEmployees(@RequestBody @Validated List<EmployeeCreationDto> employeeDtos) {
-        log.info("POST /bulkAdd called with payload {}", employeeDtos);
-        employeeService.bulkAddEmployees(employeeDtos);
-
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
     @PutMapping("/update/{uuid}")
     public ResponseEntity<Void> updateEmployee(@RequestBody @Validated EmployeeCreationDto employeeDto, @PathVariable UUID uuid) {
         log.info("PUT /update called with payload {} for UUID {}", employeeDto, uuid);

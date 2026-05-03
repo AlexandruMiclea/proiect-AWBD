@@ -60,14 +60,6 @@ public class StoreController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PostMapping("/bulkAdd")
-    public ResponseEntity<Void> bulkAddStores(@RequestBody @Validated List<StoreCreationDto> storeDtos) {
-        log.info("POST /bulkAdd called with payload {}", storeDtos);
-        storeService.bulkAddStores(storeDtos);
-
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
     @PutMapping("/update/{uuid}")
     public ResponseEntity<Void> updateStore(@RequestBody @Validated StoreCreationDto storeDto, @PathVariable UUID uuid) {
         log.info("PUT /update called with payload {} for UUID {}", storeDto, uuid);

@@ -120,29 +120,6 @@ public class FuelSupplyControllerTest {
     }
 
     @Test
-    void bulkAddFuelSupplies() throws Exception {
-        UUID fuelId = UUID.randomUUID();
-        UUID stationId = UUID.randomUUID();
-
-        FuelSupplyKeyDto fuelSupplyKeyDto = FuelSupplyKeyDto.builder()
-                .fuelId(fuelId)
-                .stationId(stationId)
-                .build();
-
-        FuelSupplyCreationDto mockCreation = FuelSupplyCreationDto.builder()
-                .id(fuelSupplyKeyDto)
-                .quantity(BigDecimal.valueOf(500))
-                .price(BigDecimal.valueOf(7.45))
-                .priceChange(Instant.parse("2024-01-01T00:00:00Z"))
-                .build();
-
-        mockMvc.perform(post(API_STRING + "/bulkAdd")
-                        .content(objectMapper.writeValueAsString(List.of(mockCreation)))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated());
-    }
-
-    @Test
     void updateFuelSupply() throws Exception {
         FuelSupplyCreationDto mockCreation = FuelSupplyCreationDto.builder()
                 .quantity(BigDecimal.valueOf(500))

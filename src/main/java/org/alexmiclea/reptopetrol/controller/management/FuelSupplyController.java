@@ -55,14 +55,6 @@ public class FuelSupplyController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PostMapping("/bulkAdd")
-    public ResponseEntity<Void> bulkAddFuelSupplies(@RequestBody @Validated List<FuelSupplyCreationDto> fuelSupplyDtos) {
-        log.info("POST /bulkAdd called with payload {}", fuelSupplyDtos);
-        fuelSupplyService.bulkAddFuelSupplies(fuelSupplyDtos);
-
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
     @PutMapping("/update")
     public ResponseEntity<Void> updateFuelSupply(@RequestBody @Validated FuelSupplyCreationDto fuelSupplyDto) {
         log.info("PUT /update called with payload {}", fuelSupplyDto);

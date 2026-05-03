@@ -106,19 +106,6 @@ public class ContractControllerTest {
     }
 
     @Test
-    void bulkAddContracts() throws Exception {
-        ContractCreationDto mockContractCreation = ContractCreationDto.builder()
-                .beginDate(Instant.parse("2024-01-01T00:00:00Z"))
-                .endDate(Instant.parse("2025-01-01T00:00:00Z"))
-                .build();
-
-        mockMvc.perform(post(API_STRING + "bulkAdd")
-                        .content(objectMapper.writeValueAsString(List.of(mockContractCreation)))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated());
-    }
-
-    @Test
     void updateContract() throws Exception {
         UUID contractId = UUID.randomUUID();
         UUID supplierId = UUID.randomUUID();

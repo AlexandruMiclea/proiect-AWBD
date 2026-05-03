@@ -39,11 +39,6 @@ public class FuelService {
         fuelRepository.save(fuel);
     }
 
-    public void bulkAddFuels(List<FuelCreationDto> fuelDtos) {
-        List<Fuel> fuels = fuelCreationMapper.toFuels(fuelDtos);
-        fuelRepository.saveAll(fuels);
-    }
-
     @Transactional
     public void updateFuel(FuelCreationDto fuelDto, UUID uuid) {
         Fuel currentFuel = fuelRepository.getReferenceById(uuid);

@@ -100,19 +100,6 @@ public class ProductControllerTest {
     }
 
     @Test
-    void bulkAddProducts() throws Exception {
-        ProductCreationDto mockProductCreation = ProductCreationDto.builder()
-                .name("Motor Oil")
-                .type("Car Accessory")
-                .build();
-
-        mockMvc.perform(post(API_STRING + "bulkAdd")
-                        .content(objectMapper.writeValueAsString(List.of(mockProductCreation)))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated());
-    }
-
-    @Test
     void updateProduct() throws Exception {
         UUID productId = UUID.randomUUID();
 
