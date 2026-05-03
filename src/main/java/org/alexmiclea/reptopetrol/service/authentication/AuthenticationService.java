@@ -3,6 +3,7 @@ package org.alexmiclea.reptopetrol.service.authentication;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.alexmiclea.reptopetrol.dto.user.TokenResponseDto;
 import org.alexmiclea.reptopetrol.dto.user.UserAuthenticationDto;
 import org.alexmiclea.reptopetrol.dto.user.UserCreationDto;
@@ -10,7 +11,6 @@ import org.alexmiclea.reptopetrol.model.authentication.Token;
 import org.alexmiclea.reptopetrol.model.user.User;
 import org.alexmiclea.reptopetrol.repository.authentication.TokenRepository;
 import org.alexmiclea.reptopetrol.repository.authentication.UserRepository;
-import org.springframework.cloud.endpoint.event.RefreshEventListener;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,6 +25,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthenticationService {
 
     private final UserRepository userRepository;
@@ -51,6 +52,7 @@ public class AuthenticationService {
 
         // validate that the password inputs are equal
         // TODO how do I return an error that is rendered in thymeleaf?
+
         if (!userCreationDto.getPassword().equals(userCreationDto.getConfirmPassword())) {
             return Optional.empty();
         }
