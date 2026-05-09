@@ -34,7 +34,7 @@ public class StoreController {
     public String getStores(Model model) {
         log.info("GET /all called");
         model.addAttribute("stations", storeService.getAll());
-        return "stores/index";
+        return "management/stores/index";
     }
 
     @GetMapping("/{uuid}")

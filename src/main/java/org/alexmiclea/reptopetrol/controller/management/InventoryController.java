@@ -34,7 +34,7 @@ public class InventoryController {
     public String getInventories(Model model) {
         log.info("GET /all called");
         model.addAttribute("inventories", inventoryService.getAll());
-        return "inventories/index";
+        return "management/inventories/index";
     }
 
     @GetMapping

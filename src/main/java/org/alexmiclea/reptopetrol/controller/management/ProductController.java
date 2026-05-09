@@ -28,7 +28,7 @@ public class ProductController {
     public String getProducts(Model model) {
         log.info("GET /all called");
         model.addAttribute("products", productService.getAll());
-        return "products/index";
+        return "management/products/index";
     }
 
     @GetMapping("/{uuid}")

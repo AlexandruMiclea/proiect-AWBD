@@ -28,7 +28,7 @@ public class SupplierController {
     public String getSuppliers(Model model) {
         log.info("GET /all called");
         model.addAttribute("suppliers", supplierService.getAll());
-        return "suppliers/index";
+        return "management/suppliers/index";
     }
 
     @GetMapping("/{uuid}")

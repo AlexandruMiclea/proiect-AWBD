@@ -28,7 +28,7 @@ public class TransportController {
     public String getTransports(Model model) {
         log.info("GET /all called");
         model.addAttribute("transports", transportService.getAll());
-        return "transports/index";
+        return "management/transports/index";
     }
 
     @GetMapping("/{uuid}")

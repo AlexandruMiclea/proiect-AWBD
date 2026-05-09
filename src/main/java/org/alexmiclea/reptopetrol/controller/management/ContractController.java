@@ -30,7 +30,7 @@ public class ContractController {
     public String getContracts(Model model) {
         log.info("GET /all called");
         model.addAttribute("contracts", contractService.getAll());
-        return "contracts/index";
+        return "management/contracts/index";
     }
 
     @GetMapping("/{uuid}")

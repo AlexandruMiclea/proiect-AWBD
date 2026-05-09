@@ -34,7 +34,7 @@ public class FuelSupplyController {
     public String getFuelSupplies(Model model) {
         log.info("GET /all called");
         model.addAttribute("fuelSupplies", fuelSupplyService.getAll());
-        return "fuelSupplies/index";
+        return "management/fuelSupplies/index";
     }
 
     @GetMapping

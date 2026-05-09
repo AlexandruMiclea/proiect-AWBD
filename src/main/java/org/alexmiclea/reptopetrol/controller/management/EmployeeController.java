@@ -28,7 +28,7 @@ public class EmployeeController {
     public String getEmployees(Model model) {
         log.info("GET /all called");
         model.addAttribute("employees", employeeService.getAll());
-        return "employees/index";
+        return "management/employees/index";
     }
 
     @GetMapping("/{uuid}")

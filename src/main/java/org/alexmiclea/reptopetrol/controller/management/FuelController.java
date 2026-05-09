@@ -28,7 +28,7 @@ public class FuelController {
     public String getFuels(Model model) {
         log.info("GET /all called");
         model.addAttribute("fuels", fuelService.getAll());
-        return "fuels/index";
+        return "management/fuels/index";
     }
 
     @GetMapping("/{uuid}")
