@@ -29,7 +29,7 @@
                     <td class="col-id" th:text="${store.id}"></td>
                     <td class="col-id" th:text="${store.stationId}"></td>
                     <td class="col-actions">
-                        <a th:href="@{/api/store/view/edit/{id}(id=${store.id})}" class="btn-row-edit">Edit</a>
+                        <a th:href="@{/api/store/update/{id}(id=${store.id})}" class="btn-row-edit">Edit</a>
                         <button class="btn-row-delete"
                                 th:onclick="'deleteEntry(\'' + ${store.id} + '\')'">Delete</button>
                     </td>

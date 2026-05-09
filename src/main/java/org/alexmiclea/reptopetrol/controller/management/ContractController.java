@@ -5,15 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.alexmiclea.reptopetrol.dto.management.creation.ContractCreationDto;
 import org.alexmiclea.reptopetrol.dto.management.retrieval.ContractRetrievalDto;
 import org.alexmiclea.reptopetrol.service.management.ContractService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,10 +21,6 @@ public class ContractController {
 
     private final ContractService contractService;
 
-    // TODO for all controllers, create GET all, POST and PUT methods with templates for creating, updating and listing
-    // all elements. The delete should redirect to the /all endpoint after deletion. Getting one element is something that
-    // should be a service-level operation (if you need to show more data, show it )
-
     @GetMapping("/all")
     //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
     public String getContracts(Model model) {
@@ -39,30 +31,71 @@ public class ContractController {
         return "management/contracts/index";
     }
 
-     @PostMapping("/add")
+    @GetMapping("/add")
+    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    public String getContractCreatePage(Model model) {
+        log.debug("GET /add called");
+
+        // creation Dto
+        ContractCreationDto contractCreationDto = new ContractCreationDto();
+
+        // TODO you need to add a list of other elements, so you can have a dropdown and select them
+
+        model.addAttribute("contractCreationDto", contractCreationDto);
+
+        return "management/contracts/add";
+    }
+
+    @GetMapping("/update/{uuid}")
+    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    public String getContractUpdatePage(Model model, @PathVariable UUID uuid) {
+        log.debug("PUT /update called for UUID {}", uuid);
+
+        Optional<ContractRetrievalDto> contractRetrievalDto = contractService.getContractById(uuid);
+
+        if (contractRetrievalDto.isPresent()) {
+
+            ContractRetrievalDto retrieved = contractRetrievalDto.get();
+
+            ContractCreationDto contractCreationDto = ContractCreationDto.builder()
+                    .id(uuid)
+                    .supplierId(retrieved.getSupplierId())
+                    .fuelIds(retrieved.getFuelIds())
+                    .beginDate(retrieved.getBeginDate())
+                    .endDate(retrieved.getEndDate())
+                    .build();
+
+            model.addAttribute("contractCreationDto", contractCreationDto);
+            return "management/contracts/update";
+        } else {
+            return "management/contracts/index";
+        }
+    }
+
+    @PostMapping("/add")
     //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
     public String addContract(@RequestBody @Validated ContractCreationDto contractDto) {
         log.debug("POST /add called with payload {}", contractDto);
 
         contractService.addContract(contractDto);
 
-        return "management/contracts/add";
+        return "redirect:api/contract/all";
     }
 
     @PutMapping("/update/{uuid}")
     //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
     public String updateContract(@RequestBody @Validated ContractCreationDto contractDto, @PathVariable UUID uuid) {
-        log.info("PUT /update called with payload {} for UUID {}", contractDto, uuid);
+        log.debug("PUT /update called with payload {} for UUID {}", contractDto, uuid);
 
         contractService.updateContract(contractDto, uuid);
 
-        return "management/contracts/edit";
+        return "redirect:api/contract/all";
     }
 
     @DeleteMapping("/delete/{uuid}")
     //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
     public String deleteContract(@PathVariable UUID uuid) {
-        log.info("DELETE /delete called for UUID {}", uuid);
+        log.debug("DELETE /delete called for UUID {}", uuid);
 
         Optional<UUID> response = contractService.deleteContract(uuid);
 
@@ -70,14 +103,4 @@ public class ContractController {
 
         return "redirect:api/contract/all";
     }
-
-//    @GetMapping("/{uuid}")
-//    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
-//    public ResponseEntity<ContractRetrievalDto> getContract(@PathVariable UUID uuid) {
-//        log.info("GET /{} called", uuid);
-//        Optional<ContractRetrievalDto> contract = contractService.getContractById(uuid);
-//        log.debug("Database response for GET: {}", contract);
-//
-//        return contract.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
-//    }
 }

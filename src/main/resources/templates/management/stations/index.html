@@ -39,7 +39,7 @@
                     <td th:text="${#lists.size(station.employeeIds)}"></td>
                     <td th:text="${#lists.size(station.fuelIds)}"></td>
                     <td class="col-actions">
-                        <a th:href="@{/api/station/view/edit/{id}(id=${station.id})}" class="btn-row-edit">Edit</a>
+                        <a th:href="@{/api/station/update/{id}(id=${station.id})}" class="btn-row-edit">Edit</a>
                         <button class="btn-row-delete"
                                 th:onclick="'deleteEntry(\'' + ${station.id} + '\')'">Delete</button>
                     </td>

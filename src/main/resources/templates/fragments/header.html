@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
 <head>
     <th:block th:fragment="appHead">
         <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -31,6 +31,7 @@
     <div class="drawer-overlay" id="drawerOverlay"></div>
     <nav class="nav-drawer" id="navDrawer" aria-label="Management navigation">
         <div class="nav-drawer-section">Management</div>
+<!--        <a sec:authorize="hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_ADMIN')" th:href="@{/api/contract/all}"    class="nav-link">Contracts</a>-->
         <a th:href="@{/api/contract/all}"    class="nav-link">Contracts</a>
         <a th:href="@{/api/employee/all}"    class="nav-link">Employees</a>
         <a th:href="@{/api/fuelSupply/all}"  class="nav-link">Fuel Supplies</a>

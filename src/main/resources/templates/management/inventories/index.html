@@ -35,7 +35,7 @@
                     <td th:text="${inv.price}"></td>
                     <td th:text="${inv.priceChange}"></td>
                     <td class="col-actions">
-                        <a th:href="@{/api/inventory/view/edit(storeId=${inv.id.storeId},productId=${inv.id.productId})}"
+                        <a th:href="@{/api/inventory/update(storeId=${inv.id.storeId},productId=${inv.id.productId})}"
                            class="btn-row-edit">Edit</a>
                     </td>
                 </tr>

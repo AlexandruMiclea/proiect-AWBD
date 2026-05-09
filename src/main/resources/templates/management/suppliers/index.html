@@ -35,7 +35,7 @@
                     <td th:text="${supplier.homeCountry}"></td>
                     <td th:text="${supplier.contractIds}"></td>
                     <td class="col-actions">
-                        <a th:href="@{/api/supplier/view/edit/{id}(id=${supplier.id})}" class="btn-row-edit">Edit</a>
+                        <a th:href="@{/api/supplier/update/{id}(id=${supplier.id})}" class="btn-row-edit">Edit</a>
                         <button class="btn-row-delete"
                                 th:onclick="'deleteEntry(\'' + ${supplier.id} + '\')'">Delete</button>
                     </td>

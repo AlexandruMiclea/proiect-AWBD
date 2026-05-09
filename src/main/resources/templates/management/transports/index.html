@@ -37,7 +37,7 @@
                     <td th:text="${transport.completionDate}"></td>
                     <td th:text="${#lists.size(transport.stationIds)}"></td>
                     <td class="col-actions">
-                        <a th:href="@{/api/transport/view/edit/{id}(id=${transport.id})}" class="btn-row-edit">Edit</a>
+                        <a th:href="@{/api/transport/update/{id}(id=${transport.id})}" class="btn-row-edit">Edit</a>
                         <button class="btn-row-delete"
                                 th:onclick="'deleteEntry(\'' + ${transport.id} + '\')'">Delete</button>
                     </td>

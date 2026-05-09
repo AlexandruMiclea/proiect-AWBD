@@ -3,12 +3,9 @@ package org.alexmiclea.reptopetrol.controller.management;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.alexmiclea.reptopetrol.dto.management.creation.StoreCreationDto;
-import org.alexmiclea.reptopetrol.dto.management.retrieval.StationRetrievalDto;
 import org.alexmiclea.reptopetrol.dto.management.retrieval.StoreRetrievalDto;
 import org.alexmiclea.reptopetrol.service.management.StationService;
 import org.alexmiclea.reptopetrol.service.management.StoreService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -31,48 +28,81 @@ public class StoreController {
     private final StationService stationService;
 
     @GetMapping("/all")
+    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
     public String getStores(Model model) {
-        log.info("GET /all called");
+        log.debug("GET /all called");
+
         model.addAttribute("stores", storeService.getAll());
+
         return "management/stores/index";
     }
 
-    @GetMapping("/{uuid}")
-    public ResponseEntity<StoreRetrievalDto> getStore(@PathVariable UUID uuid) {
-        log.info("GET /{} called", uuid);
-        Optional<StoreRetrievalDto> store = storeService.getStoreById(uuid);
-        log.debug("Database response for GET: {}", store);
+    @GetMapping("/add")
+    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    public String getStoreCreatePage(Model model) {
+        log.debug("GET /add called");
 
-        return store.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        // creation Dto
+        StoreCreationDto storeCreationDto = new StoreCreationDto();
+
+        // TODO you need to add a list of other elements, so you can have a dropdown and select them
+
+        model.addAttribute("storeCreationDto", storeCreationDto);
+
+        return "management/stores/add";
+    }
+
+    @GetMapping("/update/{uuid}")
+    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    public String getStoreUpdatePage(Model model, @PathVariable UUID uuid) {
+        log.debug("PUT /update called for UUID {}", uuid);
+
+        Optional<StoreRetrievalDto> storeRetrievalDto = storeService.getStoreById(uuid);
+
+        if (storeRetrievalDto.isPresent()) {
+
+            StoreRetrievalDto retrieved = storeRetrievalDto.get();
+
+            StoreCreationDto storeCreationDto = StoreCreationDto.builder()
+                    .id(uuid)
+                    .build();
+
+            model.addAttribute("storeCreationDto", storeCreationDto);
+            return "management/stores/update";
+        } else {
+            return "management/stores/index";
+        }
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Void> addStore(@RequestBody @Validated StoreCreationDto storeDto) {
-        log.info("POST /add called with payload {}", storeDto);
+    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    public String addStore(@RequestBody @Validated StoreCreationDto storeDto) {
+        log.debug("POST /add called with payload {}", storeDto);
+
         storeService.addStore(storeDto);
 
-        // for the station in the storeDto, we need to add the storeId
-        // TODO do some exception handling here in the future
-        StationRetrievalDto retrievalDto = stationService.getStationById(storeDto.getStationId()).get();
-
-
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return "redirect:api/store/all";
     }
 
     @PutMapping("/update/{uuid}")
-    public ResponseEntity<Void> updateStore(@RequestBody @Validated StoreCreationDto storeDto, @PathVariable UUID uuid) {
-        log.info("PUT /update called with payload {} for UUID {}", storeDto, uuid);
+    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    public String updateStore(@RequestBody @Validated StoreCreationDto storeDto, @PathVariable UUID uuid) {
+        log.debug("PUT /update called with payload {} for UUID {}", storeDto, uuid);
+
         storeService.updateStore(storeDto, uuid);
 
-        return ResponseEntity.ok().build();
+        return "redirect:api/store/all";
     }
 
     @DeleteMapping("/delete/{uuid}")
-    public ResponseEntity<UUID> deleteStore(@PathVariable UUID uuid) {
-        log.info("DELETE /delete called for UUID {}", uuid);
+    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    public String deleteStore(@PathVariable UUID uuid) {
+        log.debug("DELETE /delete called for UUID {}", uuid);
+
         Optional<UUID> response = storeService.deleteStore(uuid);
+
         log.debug("Database response for DELETE: {}", response);
 
-        return response.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        return "redirect:api/store/all";
     }
 }

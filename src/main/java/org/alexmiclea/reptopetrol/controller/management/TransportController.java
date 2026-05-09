@@ -5,14 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.alexmiclea.reptopetrol.dto.management.creation.TransportCreationDto;
 import org.alexmiclea.reptopetrol.dto.management.retrieval.TransportRetrievalDto;
 import org.alexmiclea.reptopetrol.service.management.TransportService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,43 +22,84 @@ public class TransportController {
     private final TransportService transportService;
 
     @GetMapping("/all")
+    //@Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
     public String getTransports(Model model) {
-        log.info("GET /all called");
+        log.debug("GET /all called");
+
         model.addAttribute("transports", transportService.getAll());
+
         return "management/transports/index";
     }
 
-    @GetMapping("/{uuid}")
-    public ResponseEntity<TransportRetrievalDto> getTransport(@PathVariable UUID uuid) {
-        log.info("GET /{} called", uuid);
-        Optional<TransportRetrievalDto> transport = transportService.getTransportById(uuid);
-        log.debug("Database response for GET: {}", transport);
+    @GetMapping("/add")
+    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    public String getTransportCreatePage(Model model) {
+        log.debug("GET /add called");
 
-        return transport.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        // creation Dto
+        TransportCreationDto transportCreationDto = new TransportCreationDto();
+
+        // TODO you need to add a list of other elements, so you can have a dropdown and select them
+
+        model.addAttribute("transportCreationDto", transportCreationDto);
+
+        return "management/transports/add";
+    }
+
+    @GetMapping("/update/{uuid}")
+    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    public String getEmployeeUpdatePage(Model model, @PathVariable UUID uuid) {
+        log.debug("PUT /update called for UUID {}", uuid);
+
+        Optional<TransportRetrievalDto> transportRetrievalDto = transportService.getTransportById(uuid);
+
+        if (transportRetrievalDto.isPresent()) {
+
+            TransportRetrievalDto retrieved = transportRetrievalDto.get();
+
+            TransportCreationDto transportCreationDto = TransportCreationDto.builder()
+                    .id(uuid)
+                    .creationDate(retrieved.getCreationDate())
+                    .completionDate(retrieved.getCompletionDate())
+                    .companyName(retrieved.getCompanyName())
+                    .build();
+
+            model.addAttribute("transportCreationDto", transportCreationDto);
+            return "management/transports/update";
+        } else {
+            return "management/transports/index";
+        }
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Void> addTransport(@RequestBody @Validated TransportCreationDto transportDto) {
-        log.info("POST /add called with payload {}", transportDto);
+    //@Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
+    public String addTransport(@RequestBody @Validated TransportCreationDto transportDto) {
+        log.debug("POST /add called with payload {}", transportDto);
+
         transportService.addTransport(transportDto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return "redirect:api/transport/all";
     }
 
     @PutMapping("/update/{uuid}")
-    public ResponseEntity<Void> updateTransport(@RequestBody @Validated TransportCreationDto transportDto, @PathVariable UUID uuid) {
-        log.info("PUT /update called with payload {} for UUID {}", transportDto, uuid);
+    //@Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
+    public String updateTransport(@RequestBody @Validated TransportCreationDto transportDto, @PathVariable UUID uuid) {
+        log.debug("PUT /update called with payload {} for UUID {}", transportDto, uuid);
+
         transportService.updateTransport(transportDto, uuid);
 
-        return ResponseEntity.ok().build();
+        return "redirect:api/transport/all";
     }
 
     @DeleteMapping("/delete/{uuid}")
-    public ResponseEntity<UUID> deleteTransport(@PathVariable UUID uuid) {
-        log.info("DELETE /delete called for UUID {}", uuid);
+    //@Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
+    public String deleteTransport(@PathVariable UUID uuid) {
+        log.debug("DELETE /delete called for UUID {}", uuid);
+
         Optional<UUID> response = transportService.deleteTransport(uuid);
+
         log.debug("Database response for DELETE: {}", response);
 
-        return response.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        return "redirect:api/transport/all";
     }
 }

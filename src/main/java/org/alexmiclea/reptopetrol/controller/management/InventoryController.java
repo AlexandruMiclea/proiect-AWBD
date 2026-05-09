@@ -9,14 +9,11 @@ import org.alexmiclea.reptopetrol.mapper.keys.InventoryKeyMapper;
 import org.alexmiclea.reptopetrol.model.management.keys.InventoryKey;
 import org.alexmiclea.reptopetrol.service.management.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -31,46 +28,84 @@ public class InventoryController {
     private final InventoryKeyMapper inventoryKeyMapper;
 
     @GetMapping("/all")
+    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
     public String getInventories(Model model) {
-        log.info("GET /all called");
+        log.debug("GET /all called");
+
         model.addAttribute("inventories", inventoryService.getAll());
+
         return "management/inventories/index";
     }
 
-    @GetMapping
-    public ResponseEntity<InventoryRetrievalDto> getInventory(@RequestBody InventoryKeyDto key) {
-        log.info("GET called with composed key {}", key);
-        InventoryKey inventoryKey = inventoryKeyMapper.toInventoryKey(key);
+    @GetMapping("/add")
+    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    public String getInventoryCreatePage(Model model) {
+        log.debug("GET /add called");
 
-        Optional<InventoryRetrievalDto> inventory = inventoryService.getInventoryById(inventoryKey);
-        log.debug("Database response for GET: {}", inventory);
+        // creation Dto
+        InventoryCreationDto inventoryCreationDto = new InventoryCreationDto();
 
-        return inventory.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        // TODO you need to add a list of other elements, so you can have a dropdown and select them
+
+        model.addAttribute("inventoryCreationDto", inventoryCreationDto);
+
+        return "management/inventories/add";
+    }
+
+    @GetMapping("/update/{uuid}")
+    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    public String getFuelSupplyUpdatePage(Model model, InventoryKeyDto inventoryKeyDto) {
+        log.debug("GET /update called with ID {}", inventoryKeyDto);
+
+        Optional<InventoryRetrievalDto> inventoryRetrievalDto =
+                inventoryService.getInventoryById(inventoryKeyMapper.toInventoryKey(inventoryKeyDto));
+
+        if (inventoryRetrievalDto.isPresent()) {
+
+            InventoryRetrievalDto retrieved = inventoryRetrievalDto.get();
+
+            InventoryCreationDto inventoryCreationDto = InventoryCreationDto.builder()
+                    .id(retrieved.getId())
+                    .price(retrieved.getPrice())
+                    .priceChange(retrieved.getPriceChange())
+                    .quantity(retrieved.getQuantity())
+                    .build();
+
+            model.addAttribute("inventoryCreationDto", inventoryCreationDto);
+            return "management/inventories/update";
+        } else {
+            return "management/inventories/index";
+        }
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Void> addInventory(@RequestBody @Validated InventoryCreationDto inventoryDto) {
-        log.info("POST /add called with payload {}", inventoryDto);
+    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    public String addInventory(@RequestBody @Validated InventoryCreationDto inventoryDto) {
+        log.debug("POST /add called with payload {}", inventoryDto);
         inventoryService.addInventory(inventoryDto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return "redirect:api/inventory/all";
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Void> updateInventory(@RequestBody @Validated InventoryCreationDto inventoryDto) {
-        log.info("PUT /update called with payload {}", inventoryDto);
+    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    public String updateInventory(@RequestBody @Validated InventoryCreationDto inventoryDto) {
+        log.debug("PUT /update called with payload {}", inventoryDto);
         inventoryService.updateInventory(inventoryDto, inventoryDto.getId());
 
-        return ResponseEntity.ok().build();
+        return "redirect:api/inventory/all";
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<InventoryKey> deleteInventory(@RequestBody InventoryKeyDto key) {
-        log.info("DELETE called with composed key {}", key);
+    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    public String deleteInventory(@RequestBody InventoryKeyDto key) {
+        log.debug("DELETE called with composed key {}", key);
+
         InventoryKey inventoryKey = inventoryKeyMapper.toInventoryKey(key);
         Optional<InventoryKey> inventory = inventoryService.deleteInventory(inventoryKey);
+
         log.debug("Database response for DELETE: {}", inventory);
 
-        return inventory.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        return "redirect:api/inventory/all";
     }
 }
