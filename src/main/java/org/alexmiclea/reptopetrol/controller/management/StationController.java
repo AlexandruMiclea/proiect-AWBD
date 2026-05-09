@@ -28,7 +28,7 @@ public class StationController {
     public String getStations(Model model) {
         log.info("GET /all called");
         model.addAttribute("stations", stationService.getAll());
-        return "stations/index";
+        return "management/stations/index";
     }
 
     @GetMapping("/{uuid}")

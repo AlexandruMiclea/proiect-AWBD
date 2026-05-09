@@ -1,21 +1,23 @@
 package org.alexmiclea.reptopetrol.controller.authentication;
 
-import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.alexmiclea.reptopetrol.dto.user.TokenResponseDto;
 import org.alexmiclea.reptopetrol.dto.user.UserAuthenticationDto;
 import org.alexmiclea.reptopetrol.dto.user.UserCreationDto;
-import org.alexmiclea.reptopetrol.model.user.User;
 import org.alexmiclea.reptopetrol.service.authentication.AuthenticationService;
+import org.alexmiclea.reptopetrol.service.authentication.JwtService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.View;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/api/auth")
@@ -28,29 +30,72 @@ public class AuthenticationController {
     // TODO assign role endpoint for Admin?
 
     private final AuthenticationService authenticationService;
+    private final View error;
+    private final JwtService jwtService;
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute UserCreationDto userCreationDto, HttpServletRequest request) {
-        log.info("{}", authenticationService.getAllUsers());
-        Optional<TokenResponseDto> response = authenticationService.registerUser(userCreationDto);
+    public String registerUser(@Valid UserCreationDto userCreationDto, BindingResult result, Model model) {
 
-        if (response.isPresent()) {
-            // TODO redo the redirect path
-            // redirect to index page
-            return "redirect:/index/index";
-        } else {
+        // check for field validation errors - if they exist, redirect to the register page
+        if (result.hasErrors()) {
+            UserAuthenticationDto userAuthenticationDto = new UserAuthenticationDto();
+            model.addAttribute("userAuthenticationDto", userAuthenticationDto);
+            model.addAttribute("userCreationDto", userCreationDto);
+            model.addAttribute("activeForm","register");
             return "auth/auth";
         }
+
+        List<String> errors = authenticationService.validateUserCreationDto(userCreationDto);
+        if (!errors.isEmpty()) {
+            UserAuthenticationDto userAuthenticationDto = new UserAuthenticationDto();
+            model.addAttribute("userAuthenticationDto", userAuthenticationDto);
+            model.addAttribute("userCreationDto", userCreationDto);
+            model.addAttribute("activeForm","register");
+            model.addAttribute("registerError", errors);
+            return "auth/auth";
+        }
+
+        // TODO wat to do with the token?
+        TokenResponseDto response = authenticationService.registerUser(userCreationDto);
+
+        model.addAttribute("userAuthenticationDto", new UserAuthenticationDto());
+        model.addAttribute("userCreationDto", new UserCreationDto());
+        model.addAttribute("activeForm","authenticate");
+        return "auth/auth";
     }
 
+    // TODO refactor like the method above
     @PostMapping("/authenticate")
-    public String authenticateUser(@ModelAttribute UserAuthenticationDto userAuthenticationDto) {
-        Optional<TokenResponseDto> response = authenticationService.authenticateUser(userAuthenticationDto);
+    public String authenticateUser(@Valid UserAuthenticationDto userAuthenticationDto, BindingResult result, Model model, HttpServletResponse response) {
+        log.debug("sal");
 
-        if (response.isPresent()){
-            return "redirect:/index/index";
-        } else {
+        // check for field validation errors - if they exist, redirect to the register page
+        if (result.hasErrors()) {
+            UserCreationDto userCreationDto = new UserCreationDto();
+            model.addAttribute("userAuthenticationDto", userAuthenticationDto);
+            model.addAttribute("userCreationDto", userCreationDto);
+            model.addAttribute("activeForm","authenticate");
             return "auth/auth";
         }
+
+        List<String> errors = authenticationService.validateUserAuthenticationDto(userAuthenticationDto);
+        if (!errors.isEmpty()) {
+            UserCreationDto userCreationDto = new UserCreationDto();
+            model.addAttribute("userAuthenticationDto", userAuthenticationDto);
+            model.addAttribute("userCreationDto", userCreationDto);
+            model.addAttribute("activeForm","authenticate");
+            model.addAttribute("registerError", errors);
+            return "auth/auth";
+        }
+
+        // TODO what to do with the token?
+        TokenResponseDto tokenResponse = authenticationService.authenticateUser(userAuthenticationDto);
+        Cookie cookie = new Cookie("jwt", tokenResponse.getAccessToken());
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+        cookie.setMaxAge(86400);
+
+        response.addCookie(cookie);
+        return "redirect:/api/station/all";
     }
 }

@@ -2,6 +2,7 @@ package org.alexmiclea.reptopetrol.service.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.alexmiclea.reptopetrol.dto.user.TokenResponseDto;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import tools.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -48,17 +50,50 @@ public class AuthenticationService {
         return userRepository.findAll();
     }
 
-    public Optional<TokenResponseDto> registerUser(UserCreationDto userCreationDto) {
+    public List<String> validateUserCreationDto(UserCreationDto userCreationDto) {
+        List<String> errors = new ArrayList<>();
 
         // validate that the password inputs are equal
-        // TODO how do I return an error that is rendered in thymeleaf?
-
         if (!userCreationDto.getPassword().equals(userCreationDto.getConfirmPassword())) {
-            return Optional.empty();
+            errors.add("Passwords are not matching!");
         }
 
+        // validate that the email is not used by another user
+        if (userRepository.findByEmail(userCreationDto.getEmail()).isPresent()) {
+            errors.add("Email is already used by another account!");
+        }
+
+        return errors;
+    }
+
+    public List<String> validateUserAuthenticationDto(UserAuthenticationDto userAuthenticationDto) {
+        List<String> errors = new ArrayList<>();
+
+        // validate that the email is used by any user
+        if (userRepository.findByEmail(userAuthenticationDto.getEmail()).isEmpty()) {
+            errors.add("Email not used by any account!");
+            return errors;
+        }
+
+        // Check that the password in the form is good enough to authenticate user
+        try {
+            authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        userAuthenticationDto.getEmail(),
+                        userAuthenticationDto.getPassword()
+                )
+            );
+        } catch (Exception e) {
+            errors.add("Entered password does not match account password!");
+            return errors;
+        }
+
+        return errors;
+    }
+
+    public TokenResponseDto registerUser(UserCreationDto userCreationDto) {
+
          User user = User.builder()
-            .id(UUID.randomUUID())
             .firstname(userCreationDto.getFirstName())
             .lastname(userCreationDto.getLastName())
             .email(userCreationDto.getEmail())
@@ -70,13 +105,14 @@ public class AuthenticationService {
         String refreshToken = jwtService.generateRefreshToken(user);
 
         saveUserToken(savedUser, jwtToken);
-        return Optional.of(TokenResponseDto.builder()
+
+        return TokenResponseDto.builder()
                         .accessToken(jwtToken)
                         .refreshToken(refreshToken)
-                .build());
+                .build();
     }
 
-    public Optional<TokenResponseDto> authenticateUser(UserAuthenticationDto userAuthenticationDto) {
+    public TokenResponseDto authenticateUser(UserAuthenticationDto userAuthenticationDto) {
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -84,16 +120,18 @@ public class AuthenticationService {
                         userAuthenticationDto.getPassword()
                 )
         );
+
         User user = userRepository.findByEmail(userAuthenticationDto.getEmail()).orElseThrow();
         String jwtToken = jwtService.generateToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);
+
         revokeUserTokens(user);
         saveUserToken(user, jwtToken);
 
-        return Optional.of(TokenResponseDto.builder()
-                        .accessToken(jwtToken)
-                        .refreshToken(refreshToken)
-                .build());
+        return TokenResponseDto.builder()
+                    .accessToken(jwtToken)
+                    .refreshToken(refreshToken)
+                .build();
     }
 
     public Optional<UUID> deleteUser(UUID uuid) {
@@ -153,6 +191,7 @@ public class AuthenticationService {
 
     private void revokeUserTokens(User user) {
         List<Token> validUserTokens = tokenRepository.findAllByUser(user.getId());
+        log.debug("Tokens: {}", validUserTokens);
 
         if (validUserTokens.isEmpty()) return;
 

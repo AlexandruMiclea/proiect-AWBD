@@ -2,6 +2,7 @@ package org.alexmiclea.reptopetrol.model.user;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.alexmiclea.reptopetrol.model.authentication.Token;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -16,6 +17,7 @@ import java.util.UUID;
 @Setter
 @RequiredArgsConstructor
 @AllArgsConstructor
+@ToString
 public class User implements UserDetails {
 
     @Id
@@ -27,6 +29,9 @@ public class User implements UserDetails {
 //    private String username;
     private String email;
     private String password;
+
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

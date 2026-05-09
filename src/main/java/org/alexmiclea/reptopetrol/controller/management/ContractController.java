@@ -7,6 +7,7 @@ import org.alexmiclea.reptopetrol.dto.management.retrieval.ContractRetrievalDto;
 import org.alexmiclea.reptopetrol.service.management.ContractService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -25,6 +26,7 @@ public class ContractController {
     private final ContractService contractService;
 
     @GetMapping("/all")
+//    @PreAuthorize("hasAuthority('ROLE_OPERATIONAL'))
     public String getContracts(Model model) {
         log.info("GET /all called");
         model.addAttribute("contracts", contractService.getAll());
