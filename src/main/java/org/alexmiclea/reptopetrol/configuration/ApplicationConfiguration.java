@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-// TODO understand what all these beans do
+// VIEW understand what all these beans do
 
 @Configuration
 @RequiredArgsConstructor
@@ -34,7 +34,7 @@ public class ApplicationConfiguration {
         return authProvider;
     }
 
-    // TODO determine what the auditor aware does
+    // VIEW determine what the auditor aware does (and include it!)
 
     @Bean
     public PasswordEncoder passwordEncoder() {

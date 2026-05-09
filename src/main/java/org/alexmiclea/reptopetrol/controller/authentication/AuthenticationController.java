@@ -9,13 +9,11 @@ import org.alexmiclea.reptopetrol.dto.user.TokenResponseDto;
 import org.alexmiclea.reptopetrol.dto.user.UserAuthenticationDto;
 import org.alexmiclea.reptopetrol.dto.user.UserCreationDto;
 import org.alexmiclea.reptopetrol.service.authentication.AuthenticationService;
-import org.alexmiclea.reptopetrol.service.authentication.JwtService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.View;
 
 import java.util.List;
 
@@ -25,13 +23,9 @@ import java.util.List;
 @Slf4j
 public class AuthenticationController {
 
-    // Register
-    // Authenticate
     // TODO assign role endpoint for Admin?
 
     private final AuthenticationService authenticationService;
-    private final View error;
-    private final JwtService jwtService;
 
     @PostMapping("/register")
     public String registerUser(@Valid UserCreationDto userCreationDto, BindingResult result, Model model) {
@@ -64,7 +58,6 @@ public class AuthenticationController {
         return "auth/auth";
     }
 
-    // TODO refactor like the method above
     @PostMapping("/authenticate")
     public String authenticateUser(@Valid UserAuthenticationDto userAuthenticationDto, BindingResult result, Model model, HttpServletResponse response) {
         log.debug("sal");
@@ -88,7 +81,6 @@ public class AuthenticationController {
             return "auth/auth";
         }
 
-        // TODO what to do with the token?
         TokenResponseDto tokenResponse = authenticationService.authenticateUser(userAuthenticationDto);
         Cookie cookie = new Cookie("jwt", tokenResponse.getAccessToken());
         cookie.setHttpOnly(true);
@@ -96,6 +88,6 @@ public class AuthenticationController {
         cookie.setMaxAge(86400);
 
         response.addCookie(cookie);
-        return "redirect:/api/station/all";
+        return "redirect:/";
     }
 }

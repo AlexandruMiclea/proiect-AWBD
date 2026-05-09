@@ -28,9 +28,12 @@ public class User implements UserDetails {
     private String lastname;
 //    private String username;
     private String email;
+
+    @ToString.Exclude
     private String password;
 
     @OneToMany(mappedBy = "user")
+    @ToString.Exclude
     private List<Token> tokens;
 
     @Override
