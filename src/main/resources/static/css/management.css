@@ -1,0 +1,145 @@
+/* ── Page layout ── */
+.mgmt-container {
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+}
+
+.mgmt-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.mgmt-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    color: var(--ink);
+    margin: 0;
+}
+
+/* ── Table ── */
+.mgmt-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 0;
+}
+
+.mgmt-table thead th {
+    background-color: var(--ink);
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 0.8rem 1rem;
+    border: none;
+    white-space: nowrap;
+}
+
+.mgmt-table tbody td {
+    padding: 0.7rem 1rem;
+    vertical-align: middle;
+    font-size: 0.875rem;
+    color: var(--ink);
+    border-top: 1px solid var(--border);
+    border-bottom: none;
+    max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mgmt-table tbody tr:hover td {
+    background-color: var(--paper);
+}
+
+.mgmt-table .col-actions {
+    text-align: right;
+    white-space: nowrap;
+    max-width: none;
+    width: 1%;
+}
+
+.mgmt-table .col-id {
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-family: monospace;
+}
+
+/* ── Buttons ── */
+.btn-mgmt-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: var(--ink);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+
+.btn-mgmt-add:hover {
+    background: #2e2724;
+    color: #fff;
+    text-decoration: none;
+}
+
+.btn-row-edit {
+    display: inline-block;
+    border: 1.5px solid var(--ink);
+    color: var(--ink);
+    background: transparent;
+    border-radius: 5px;
+    padding: 0.18rem 0.55rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-decoration: none;
+    margin-right: 0.3rem;
+    transition: background 0.15s, color 0.15s;
+}
+
+.btn-row-edit:hover {
+    background: var(--ink);
+    color: #fff;
+    text-decoration: none;
+}
+
+.btn-row-delete {
+    display: inline-block;
+    border: 1.5px solid var(--accent);
+    color: var(--accent);
+    background: transparent;
+    border-radius: 5px;
+    padding: 0.18rem 0.55rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.btn-row-delete:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+/* ── Empty state ── */
+.mgmt-empty {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+    font-style: italic;
+}

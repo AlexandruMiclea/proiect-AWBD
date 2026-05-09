@@ -33,7 +33,7 @@ public class StoreController {
     @GetMapping("/all")
     public String getStores(Model model) {
         log.info("GET /all called");
-        model.addAttribute("stations", storeService.getAll());
+        model.addAttribute("stores", storeService.getAll());
         return "management/stores/index";
     }
 

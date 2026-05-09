@@ -1,0 +1,202 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --ink: #1a1614;
+    --paper: #f5f0eb;
+    --accent: #c8472b;
+    --muted: #8a7f79;
+    --border: #d6cec8;
+    --surface: #fff;
+}
+
+html, body {
+    height: 100%;
+    background-color: var(--paper);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--ink);
+}
+
+body {
+    padding-top: 64px;
+}
+
+/* ── Header ── */
+.app-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    z-index: 100;
+}
+
+.header-logo img {
+    height: 40px;
+    width: auto;
+    display: block;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.header-user {
+    font-size: 0.82rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.header-user-name {
+    color: #fff;
+    font-weight: 500;
+}
+
+.btn-logout {
+    background: none;
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    border-radius: 5px;
+    color: #d6cec8;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    padding: 0.35rem 0.85rem;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.btn-logout:hover {
+    border-color: rgba(255, 255, 255, 0.6);
+    color: #fff;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+/* ── Hamburger button ── */
+.hamburger-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.hamburger-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.hamburger-btn span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: #fff;
+    border-radius: 2px;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+    transform-origin: center;
+}
+
+.hamburger-btn.open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger-btn.open span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.hamburger-btn.open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ── Side drawer ── */
+.nav-drawer {
+    position: fixed;
+    top: 64px;
+    right: 0;
+    bottom: 0;
+    width: 260px;
+    background: var(--surface);
+    border-left: 1px solid var(--border);
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    z-index: 99;
+    overflow-y: auto;
+    box-shadow: -4px 0 20px rgba(26, 22, 20, 0.08);
+}
+
+.nav-drawer.open {
+    transform: translateX(0);
+}
+
+.nav-drawer-section {
+    padding: 1.25rem 1.5rem 0.6rem;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 1.5rem;
+    text-decoration: none;
+    color: var(--ink);
+    font-size: 0.9rem;
+    border-bottom: 1px solid transparent;
+    transition: background 0.15s, color 0.15s;
+}
+
+.nav-link:hover {
+    background: var(--paper);
+    color: var(--accent);
+}
+
+/* ── Overlay ── */
+.drawer-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    top: 64px;
+    background: rgba(26, 22, 20, 0.35);
+    z-index: 98;
+    animation: fadeIn 0.2s ease;
+}
+
+.drawer-overlay.open {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* ── Main content ── */
+.app-main {
+    padding: 2.5rem 2rem;
+}
+
+.app-main h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    color: var(--ink);
+}

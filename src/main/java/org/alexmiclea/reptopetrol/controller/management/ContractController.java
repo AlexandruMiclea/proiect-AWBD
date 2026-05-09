@@ -25,45 +25,59 @@ public class ContractController {
 
     private final ContractService contractService;
 
+    // TODO for all controllers, create GET all, POST and PUT methods with templates for creating, updating and listing
+    // all elements. The delete should redirect to the /all endpoint after deletion. Getting one element is something that
+    // should be a service-level operation (if you need to show more data, show it )
+
     @GetMapping("/all")
-//    @PreAuthorize("hasAuthority('ROLE_OPERATIONAL'))
+    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
     public String getContracts(Model model) {
-        log.info("GET /all called");
+        log.debug("GET /all called");
+
         model.addAttribute("contracts", contractService.getAll());
+
         return "management/contracts/index";
     }
 
-    @GetMapping("/{uuid}")
-    public ResponseEntity<ContractRetrievalDto> getContract(@PathVariable UUID uuid) {
-        log.info("GET /{} called", uuid);
-        Optional<ContractRetrievalDto> contract = contractService.getContractById(uuid);
-        log.debug("Database response for GET: {}", contract);
+     @PostMapping("/add")
+    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    public String addContract(@RequestBody @Validated ContractCreationDto contractDto) {
+        log.debug("POST /add called with payload {}", contractDto);
 
-        return contract.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
-    }
-
-    @PostMapping("/add")
-    public ResponseEntity<Void> addContract(@RequestBody @Validated ContractCreationDto contractDto) {
-        log.info("POST /add called with payload {}", contractDto);
         contractService.addContract(contractDto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return "management/contracts/add";
     }
 
     @PutMapping("/update/{uuid}")
-    public ResponseEntity<Void> updateContract(@RequestBody @Validated ContractCreationDto contractDto, @PathVariable UUID uuid) {
+    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    public String updateContract(@RequestBody @Validated ContractCreationDto contractDto, @PathVariable UUID uuid) {
         log.info("PUT /update called with payload {} for UUID {}", contractDto, uuid);
+
         contractService.updateContract(contractDto, uuid);
 
-        return ResponseEntity.ok().build();
+        return "management/contracts/edit";
     }
 
     @DeleteMapping("/delete/{uuid}")
-    public ResponseEntity<UUID> deleteContract(@PathVariable UUID uuid) {
+    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    public String deleteContract(@PathVariable UUID uuid) {
         log.info("DELETE /delete called for UUID {}", uuid);
+
         Optional<UUID> response = contractService.deleteContract(uuid);
+
         log.debug("Database response for DELETE: {}", response);
 
-        return response.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        return "redirect:api/contract/all";
     }
+
+//    @GetMapping("/{uuid}")
+//    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+//    public ResponseEntity<ContractRetrievalDto> getContract(@PathVariable UUID uuid) {
+//        log.info("GET /{} called", uuid);
+//        Optional<ContractRetrievalDto> contract = contractService.getContractById(uuid);
+//        log.debug("Database response for GET: {}", contract);
+//
+//        return contract.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+//    }
 }

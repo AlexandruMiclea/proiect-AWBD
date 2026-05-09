@@ -1,41 +1,62 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Stations</title>
-<link rel="stylesheet"
-    href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-    crossorigin="anonymous">
-<th:block th:replace="~{fragments/header :: appHead}"></th:block>
+    <meta charset="UTF-8">
+    <title>Stations</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <th:block th:replace="~{fragments/header :: appHead}"></th:block>
+    <link rel="stylesheet" href="/css/management.css">
 </head>
 <body>
 <th:block th:replace="~{fragments/header :: appHeader}"></th:block>
-<div class="container my-2" align="center">
-
-<h3>Station List</h3>
-<a th:href="@{/addnew}" class="btn btn-primary btn-sm mb-3" >Add Station</a>
-    <table style="width:80%" border="1"
-           class = "table table-striped table-responsive-md">
-    <thead>
-  <tr>
-    <th>Name</th>
-    <th>Address</th>
-    <th>Action</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="station:${stations}">
-        <td th:text="${station.name}"></td>
-        <td th:text="${station.address}"></td>
-<!--        <td> <a th:href="@{/showFormForUpdate/{id}(id=${station.id})}"-->
-<!--                class="btn btn-primary">Update</a>-->
-<!--                <a th:href="@{/deleteEmployee/{id}(id=${station.id})}"-->
-<!--                class="btn btn-danger">Delete</a>-->
-<!--    </td>-->
-  </tr>
-  </tbody>
-</table>
+<div class="container mgmt-container">
+    <div class="mgmt-header">
+        <h1 class="mgmt-title">Stations</h1>
+        <a href="/api/station/add" class="btn-mgmt-add">+ Add New</a>
+    </div>
+    <div class="table-responsive">
+        <table class="table mgmt-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Pumps</th>
+                    <th>Store ID</th>
+                    <th>Employees</th>
+                    <th>Fuels</th>
+                    <th class="col-actions">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="station : ${stations}">
+                    <td class="col-id" th:text="${station.id}"></td>
+                    <td th:text="${station.name}"></td>
+                    <td th:text="${station.address}"></td>
+                    <td th:text="${station.pumpNo}"></td>
+                    <td class="col-id" th:text="${station.storeId}"></td>
+                    <td th:text="${#lists.size(station.employeeIds)}"></td>
+                    <td th:text="${#lists.size(station.fuelIds)}"></td>
+                    <td class="col-actions">
+                        <a th:href="@{/api/station/view/edit/{id}(id=${station.id})}" class="btn-row-edit">Edit</a>
+                        <button class="btn-row-delete"
+                                th:onclick="'deleteEntry(\'' + ${station.id} + '\')'">Delete</button>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(stations)}">
+                    <td colspan="8" class="mgmt-empty">No stations found.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
+<script>
+function deleteEntry(uuid) {
+    if (!confirm('Delete this station?')) return;
+    fetch('/api/station/delete/' + uuid, { method: 'DELETE' })
+        .then(function(r) { if (r.ok) location.reload(); else alert('Delete failed: ' + r.status); });
+}
+</script>
 </body>
 </html>
