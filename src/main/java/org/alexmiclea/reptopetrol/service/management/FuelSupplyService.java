@@ -13,6 +13,7 @@ import org.alexmiclea.reptopetrol.model.management.keys.FuelSupplyKey;
 import org.alexmiclea.reptopetrol.repository.management.FuelSupplyRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,6 +53,7 @@ public class FuelSupplyService {
         FuelSupply currentFuelSupply = fuelSupplyRepository.getReferenceById(fuelSupplyKey);
         currentFuelSupply.setQuantity(fuelSupplyDto.getQuantity());
         currentFuelSupply.setPrice(fuelSupplyDto.getPrice());
+        currentFuelSupply.setPriceChange(Instant.now());
         fuelSupplyRepository.save(currentFuelSupply);
     }
 

@@ -22,7 +22,7 @@ public class Fuel {
     @OneToMany(mappedBy = "fuel")
     private List<FuelSupply> fuelSupplies;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "fuels")
     private List<Contract> contracts;
 
     @NotBlank

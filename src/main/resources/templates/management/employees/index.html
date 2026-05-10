@@ -39,10 +39,10 @@
                     <td th:text="${employee.dateOfHire}"></td>
                     <td th:text="${employee.wage}"></td>
                     <td th:text="${employee.identificationNumber}"></td>
-                    <td class="col-id" th:text="${employee.stationId}"></td>
+<!--                    <td class="col-id" th:text="${employee.stationId}"></td>-->
                     <td class="col-actions">
                         <a th:href="@{/api/employee/update/{id}(id=${employee.id})}" class="btn-row-edit">Edit</a>
-                        <form th:action="@{/api/employee/delete/{id}(id=${station.id})}" method="post" class="d-inline">
+                        <form th:action="@{/api/employee/delete/{id}(id=${employee.id})}" method="post" class="d-inline">
                           <input type="hidden" name="_method" value="DELETE">
                           <button type="submit" class="btn-row-delete">Delete</button>
                         </form>

@@ -7,7 +7,9 @@ import org.alexmiclea.reptopetrol.dto.management.keys.FuelSupplyKeyDto;
 import org.alexmiclea.reptopetrol.dto.management.retrieval.composites.FuelSupplyRetrievalDto;
 import org.alexmiclea.reptopetrol.mapper.keys.FuelSupplyKeyMapper;
 import org.alexmiclea.reptopetrol.model.management.keys.FuelSupplyKey;
+import org.alexmiclea.reptopetrol.service.management.FuelService;
 import org.alexmiclea.reptopetrol.service.management.FuelSupplyService;
+import org.alexmiclea.reptopetrol.service.management.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,8 +25,9 @@ import java.util.Optional;
 public class FuelSupplyController {
 
     private final FuelSupplyService fuelSupplyService;
+    private final StationService stationService;
+    private final FuelService fuelService;
 
-    @Autowired
     private final FuelSupplyKeyMapper fuelSupplyKeyMapper;
 
     @GetMapping("/all")
@@ -46,13 +49,14 @@ public class FuelSupplyController {
         FuelSupplyCreationDto fuelSupplyCreationDto = new FuelSupplyCreationDto();
 
         // TODO you need to add a list of other elements, so you can have a dropdown and select them
-
+        model.addAttribute("stations", stationService.getAll());
+        model.addAttribute("fuels", fuelService.getAll());
         model.addAttribute("fuelSupplyCreationDto", fuelSupplyCreationDto);
 
         return "management/fuelSupplies/add";
     }
 
-    @GetMapping("/update/{uuid}")
+    @GetMapping("/update")
     //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
     public String getFuelSupplyUpdatePage(Model model, FuelSupplyKeyDto fuelSupplyKeyDto) {
         log.debug("GET /update called with ID {}", fuelSupplyKeyDto);
@@ -85,7 +89,7 @@ public class FuelSupplyController {
 
         fuelSupplyService.addFuelSupply(fuelSupplyDto);
 
-        return "redirect:/api/fuelSupplies/all";
+        return "redirect:/api/fuelSupply/all";
     }
 
     @PutMapping("/update")
@@ -95,12 +99,12 @@ public class FuelSupplyController {
 
         fuelSupplyService.updateFuelSupply(fuelSupplyDto, fuelSupplyDto.getId());
 
-        return "redirect:/api/fuelSupplies/all";
+        return "redirect:/api/fuelSupply/all";
     }
 
     @DeleteMapping("/delete")
     //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
-    public String deleteFuelSupply(@RequestBody FuelSupplyKeyDto key) {
+    public String deleteFuelSupply(FuelSupplyKeyDto key) {
         log.debug("DELETE called with composed key {}", key);
 
         FuelSupplyKey fuelSupplyKey = fuelSupplyKeyMapper.toFuelSupplyKey(key);
@@ -108,6 +112,6 @@ public class FuelSupplyController {
 
         log.debug("Database response for DELETE: {}", fuelSupply);
 
-        return "redirect:/api/fuelSupplies/all";
+        return "redirect:/api/fuelSupply/all";
     }
 }

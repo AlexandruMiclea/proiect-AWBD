@@ -79,7 +79,7 @@ public class FuelController {
 
         fuelService.addFuel(fuelDto);
 
-        return "redirect:/api/contract/all";
+        return "redirect:/api/fuel/all";
     }
 
     @PutMapping("/update/{uuid}")
@@ -89,7 +89,7 @@ public class FuelController {
 
         fuelService.updateFuel(fuelDto, uuid);
 
-        return "redirect:/api/contract/all";
+        return "redirect:/api/fuel/all";
     }
 
     @DeleteMapping("/delete/{uuid}")
@@ -101,6 +101,6 @@ public class FuelController {
 
         log.debug("Database response for DELETE: {}", response);
 
-        return "redirect:/api/contract/all";
+        return "redirect:/api/fuel/all";
     }
 }

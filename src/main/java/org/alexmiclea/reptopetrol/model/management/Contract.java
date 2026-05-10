@@ -28,7 +28,11 @@ public class Contract {
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "fuel_contract",
+        joinColumns = @JoinColumn(name = "contract_id"),
+        inverseJoinColumns = @JoinColumn(name = "fuel_id")
+    )
     private List<Fuel> fuels;
 
     @PastOrPresent

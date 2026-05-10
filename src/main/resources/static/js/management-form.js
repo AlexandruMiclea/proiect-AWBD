@@ -33,6 +33,15 @@ document.addEventListener('DOMContentLoaded', function () {
         var data = {};
         form.querySelectorAll('[name]').forEach(function (el) {
             var key = el.name;
+
+            // multi-select: collect all selected option values as an array
+            if (el.tagName === 'SELECT' && el.multiple) {
+                var selected = Array.from(el.selectedOptions).map(function (o) { return o.value; }).filter(Boolean);
+                if (selected.length === 0) return;
+                setNestedValue(data, key, selected);
+                return;
+            }
+
             var raw = el.value.trim();
 
             if (!raw && el.type !== 'hidden') return;

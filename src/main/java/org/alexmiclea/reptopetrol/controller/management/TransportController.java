@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.alexmiclea.reptopetrol.dto.management.creation.TransportCreationDto;
 import org.alexmiclea.reptopetrol.dto.management.retrieval.TransportRetrievalDto;
+import org.alexmiclea.reptopetrol.service.management.ContractService;
+import org.alexmiclea.reptopetrol.service.management.StationService;
 import org.alexmiclea.reptopetrol.service.management.TransportService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,8 @@ import java.util.UUID;
 public class TransportController {
 
     private final TransportService transportService;
+    private final ContractService contractService;
+    private final StationService stationService;
 
     @GetMapping("/all")
     //@Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
@@ -39,8 +43,8 @@ public class TransportController {
         // creation Dto
         TransportCreationDto transportCreationDto = new TransportCreationDto();
 
-        // TODO you need to add a list of other elements, so you can have a dropdown and select them
-
+        model.addAttribute("contracts", contractService.getAll());
+        model.addAttribute("stations", stationService.getAll());
         model.addAttribute("transportCreationDto", transportCreationDto);
 
         return "management/transports/add";
@@ -59,6 +63,8 @@ public class TransportController {
 
             TransportCreationDto transportCreationDto = TransportCreationDto.builder()
                     .id(uuid)
+                    .contractId(retrieved.getContractId())
+                    .stationIds(retrieved.getStationIds())
                     .creationDate(retrieved.getCreationDate())
                     .completionDate(retrieved.getCompletionDate())
                     .companyName(retrieved.getCompanyName())

@@ -78,7 +78,7 @@ public class SupplierController {
 
         supplierService.addSupplier(supplierDto);
 
-        return "redirect:/api/suppliers/all";
+        return "redirect:/api/supplier/all";
     }
 
     @PutMapping("/update/{uuid}")
@@ -88,7 +88,7 @@ public class SupplierController {
 
         supplierService.updateSupplier(supplierDto, uuid);
 
-        return "redirect:/api/suppliers/all";
+        return "redirect:/api/supplier/all";
     }
 
     @DeleteMapping("/delete/{uuid}")
@@ -100,6 +100,6 @@ public class SupplierController {
 
         log.debug("Database response for DELETE: {}", response);
 
-        return "redirect:/api/suppliers/all";
+        return "redirect:/api/supplier/all";
     }
 }

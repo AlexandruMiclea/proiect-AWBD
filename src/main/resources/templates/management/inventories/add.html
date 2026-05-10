@@ -24,14 +24,18 @@
                   data-success-url="/api/inventory/all">
                 <div class="form-error"></div>
                 <div class="form-group">
-                    <label for="id_storeId">Store ID</label>
-                    <input type="text" id="id_storeId" name="id.storeId" class="form-control mgmt-input"
-                           required placeholder="UUID of the store">
+                    <label for="id_storeId">Store</label>
+                    <select id="id_storeId" name="id.storeId" class="form-control mgmt-input" required>
+                        <option value="" disabled selected>Select store</option>
+                        <option th:each="store : ${stores}" th:value="${store.getId()}" th:text="${store.getId()}"></option>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label for="id_productId">Product ID</label>
-                    <input type="text" id="id_productId" name="id.productId" class="form-control mgmt-input"
-                           required placeholder="UUID of the product">
+                    <label for="id_productId">Product</label>
+                    <select id="id_productId" name="id.productId" class="form-control mgmt-input" required>
+                        <option value="" disabled selected>Select product</option>
+                        <option th:each="product : ${products}" th:value="${product.getId()}" th:text="${product.getName()}"></option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="quantity">Quantity</label>

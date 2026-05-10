@@ -24,16 +24,17 @@
                   data-success-url="/api/contract/all">
                 <div class="form-error"></div>
                 <div class="form-group">
-                    <label for="supplierId">Supplier ID</label>
-                    <input type="text" id="supplierId" name="supplierId" class="form-control mgmt-input"
-                           required placeholder="UUID of the supplier">
+                    <label for="supplierId">Supplier</label>
+                    <select id="supplierId" name="supplierId" class="form-control mgmt-input" required>
+                        <option value="" disabled selected>Select supplier</option>
+                        <option th:each="supplier : ${suppliers}" th:value="${supplier.getId()}" th:text="${supplier.getName()}"></option>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label for="fuelIds">Fuel IDs</label>
-                    <input type="text" id="fuelIds" name="fuelIds" class="form-control mgmt-input"
-                           required placeholder="UUID1, UUID2, ..."
-                           data-type="array">
-                    <small class="field-hint">Comma-separated list of fuel UUIDs.</small>
+                    <label for="fuelIds">Fuels</label>
+                    <select id="fuelIds" name="fuelIds" class="form-control mgmt-input" required multiple>
+                        <option th:each="fuel : ${fuels}" th:value="${fuel.id}" th:text="${fuel.name}"></option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="beginDate">Begin Date</label>

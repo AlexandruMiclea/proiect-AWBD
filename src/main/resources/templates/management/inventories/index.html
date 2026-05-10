@@ -37,6 +37,10 @@
                     <td class="col-actions">
                         <a th:href="@{/api/inventory/update(storeId=${inv.id.storeId},productId=${inv.id.productId})}"
                            class="btn-row-edit">Edit</a>
+                        <form th:action="@{/api/inventory/delete(storeId=${inv.id.storeId},productId=${inv.id.productId})}" method="post" class="d-inline">
+                          <input type="hidden" name="_method" value="DELETE">
+                          <button type="submit" class="btn-row-delete">Delete</button>
+                        </form>
                     </td>
                 </tr>
                 <tr th:if="${#lists.isEmpty(inventories)}">

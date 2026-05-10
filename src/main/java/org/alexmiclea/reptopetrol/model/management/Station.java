@@ -30,7 +30,7 @@ public class Station {
     @OneToOne(optional = true)
     private Store store;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "stations")
     private List<Transport> transports;
 
     @NotBlank

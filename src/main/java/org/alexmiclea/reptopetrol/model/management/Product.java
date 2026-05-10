@@ -21,7 +21,7 @@ public class Product {
     @NotBlank
     private String name;
 
-    @Positive
+    @NotBlank
     private String type;
 
 }

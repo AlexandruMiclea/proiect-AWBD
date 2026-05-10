@@ -8,6 +8,8 @@ import org.alexmiclea.reptopetrol.dto.management.retrieval.composites.InventoryR
 import org.alexmiclea.reptopetrol.mapper.keys.InventoryKeyMapper;
 import org.alexmiclea.reptopetrol.model.management.keys.InventoryKey;
 import org.alexmiclea.reptopetrol.service.management.InventoryService;
+import org.alexmiclea.reptopetrol.service.management.ProductService;
+import org.alexmiclea.reptopetrol.service.management.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,8 @@ import java.util.Optional;
 public class InventoryController {
 
     private final InventoryService inventoryService;
+    private final StoreService storeService;
+    private final ProductService productService;
 
     @Autowired
     private final InventoryKeyMapper inventoryKeyMapper;
@@ -45,14 +49,14 @@ public class InventoryController {
         // creation Dto
         InventoryCreationDto inventoryCreationDto = new InventoryCreationDto();
 
-        // TODO you need to add a list of other elements, so you can have a dropdown and select them
-
+        model.addAttribute("stores", storeService.getAll());
+        model.addAttribute("products", productService.getAll());
         model.addAttribute("inventoryCreationDto", inventoryCreationDto);
 
         return "management/inventories/add";
     }
 
-    @GetMapping("/update/{uuid}")
+    @GetMapping("/update")
     //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
     public String getFuelSupplyUpdatePage(Model model, InventoryKeyDto inventoryKeyDto) {
         log.debug("GET /update called with ID {}", inventoryKeyDto);
@@ -98,7 +102,7 @@ public class InventoryController {
 
     @DeleteMapping("/delete")
     //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
-    public String deleteInventory(@RequestBody InventoryKeyDto key) {
+    public String deleteInventory(InventoryKeyDto key) {
         log.debug("DELETE called with composed key {}", key);
 
         InventoryKey inventoryKey = inventoryKeyMapper.toInventoryKey(key);

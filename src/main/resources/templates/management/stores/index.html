@@ -30,7 +30,7 @@
                     <td class="col-id" th:text="${store.stationId}"></td>
                     <td class="col-actions">
                         <a th:href="@{/api/store/update/{id}(id=${store.id})}" class="btn-row-edit">Edit</a>
-                        <form th:action="@{/api/store/delete/{id}(id=${station.id})}" method="post" class="d-inline">
+                        <form th:action="@{/api/store/delete/{id}(id=${store.id})}" method="post" class="d-inline">
                           <input type="hidden" name="_method" value="DELETE">
                           <button type="submit" class="btn-row-delete">Delete</button>
                         </form>

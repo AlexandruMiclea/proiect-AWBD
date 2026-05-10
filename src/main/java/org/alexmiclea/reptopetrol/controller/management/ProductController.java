@@ -39,8 +39,6 @@ public class ProductController {
         // creation Dto
         ProductCreationDto productCreationDto = new ProductCreationDto();
 
-        // TODO you need to add a list of other elements, so you can have a dropdown and select them
-
         model.addAttribute("productCreationDto", productCreationDto);
 
         return "management/products/add";

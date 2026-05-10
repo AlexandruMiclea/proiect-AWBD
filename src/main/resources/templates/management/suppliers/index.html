@@ -33,10 +33,10 @@
                     <td th:text="${supplier.name}"></td>
                     <td th:text="${supplier.address}"></td>
                     <td th:text="${supplier.homeCountry}"></td>
-                    <td th:text="${supplier.contractIds}"></td>
+<!--                    <td th:text="${supplier.contractIds}"></td>-->
                     <td class="col-actions">
                         <a th:href="@{/api/supplier/update/{id}(id=${supplier.id})}" class="btn-row-edit">Edit</a>
-                        <form th:action="@{/api/supplier/delete/{id}(id=${station.id})}" method="post" class="d-inline">
+                        <form th:action="@{/api/supplier/delete/{id}(id=${supplier.id})}" method="post" class="d-inline">
                           <input type="hidden" name="_method" value="DELETE">
                           <button type="submit" class="btn-row-delete">Delete</button>
                         </form>

@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.alexmiclea.reptopetrol.dto.management.creation.ContractCreationDto;
 import org.alexmiclea.reptopetrol.dto.management.retrieval.ContractRetrievalDto;
 import org.alexmiclea.reptopetrol.service.management.ContractService;
+import org.alexmiclea.reptopetrol.service.management.FuelService;
+import org.alexmiclea.reptopetrol.service.management.SupplierService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -20,6 +22,8 @@ import java.util.UUID;
 public class ContractController {
 
     private final ContractService contractService;
+    private final SupplierService supplierService;
+    private final FuelService fuelService;
 
     @GetMapping("/all")
     //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
@@ -41,6 +45,8 @@ public class ContractController {
 
         // TODO you need to add a list of other elements, so you can have a dropdown and select them
 
+        model.addAttribute("suppliers", supplierService.getAll());
+        model.addAttribute("fuels", fuelService.getAll());
         model.addAttribute("contractCreationDto", contractCreationDto);
 
         return "management/contracts/add";
@@ -79,7 +85,7 @@ public class ContractController {
 
         contractService.addContract(contractDto);
 
-        return "redirect:api/contract/all";
+        return "redirect:/api/contract/all";
     }
 
     @PutMapping("/update/{uuid}")
@@ -89,7 +95,7 @@ public class ContractController {
 
         contractService.updateContract(contractDto, uuid);
 
-        return "redirect:api/contract/all";
+        return "redirect:/api/contract/all";
     }
 
     @DeleteMapping("/delete/{uuid}")
@@ -101,6 +107,6 @@ public class ContractController {
 
         log.debug("Database response for DELETE: {}", response);
 
-        return "redirect:api/contract/all";
+        return "redirect:/api/contract/all";
     }
 }

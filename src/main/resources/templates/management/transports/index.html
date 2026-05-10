@@ -38,7 +38,7 @@
                     <td th:text="${#lists.size(transport.stationIds)}"></td>
                     <td class="col-actions">
                         <a th:href="@{/api/transport/update/{id}(id=${transport.id})}" class="btn-row-edit">Edit</a>
-                        <form th:action="@{/api/transport/delete/{id}(id=${station.id})}" method="post" class="d-inline">
+                        <form th:action="@{/api/transport/delete/{id}(id=${transport.id})}" method="post" class="d-inline">
                           <input type="hidden" name="_method" value="DELETE">
                           <button type="submit" class="btn-row-delete">Delete</button>
                         </form>

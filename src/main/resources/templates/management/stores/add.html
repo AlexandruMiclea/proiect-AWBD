@@ -25,9 +25,9 @@
                 <div class="form-error"></div>
                 <div class="form-group">
                     <label for="stationId">Station ID</label>
-                    <input type="text" id="stationId" name="stationId" class="form-control mgmt-input"
-                           required placeholder="UUID of the linked station">
-                    <small class="field-hint">Enter the UUID of the station this store belongs to.</small>
+                    <select id="stationId" name="stationId" class="form-control mgmt-input" required>
+                        <option th:each="station : ${stations}" th:value="${station.id}" th:text="${station.name}"></option>
+                    </select>
                 </div>
                 <div class="form-actions">
                     <button type="submit" class="btn-form-submit">Create Store</button>

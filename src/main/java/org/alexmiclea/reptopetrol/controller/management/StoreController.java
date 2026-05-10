@@ -45,8 +45,7 @@ public class StoreController {
         // creation Dto
         StoreCreationDto storeCreationDto = new StoreCreationDto();
 
-        // TODO you need to add a list of other elements, so you can have a dropdown and select them
-
+        model.addAttribute("stations", stationService.getAll());
         model.addAttribute("storeCreationDto", storeCreationDto);
 
         return "management/stores/add";

@@ -23,8 +23,8 @@
                     <th>Supplier ID</th>
                     <th>Begin Date</th>
                     <th>End Date</th>
-                    <th>Fuels</th>
-                    <th>Transports</th>
+<!--                    <th>Fuels</th>-->
+<!--                    <th>Transports</th>-->
                     <th class="col-actions">Actions</th>
                 </tr>
             </thead>
@@ -34,11 +34,11 @@
                     <td class="col-id" th:text="${contract.supplierId}"></td>
                     <td th:text="${contract.beginDate}"></td>
                     <td th:text="${contract.endDate}"></td>
-                    <td th:text="${contract.fuelIds}"></td>
-                    <td th:text="${contract.transportIds}"></td>
+<!--                    <td th:text="${contract.fuelIds}"></td>-->
+<!--                    <td th:text="${contract.transportIds}"></td>-->
                     <td class="col-actions">
                         <a th:href="@{/api/contract/update/{id}(id=${contract.id})}" class="btn-row-edit">Edit</a>
-                        <form th:action="@{/api/contract/delete/{id}(id=${station.id})}" method="post" class="d-inline">
+                        <form th:action="@{/api/contract/delete/{id}(id=${contract.id})}" method="post" class="d-inline">
                               <input type="hidden" name="_method" value="DELETE">
                               <button type="submit" class="btn-row-delete">Delete</button>
                         </form>

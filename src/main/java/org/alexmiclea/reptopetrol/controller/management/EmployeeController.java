@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.alexmiclea.reptopetrol.dto.management.creation.EmployeeCreationDto;
 import org.alexmiclea.reptopetrol.dto.management.retrieval.EmployeeRetrievalDto;
 import org.alexmiclea.reptopetrol.service.management.EmployeeService;
+import org.alexmiclea.reptopetrol.service.management.StationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -20,6 +21,7 @@ import java.util.UUID;
 public class EmployeeController {
 
     private final EmployeeService employeeService;
+    private final StationService stationService;
 
     @GetMapping("/all")
     //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
@@ -39,8 +41,7 @@ public class EmployeeController {
         // creation Dto
         EmployeeCreationDto employeeCreationDto = new EmployeeCreationDto();
 
-        // TODO you need to add a list of other elements, so you can have a dropdown and select them
-
+        model.addAttribute("stations", stationService.getAll());
         model.addAttribute("employeeCreationDto", employeeCreationDto);
 
         return "management/employees/add";
@@ -60,6 +61,7 @@ public class EmployeeController {
             EmployeeCreationDto employeeCreationDto = EmployeeCreationDto.builder()
                     .id(uuid)
                     .role(retrieved.getRole())
+                    .stationId(retrieved.getStationId())
                     .wage(retrieved.getWage())
                     .firstName(retrieved.getFirstName())
                     .lastName(retrieved.getLastName())
@@ -81,7 +83,7 @@ public class EmployeeController {
 
         employeeService.addEmployee(employeeDto);
 
-        return "redirect:/api/contract/all";
+        return "redirect:/api/employee/all";
     }
 
     @PutMapping("/update/{uuid}")
@@ -91,7 +93,7 @@ public class EmployeeController {
 
         employeeService.updateEmployee(employeeDto, uuid);
 
-        return "redirect:/api/contract/all";
+        return "redirect:/api/employee/all";
     }
 
     @DeleteMapping("/delete/{uuid}")
@@ -103,6 +105,6 @@ public class EmployeeController {
 
         log.debug("Database response for DELETE: {}", response);
 
-        return "redirect:/api/contract/all";
+        return "redirect:/api/employee/all";
     }
 }

@@ -25,13 +25,17 @@
                 <div class="form-error"></div>
                 <div class="form-group">
                     <label for="id_stationId">Station ID</label>
-                    <input type="text" id="id_stationId" name="id.stationId" class="form-control mgmt-input"
-                           required placeholder="UUID of the station">
+                    <select id="id_stationId" name="id.stationId" class="form-control mgmt-input" required>
+                        <option value="" disabled selected>Select station</option>
+                        <option th:each="station : ${stations}" th:value="${station.getId()}" th:text="${station.getName()}"></option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="id_fuelId">Fuel ID</label>
-                    <input type="text" id="id_fuelId" name="id.fuelId" class="form-control mgmt-input"
-                           required placeholder="UUID of the fuel">
+                    <select id="id_fuelId" name="id.fuelId" class="form-control mgmt-input" required>
+                        <option value="" disabled selected>Select fuel</option>
+                        <option th:each="fuel : ${fuels}" th:value="${fuel.getId()}" th:text="${fuel.getName()}"></option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="quantity">Quantity</label>

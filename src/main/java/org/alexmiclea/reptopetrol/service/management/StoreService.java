@@ -60,6 +60,15 @@ public class StoreService {
 
     public Optional<UUID> deleteStore(UUID uuid) {
         if (storeRepository.existsById(uuid)) {
+            // check if the station is associated to any station - if so, update the store to null
+            List<Station> stations = stationRepository.findByStoreId(uuid);
+
+            if (!stations.isEmpty()) {
+                for (Station station : stations) {
+                    updateStationStoreID(station.getId(), null);
+                }
+            }
+
             storeRepository.deleteById(uuid);
             return Optional.of(uuid);
         } else {

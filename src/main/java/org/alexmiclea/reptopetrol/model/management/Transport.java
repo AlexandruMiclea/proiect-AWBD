@@ -25,7 +25,11 @@ public class Transport {
     @JoinColumn(name="contract_id")
     private Contract contract;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "station_transport",
+        joinColumns = @JoinColumn(name = "transport_id"),
+        inverseJoinColumns = @JoinColumn(name = "station_id")
+    )
     private List<Station> stations;
 
     @CreatedDate
