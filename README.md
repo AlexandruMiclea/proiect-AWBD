@@ -129,3 +129,7 @@ Each entity has three pages:
 | `GET /api/{entity}/update/{id}` | Edit form (pre-filled) |
 
 Form submissions are sent as JSON via `fetch` (managed by `management-form.js`) so that the Spring `@RequestBody` endpoints are satisfied. The delete action uses a standard HTML form with `method="POST"` and a hidden `_method=DELETE` field, processed by Spring's `HiddenHttpMethodFilter`.
+
+## Entity Relationship Diagram
+
+![ERD v3.png](img/ERD%20v3.png)

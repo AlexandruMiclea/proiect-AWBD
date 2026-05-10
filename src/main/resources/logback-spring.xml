@@ -1,6 +1,5 @@
-<!-- TODO review -->
 <configuration>
-    <!-- CONSOLE appender: INFO and above -->
+
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>DEBUG</level>
@@ -10,11 +9,9 @@
         </encoder>
     </appender>
 
-    <!-- FILE appender: ERROR only -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>logs/app-errors.log</file>
 
-        <!-- Only log ERROR level -->
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>ERROR</level>
             <onMatch>ACCEPT</onMatch>

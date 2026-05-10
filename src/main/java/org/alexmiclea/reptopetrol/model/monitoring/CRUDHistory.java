@@ -19,5 +19,4 @@ public class CRUDHistory {
     private String resourceType;
     private String resourceId;
     private Instant timestamp;
-    private String previousState;
 }
