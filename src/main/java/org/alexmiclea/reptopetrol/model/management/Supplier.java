@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +20,7 @@ public class Supplier {
     private UUID id;
 
     @OneToMany(mappedBy = "supplier")
-    private List<Contract> contracts;
+    private List<Contract> contracts = new ArrayList<>();
 
     @NotBlank
     private String name;

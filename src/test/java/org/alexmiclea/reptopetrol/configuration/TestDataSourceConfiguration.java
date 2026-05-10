@@ -1,0 +1,14 @@
+package org.alexmiclea.reptopetrol.configuration;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+@Configuration
+@Profile("test-integration")
+@EnableJpaRepositories(basePackages = {
+        "org.alexmiclea.reptopetrol.repository.management",
+        "org.alexmiclea.reptopetrol.repository.user",
+        "org.alexmiclea.reptopetrol.repository.authentication"
+})
+public class TestDataSourceConfiguration { }

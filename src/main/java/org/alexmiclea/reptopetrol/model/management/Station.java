@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.alexmiclea.reptopetrol.model.management.composites.FuelSupply;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,16 +23,16 @@ public class Station {
     private UUID id;
 
     @OneToMany(mappedBy = "station")
-    private List<FuelSupply> fuelSupplies;
+    private List<FuelSupply> fuelSupplies = new ArrayList<>();
 
     @OneToMany(mappedBy = "station")
-    private List<Employee> employees;
+    private List<Employee> employees = new ArrayList<>();
 
     @OneToOne(optional = true)
     private Store store;
 
     @ManyToMany(mappedBy = "stations")
-    private List<Transport> transports;
+    private List<Transport> transports = new ArrayList<>();
 
     @NotBlank
     private String name;
