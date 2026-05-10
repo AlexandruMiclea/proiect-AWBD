@@ -55,7 +55,7 @@ public class StoreController {
     @GetMapping("/update/{uuid}")
     //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
     public String getStoreUpdatePage(Model model, @PathVariable UUID uuid) {
-        log.debug("PUT /update called for UUID {}", uuid);
+        log.debug("GET /update called for UUID {}", uuid);
 
         Optional<StoreRetrievalDto> storeRetrievalDto = storeService.getStoreById(uuid);
 
@@ -81,7 +81,7 @@ public class StoreController {
 
         storeService.addStore(storeDto);
 
-        return "redirect:api/store/all";
+        return "redirect:/api/store/all";
     }
 
     @PutMapping("/update/{uuid}")
@@ -91,7 +91,7 @@ public class StoreController {
 
         storeService.updateStore(storeDto, uuid);
 
-        return "redirect:api/store/all";
+        return "redirect:/api/store/all";
     }
 
     @DeleteMapping("/delete/{uuid}")
@@ -103,6 +103,6 @@ public class StoreController {
 
         log.debug("Database response for DELETE: {}", response);
 
-        return "redirect:api/store/all";
+        return "redirect:/api/store/all";
     }
 }

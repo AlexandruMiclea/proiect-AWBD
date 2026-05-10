@@ -43,6 +43,18 @@
         <a th:href="@{/api/supplier/all}"    class="nav-link">Suppliers</a>
         <a th:href="@{/api/transport/all}"   class="nav-link">Transports</a>
     </nav>
+
+<!--    <div sec:authorize="isAuthenticated()">-->
+<!--      This content is only shown to authenticated users.-->
+<!--    </div>-->
+<!--    <div sec:authorize="hasRole('ROLE_ADMIN')">-->
+<!--      This content is only shown to administrators.-->
+<!--    </div>-->
+<!--    <div sec:authorize="hasRole('ROLE_USER')">-->
+<!--      This content is only shown to users.-->
+<!--    </div>-->
+<!--    <span sec:authentication="name">Bob</span>-->
+<!--    <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>-->
     <script src="/js/header_bar.js"></script>
 
 </th:block>

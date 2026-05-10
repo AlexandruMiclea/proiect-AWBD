@@ -85,7 +85,7 @@ public class FuelSupplyController {
 
         fuelSupplyService.addFuelSupply(fuelSupplyDto);
 
-        return "redirect:api/fuelSupplies/all";
+        return "redirect:/api/fuelSupplies/all";
     }
 
     @PutMapping("/update")
@@ -95,7 +95,7 @@ public class FuelSupplyController {
 
         fuelSupplyService.updateFuelSupply(fuelSupplyDto, fuelSupplyDto.getId());
 
-        return "redirect:api/fuelSupplies/all";
+        return "redirect:/api/fuelSupplies/all";
     }
 
     @DeleteMapping("/delete")
@@ -108,6 +108,6 @@ public class FuelSupplyController {
 
         log.debug("Database response for DELETE: {}", fuelSupply);
 
-        return "redirect:api/fuelSupplies/all";
+        return "redirect:/api/fuelSupplies/all";
     }
 }

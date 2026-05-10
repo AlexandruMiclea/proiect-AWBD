@@ -18,12 +18,6 @@ public abstract class EmployeeRetrievalMapper {
     @Mapping(target = "stationId", source = "employee.station.id")
     public abstract EmployeeRetrievalDto toEmployeeDto(Employee employee);
 
-    @Mapping(target = "station", expression =
-            "java(stationRepository.findById(employeeDto.getStationId()).orElseThrow())")
-    @Mapping(target = "id", ignore = true)
-    public abstract Employee toEmployee(EmployeeRetrievalDto employeeDto);
-
     public abstract List<EmployeeRetrievalDto> toEmployeeDtos(List<Employee> employees);
-    public abstract List<Employee> toEmployees(List<EmployeeRetrievalDto> employeeDtos);
 }
 

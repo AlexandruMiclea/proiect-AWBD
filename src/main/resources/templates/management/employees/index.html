@@ -42,8 +42,10 @@
                     <td class="col-id" th:text="${employee.stationId}"></td>
                     <td class="col-actions">
                         <a th:href="@{/api/employee/update/{id}(id=${employee.id})}" class="btn-row-edit">Edit</a>
-                        <button class="btn-row-delete"
-                                th:onclick="'deleteEntry(\'' + ${employee.id} + '\')'">Delete</button>
+                        <form th:action="@{/api/employee/delete/{id}(id=${station.id})}" method="post" class="d-inline">
+                          <input type="hidden" name="_method" value="DELETE">
+                          <button type="submit" class="btn-row-delete">Delete</button>
+                        </form>
                     </td>
                 </tr>
                 <tr th:if="${#lists.isEmpty(employees)}">
@@ -53,12 +55,5 @@
         </table>
     </div>
 </div>
-<script>
-function deleteEntry(uuid) {
-    if (!confirm('Delete this employee?')) return;
-    fetch('/api/employee/delete/' + uuid, { method: 'DELETE' })
-        .then(function(r) { if (r.ok) location.reload(); else alert('Delete failed: ' + r.status); });
-}
-</script>
 </body>
 </html>

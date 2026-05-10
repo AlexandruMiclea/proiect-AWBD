@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Fuel Supply</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <th:block th:replace="~{fragments/header :: appHead}"></th:block>
+    <link rel="stylesheet" href="/css/management.css">
+    <link rel="stylesheet" href="/css/management-form.css">
+</head>
+<body>
+<th:block th:replace="~{fragments/header :: appHeader}"></th:block>
+<div class="container mgmt-container">
+    <div class="mgmt-header">
+        <h1 class="mgmt-title">Edit Fuel Supply</h1>
+        <a href="/api/fuelSupply/all" class="btn-row-edit">← Back</a>
+    </div>
+    <div class="form-container">
+        <div class="form-card">
+            <form class="mgmt-form"
+                  action="/api/fuelSupply/update"
+                  data-method="PUT"
+                  data-success-url="/api/fuelSupply/all">
+                <div class="form-error"></div>
+                <!-- composite key passed as hidden fields -->
+                <input type="hidden" name="id.stationId" th:value="${fuelSupplyCreationDto.id.stationId}">
+                <input type="hidden" name="id.fuelId"    th:value="${fuelSupplyCreationDto.id.fuelId}">
+                <div class="form-group">
+                    <label>Station ID</label>
+                    <p class="form-control-plaintext col-id" th:text="${fuelSupplyCreationDto.id.stationId}"></p>
+                </div>
+                <div class="form-group">
+                    <label>Fuel ID</label>
+                    <p class="form-control-plaintext col-id" th:text="${fuelSupplyCreationDto.id.fuelId}"></p>
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <input type="number" id="quantity" name="quantity" class="form-control mgmt-input"
+                           min="0.01" step="0.01" required data-type="number"
+                           th:value="${fuelSupplyCreationDto.quantity}">
+                </div>
+                <div class="form-group">
+                    <label for="price">Price</label>
+                    <input type="number" id="price" name="price" class="form-control mgmt-input"
+                           min="0.01" step="0.01" required data-type="number"
+                           th:value="${fuelSupplyCreationDto.price}">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-form-submit">Save Changes</button>
+                    <a href="/api/fuelSupply/all" class="btn-form-cancel">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="/js/management-form.js"></script>
+</body>
+</html>

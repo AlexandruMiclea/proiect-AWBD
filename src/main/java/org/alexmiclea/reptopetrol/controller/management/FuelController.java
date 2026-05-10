@@ -51,7 +51,7 @@ public class FuelController {
     @GetMapping("/update/{uuid}")
     //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
     public String getFuelUpdatePage(Model model, @PathVariable UUID uuid) {
-        log.debug("PUT /update called for UUID {}", uuid);
+        log.debug("GET /update called for UUID {}", uuid);
 
         Optional<FuelRetrievalDto> fuelRetrievalDto = fuelService.getFuelById(uuid);
 
@@ -79,7 +79,7 @@ public class FuelController {
 
         fuelService.addFuel(fuelDto);
 
-        return "redirect:api/contract/all";
+        return "redirect:/api/contract/all";
     }
 
     @PutMapping("/update/{uuid}")
@@ -89,7 +89,7 @@ public class FuelController {
 
         fuelService.updateFuel(fuelDto, uuid);
 
-        return "redirect:api/contract/all";
+        return "redirect:/api/contract/all";
     }
 
     @DeleteMapping("/delete/{uuid}")
@@ -101,6 +101,6 @@ public class FuelController {
 
         log.debug("Database response for DELETE: {}", response);
 
-        return "redirect:api/contract/all";
+        return "redirect:/api/contract/all";
     }
 }

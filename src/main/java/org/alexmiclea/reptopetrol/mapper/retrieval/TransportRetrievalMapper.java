@@ -24,13 +24,5 @@ public abstract class TransportRetrievalMapper {
             "java(transport.getStations().stream().map(x -> x.getId()).toList())")
     public abstract TransportRetrievalDto toTransportDto(Transport transport);
 
-    @Mapping(target = "contract", expression =
-            "java(contractRepository.findById(transportDto.getContractId()).orElseThrow())")
-    @Mapping(target = "stations", expression =
-            "java(stationRepository.findAllById(transportDto.getStationIds()))")
-    @Mapping(target = "id", ignore = true)
-    public abstract Transport toTransport(TransportRetrievalDto transportDto);
-
     public abstract List<TransportRetrievalDto> toTransportDtos(List<Transport> transports);
-    public abstract List<Transport> toTransports(List<TransportRetrievalDto> transportDtos);
 }

@@ -1,0 +1,112 @@
+/* ── Form page layout ── */
+.form-container {
+    max-width: 640px;
+}
+
+.form-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 2rem;
+}
+
+/* ── Form fields ── */
+.form-group label {
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+}
+
+.mgmt-input {
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--ink);
+    transition: border-color 0.15s;
+}
+
+.mgmt-input:focus {
+    border-color: var(--ink);
+    box-shadow: none;
+    outline: none;
+}
+
+.mgmt-input.is-invalid {
+    border-color: var(--accent);
+}
+
+.field-hint {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 0.25rem;
+}
+
+/* ── Form actions ── */
+.form-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+}
+
+.btn-form-submit {
+    background: var(--ink);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.55rem 1.25rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-form-submit:hover {
+    background: #2e2724;
+}
+
+.btn-form-cancel {
+    display: inline-block;
+    border: 1.5px solid var(--border);
+    color: var(--muted);
+    background: transparent;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: border-color 0.15s, color 0.15s;
+}
+
+.btn-form-cancel:hover {
+    border-color: var(--ink);
+    color: var(--ink);
+    text-decoration: none;
+}
+
+/* ── Form error banner ── */
+.form-error {
+    background: #fdf0ee;
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    color: var(--accent);
+    font-size: 0.85rem;
+    padding: 0.65rem 1rem;
+    margin-bottom: 1.25rem;
+    display: none;
+}
+
+.form-error.visible {
+    display: block;
+}

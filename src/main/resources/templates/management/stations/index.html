@@ -23,9 +23,9 @@
                     <th>Name</th>
                     <th>Address</th>
                     <th>Pumps</th>
-                    <th>Store ID</th>
-                    <th>Employees</th>
-                    <th>Fuels</th>
+<!--                    <th>Store ID</th>-->
+<!--                    <th>Employees</th>-->
+<!--                    <th>Fuels</th>-->
                     <th class="col-actions">Actions</th>
                 </tr>
             </thead>
@@ -35,13 +35,15 @@
                     <td th:text="${station.name}"></td>
                     <td th:text="${station.address}"></td>
                     <td th:text="${station.pumpNo}"></td>
-                    <td class="col-id" th:text="${station.storeId}"></td>
-                    <td th:text="${#lists.size(station.employeeIds)}"></td>
-                    <td th:text="${#lists.size(station.fuelIds)}"></td>
+<!--                    <td class="col-id" th:text="${station.storeId}"></td>-->
+<!--                    <td th:text="${#lists.size(station.employeeIds)}"></td>-->
+<!--                    <td th:text="${#lists.size(station.fuelIds)}"></td>-->
                     <td class="col-actions">
                         <a th:href="@{/api/station/update/{id}(id=${station.id})}" class="btn-row-edit">Edit</a>
-                        <button class="btn-row-delete"
-                                th:onclick="'deleteEntry(\'' + ${station.id} + '\')'">Delete</button>
+                        <form th:action="@{/api/station/delete/{id}(id=${station.id})}" method="post" class="d-inline">
+                          <input type="hidden" name="_method" value="DELETE">
+                          <button type="submit" class="btn-row-delete">Delete</button>
+                        </form>
                     </td>
                 </tr>
                 <tr th:if="${#lists.isEmpty(stations)}">
@@ -51,12 +53,5 @@
         </table>
     </div>
 </div>
-<script>
-function deleteEntry(uuid) {
-    if (!confirm('Delete this station?')) return;
-    fetch('/api/station/delete/' + uuid, { method: 'DELETE' })
-        .then(function(r) { if (r.ok) location.reload(); else alert('Delete failed: ' + r.status); });
-}
-</script>
 </body>
 </html>

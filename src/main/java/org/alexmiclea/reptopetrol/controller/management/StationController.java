@@ -45,13 +45,13 @@ public class StationController {
 
         model.addAttribute("stationCreationDto", stationCreationDto);
 
-        return "management/contracts/add";
+        return "management/stations/add";
     }
 
     @GetMapping("/update/{uuid}")
     //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
     public String getContractUpdatePage(Model model, @PathVariable UUID uuid) {
-        log.debug("PUT /update called for UUID {}", uuid);
+        log.debug("GET /update called for UUID {}", uuid);
 
         Optional<StationRetrievalDto> stationRetrievalDto = stationService.getStationById(uuid);
 
@@ -76,22 +76,13 @@ public class StationController {
         }
     }
 
-    @GetMapping("/{uuid}")
-    public ResponseEntity<StationRetrievalDto> getStation(@PathVariable UUID uuid) {
-        log.debug("GET /{} called", uuid);
-        Optional<StationRetrievalDto> station = stationService.getStationById(uuid);
-        log.debug("Database response for GET: {}", station);
-
-        return station.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
-    }
-
     @PostMapping("/add")
     public String addStation(@RequestBody @Validated StationCreationDto stationDto) {
         log.debug("POST /add called with payload {}", stationDto);
 
         stationService.addStation(stationDto);
 
-        return "redirect:api/station/all";
+        return "redirect:/api/station/all";
     }
 
     @PutMapping("/update/{uuid}")
@@ -100,7 +91,7 @@ public class StationController {
 
         stationService.updateStation(stationDto, uuid);
 
-        return "redirect:api/contract/all";
+        return "redirect:/api/station/all";
     }
 
     @DeleteMapping("/delete/{uuid}")
@@ -111,6 +102,6 @@ public class StationController {
 
         log.debug("Database response for DELETE: {}", response);
 
-        return "redirect:api/contract/all";
+        return "redirect:/api/station/all";
     }
 }

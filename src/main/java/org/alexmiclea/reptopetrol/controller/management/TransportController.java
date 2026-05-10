@@ -49,7 +49,7 @@ public class TransportController {
     @GetMapping("/update/{uuid}")
     //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
     public String getEmployeeUpdatePage(Model model, @PathVariable UUID uuid) {
-        log.debug("PUT /update called for UUID {}", uuid);
+        log.debug("GET /update called for UUID {}", uuid);
 
         Optional<TransportRetrievalDto> transportRetrievalDto = transportService.getTransportById(uuid);
 
@@ -78,7 +78,7 @@ public class TransportController {
 
         transportService.addTransport(transportDto);
 
-        return "redirect:api/transport/all";
+        return "redirect:/api/transport/all";
     }
 
     @PutMapping("/update/{uuid}")
@@ -88,7 +88,7 @@ public class TransportController {
 
         transportService.updateTransport(transportDto, uuid);
 
-        return "redirect:api/transport/all";
+        return "redirect:/api/transport/all";
     }
 
     @DeleteMapping("/delete/{uuid}")
@@ -100,6 +100,6 @@ public class TransportController {
 
         log.debug("Database response for DELETE: {}", response);
 
-        return "redirect:api/transport/all";
+        return "redirect:/api/transport/all";
     }
 }

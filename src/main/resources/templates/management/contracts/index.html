@@ -38,8 +38,10 @@
                     <td th:text="${contract.transportIds}"></td>
                     <td class="col-actions">
                         <a th:href="@{/api/contract/update/{id}(id=${contract.id})}" class="btn-row-edit">Edit</a>
-                        <button class="btn-row-delete"
-                                th:onclick="'deleteEntry(\'' + ${contract.id} + '\')'">Delete</button>
+                        <form th:action="@{/api/contract/delete/{id}(id=${station.id})}" method="post" class="d-inline">
+                              <input type="hidden" name="_method" value="DELETE">
+                              <button type="submit" class="btn-row-delete">Delete</button>
+                        </form>
                     </td>
                 </tr>
                 <tr th:if="${#lists.isEmpty(contracts)}">
@@ -49,12 +51,5 @@
         </table>
     </div>
 </div>
-<script>
-function deleteEntry(uuid) {
-    if (!confirm('Delete this contract?')) return;
-    fetch('/api/contract/delete/' + uuid, { method: 'DELETE' })
-        .then(function(r) { if (r.ok) location.reload(); else alert('Delete failed: ' + r.status); });
-}
-</script>
 </body>
 </html>

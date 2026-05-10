@@ -49,7 +49,7 @@ public class SupplierController {
     @GetMapping("/update/{uuid}")
     //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
     public String getSupplierUpdatePage(Model model, @PathVariable UUID uuid) {
-        log.debug("PUT /update called for UUID {}", uuid);
+        log.debug("GET /update called for UUID {}", uuid);
 
         Optional<SupplierRetrievalDto> supplierRetrievalDto = supplierService.getSupplierById(uuid);
 
@@ -78,7 +78,7 @@ public class SupplierController {
 
         supplierService.addSupplier(supplierDto);
 
-        return "redirect:api/suppliers/all";
+        return "redirect:/api/suppliers/all";
     }
 
     @PutMapping("/update/{uuid}")
@@ -88,7 +88,7 @@ public class SupplierController {
 
         supplierService.updateSupplier(supplierDto, uuid);
 
-        return "redirect:api/suppliers/all";
+        return "redirect:/api/suppliers/all";
     }
 
     @DeleteMapping("/delete/{uuid}")
@@ -100,6 +100,6 @@ public class SupplierController {
 
         log.debug("Database response for DELETE: {}", response);
 
-        return "redirect:api/suppliers/all";
+        return "redirect:/api/suppliers/all";
     }
 }

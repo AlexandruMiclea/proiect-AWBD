@@ -84,7 +84,7 @@ public class InventoryController {
         log.debug("POST /add called with payload {}", inventoryDto);
         inventoryService.addInventory(inventoryDto);
 
-        return "redirect:api/inventory/all";
+        return "redirect:/api/inventory/all";
     }
 
     @PutMapping("/update")
@@ -93,7 +93,7 @@ public class InventoryController {
         log.debug("PUT /update called with payload {}", inventoryDto);
         inventoryService.updateInventory(inventoryDto, inventoryDto.getId());
 
-        return "redirect:api/inventory/all";
+        return "redirect:/api/inventory/all";
     }
 
     @DeleteMapping("/delete")
@@ -106,6 +106,6 @@ public class InventoryController {
 
         log.debug("Database response for DELETE: {}", inventory);
 
-        return "redirect:api/inventory/all";
+        return "redirect:/api/inventory/all";
     }
 }

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Fuel</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <th:block th:replace="~{fragments/header :: appHead}"></th:block>
+    <link rel="stylesheet" href="/css/management.css">
+    <link rel="stylesheet" href="/css/management-form.css">
+</head>
+<body>
+<th:block th:replace="~{fragments/header :: appHeader}"></th:block>
+<div class="container mgmt-container">
+    <div class="mgmt-header">
+        <h1 class="mgmt-title">Edit Fuel</h1>
+        <a href="/api/fuel/all" class="btn-row-edit">← Back</a>
+    </div>
+    <div class="form-container">
+        <div class="form-card">
+            <form class="mgmt-form"
+                  th:action="@{/api/fuel/update/{id}(id=${fuelCreationDto.id})}"
+                  data-method="PUT"
+                  data-success-url="/api/fuel/all">
+                <div class="form-error"></div>
+                <input type="hidden" name="id" th:value="${fuelCreationDto.id}">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" class="form-control mgmt-input"
+                           maxlength="64" required
+                           th:value="${fuelCreationDto.name}">
+                </div>
+                <div class="form-group">
+                    <label for="type">Type</label>
+                    <select id="type" name="type" class="form-control mgmt-input" required>
+                        <option value="GAS"    th:selected="${fuelCreationDto.type != null && fuelCreationDto.type.name() == 'GAS'}">GAS</option>
+                        <option value="DIESEL" th:selected="${fuelCreationDto.type != null && fuelCreationDto.type.name() == 'DIESEL'}">DIESEL</option>
+                        <option value="LPG"    th:selected="${fuelCreationDto.type != null && fuelCreationDto.type.name() == 'LPG'}">LPG</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-form-submit">Save Changes</button>
+                    <a href="/api/fuel/all" class="btn-form-cancel">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="/js/management-form.js"></script>
+</body>
+</html>

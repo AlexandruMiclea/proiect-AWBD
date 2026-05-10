@@ -26,3 +26,7 @@ spring:
     password: password
   mongodb:
     uri: mongodb://mongouser:mongopassword@localhost:27017/teleleu?authSource=admin
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true # enabled so that I can set the hidden method to DELETE for the delete buttons in the index pages

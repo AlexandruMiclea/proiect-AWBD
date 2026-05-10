@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Employee</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <th:block th:replace="~{fragments/header :: appHead}"></th:block>
+    <link rel="stylesheet" href="/css/management.css">
+    <link rel="stylesheet" href="/css/management-form.css">
+</head>
+<body>
+<th:block th:replace="~{fragments/header :: appHeader}"></th:block>
+<div class="container mgmt-container">
+    <div class="mgmt-header">
+        <h1 class="mgmt-title">Add Employee</h1>
+        <a href="/api/employee/all" class="btn-row-edit">← Back</a>
+    </div>
+    <div class="form-container">
+        <div class="form-card">
+            <form class="mgmt-form"
+                  action="/api/employee/add"
+                  method="post"
+                  data-success-url="/api/employee/all">
+                <div class="form-error"></div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" name="firstName" class="form-control mgmt-input"
+                               maxlength="64" required placeholder="First name">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" class="form-control mgmt-input"
+                               maxlength="64" required placeholder="Last name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="identificationNumber">ID Number</label>
+                    <input type="text" id="identificationNumber" name="identificationNumber"
+                           class="form-control mgmt-input"
+                           maxlength="64" required placeholder="National identification number">
+                </div>
+                <div class="form-group">
+                    <label for="role">Role</label>
+                    <select id="role" name="role" class="form-control mgmt-input" required>
+                        <option value="" disabled selected>Select role</option>
+                        <option value="CASHIER">CASHIER</option>
+                        <option value="ATTENDANT">ATTENDANT</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="wage">Wage</label>
+                    <input type="number" id="wage" name="wage" class="form-control mgmt-input"
+                           min="1" required placeholder="Monthly wage"
+                           data-type="number">
+                </div>
+                <div class="form-group">
+                    <label for="dateOfHire">Date of Hire</label>
+                    <input type="datetime-local" id="dateOfHire" name="dateOfHire"
+                           class="form-control mgmt-input" required data-type="instant">
+                </div>
+                <div class="form-group">
+                    <label for="stationId">Station ID <span class="field-hint" style="display:inline">(optional)</span></label>
+                    <input type="text" id="stationId" name="stationId" class="form-control mgmt-input"
+                           placeholder="UUID of assigned station">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-form-submit">Create Employee</button>
+                    <a href="/api/employee/all" class="btn-form-cancel">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="/js/management-form.js"></script>
+</body>
+</html>

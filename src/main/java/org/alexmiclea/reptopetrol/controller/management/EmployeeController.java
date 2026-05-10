@@ -49,7 +49,7 @@ public class EmployeeController {
     @GetMapping("/update/{uuid}")
     //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
     public String getEmployeeUpdatePage(Model model, @PathVariable UUID uuid) {
-        log.debug("PUT /update called for UUID {}", uuid);
+        log.debug("GET /update called for UUID {}", uuid);
 
         Optional<EmployeeRetrievalDto> employeeRetrievalDto = employeeService.getEmployeeById(uuid);
 
@@ -81,7 +81,7 @@ public class EmployeeController {
 
         employeeService.addEmployee(employeeDto);
 
-        return "redirect:api/contract/all";
+        return "redirect:/api/contract/all";
     }
 
     @PutMapping("/update/{uuid}")
@@ -91,7 +91,7 @@ public class EmployeeController {
 
         employeeService.updateEmployee(employeeDto, uuid);
 
-        return "redirect:api/contract/all";
+        return "redirect:/api/contract/all";
     }
 
     @DeleteMapping("/delete/{uuid}")
@@ -103,6 +103,6 @@ public class EmployeeController {
 
         log.debug("Database response for DELETE: {}", response);
 
-        return "redirect:api/contract/all";
+        return "redirect:/api/contract/all";
     }
 }

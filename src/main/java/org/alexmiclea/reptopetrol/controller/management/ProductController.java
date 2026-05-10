@@ -49,7 +49,7 @@ public class ProductController {
     @GetMapping("/update/{uuid}")
     //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
     public String getProductUpdatePage(Model model, @PathVariable UUID uuid) {
-        log.debug("PUT /update called for UUID {}", uuid);
+        log.debug("GET /update called for UUID {}", uuid);
 
         Optional<ProductRetrievalDto> productRetrievalDto = productService.getProductById(uuid);
 
@@ -77,7 +77,7 @@ public class ProductController {
 
         productService.addProduct(productDto);
 
-        return "redirect:api/product/all";
+        return "redirect:/api/product/all";
     }
 
     @PutMapping("/update/{uuid}")
@@ -87,7 +87,7 @@ public class ProductController {
 
         productService.updateProduct(productDto, uuid);
 
-        return "redirect:api/product/all";
+        return "redirect:/api/product/all";
     }
 
     @DeleteMapping("/delete/{uuid}")
@@ -99,6 +99,6 @@ public class ProductController {
 
         log.debug("Database response for DELETE: {}", response);
 
-        return "redirect:api/product/all";
+        return "redirect:/api/product/all";
     }
 }

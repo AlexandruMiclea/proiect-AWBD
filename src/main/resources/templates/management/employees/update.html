@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Employee</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <th:block th:replace="~{fragments/header :: appHead}"></th:block>
+    <link rel="stylesheet" href="/css/management.css">
+    <link rel="stylesheet" href="/css/management-form.css">
+</head>
+<body>
+<th:block th:replace="~{fragments/header :: appHeader}"></th:block>
+<div class="container mgmt-container">
+    <div class="mgmt-header">
+        <h1 class="mgmt-title">Edit Employee</h1>
+        <a href="/api/employee/all" class="btn-row-edit">← Back</a>
+    </div>
+    <div class="form-container">
+        <div class="form-card">
+            <form class="mgmt-form"
+                  th:action="@{/api/employee/update/{id}(id=${employeeCreationDto.id})}"
+                  data-method="PUT"
+                  data-success-url="/api/employee/all">
+                <div class="form-error"></div>
+                <input type="hidden" name="id" th:value="${employeeCreationDto.id}">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" name="firstName" class="form-control mgmt-input"
+                               maxlength="64" required
+                               th:value="${employeeCreationDto.firstName}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" class="form-control mgmt-input"
+                               maxlength="64" required
+                               th:value="${employeeCreationDto.lastName}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="identificationNumber">ID Number</label>
+                    <input type="text" id="identificationNumber" name="identificationNumber"
+                           class="form-control mgmt-input"
+                           maxlength="64" required
+                           th:value="${employeeCreationDto.identificationNumber}">
+                </div>
+                <div class="form-group">
+                    <label for="role">Role</label>
+                    <select id="role" name="role" class="form-control mgmt-input" required>
+                        <option value="CASHIER"    th:selected="${employeeCreationDto.role != null && employeeCreationDto.role.name() == 'CASHIER'}">CASHIER</option>
+                        <option value="ATTENDANT"  th:selected="${employeeCreationDto.role != null && employeeCreationDto.role.name() == 'ATTENDANT'}">ATTENDANT</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="wage">Wage</label>
+                    <input type="number" id="wage" name="wage" class="form-control mgmt-input"
+                           min="1" required data-type="number"
+                           th:value="${employeeCreationDto.wage}">
+                </div>
+                <div class="form-group">
+                    <label for="dateOfHire">Date of Hire</label>
+                    <input type="text" id="dateOfHire" name="dateOfHire"
+                           class="form-control mgmt-input" required
+                           placeholder="e.g. 2024-01-15T10:30:00Z"
+                           th:value="${employeeCreationDto.dateOfHire}">
+                    <small class="field-hint">ISO 8601 format, e.g. 2024-01-15T10:30:00Z</small>
+                </div>
+                <div class="form-group">
+                    <label for="stationId">Station ID <span class="field-hint" style="display:inline">(optional)</span></label>
+                    <input type="text" id="stationId" name="stationId" class="form-control mgmt-input"
+                           placeholder="UUID of assigned station"
+                           th:value="${employeeCreationDto.stationId}">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-form-submit">Save Changes</button>
+                    <a href="/api/employee/all" class="btn-form-cancel">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="/js/management-form.js"></script>
+</body>
+</html>
