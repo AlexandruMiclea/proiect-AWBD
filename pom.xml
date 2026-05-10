@@ -10,7 +10,7 @@
     </parent>
     <groupId>org.alexmiclea</groupId>
     <artifactId>reptopetrol</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0-SNAPSHOT</version>
     <name>reptopetrol</name>
     <description>reptopetrol</description>
     <url/>
