@@ -82,6 +82,7 @@ public class ContractController {
                     .build();
 
             model.addAttribute("contractCreationDto", contractCreationDto);
+            model.addAttribute("fuels", fuelService.getAll());
             return "management/contracts/update";
         } else {
             return "management/contracts/index";

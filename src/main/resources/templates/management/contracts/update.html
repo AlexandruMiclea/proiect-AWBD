@@ -29,14 +29,11 @@
                     <input type="text" id="supplierId" name="supplierId" class="form-control mgmt-input"
                            required th:value="${contractCreationDto.supplierId}">
                 </div>
-                <!-- TODO replace with multiple choice -->
                 <div class="form-group">
                     <label for="fuelIds">Fuel IDs</label>
-                    <input type="text" id="fuelIds" name="fuelIds" class="form-control mgmt-input"
-                           required placeholder="UUID1, UUID2, ..."
-                           data-type="array"
-                           th:value="${contractCreationDto.fuelIds != null ? #strings.listJoin(contractCreationDto.fuelIds, ', ') : ''}">
-                    <small class="field-hint">Comma-separated list of fuel UUIDs.</small>
+                    <select id="fuelIds" name="fuelIds" class="form-control mgmt-input" required multiple>
+                        <option th:each="fuel : ${fuels}" th:value="${fuel.id}" th:text="${fuel.name}"></option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="beginDate">Begin Date</label>
