@@ -19,4 +19,16 @@ public class GlobalModelAdvice {
         }
         return null;
     }
+
+    // TODO modify after implementing roles
+
+    @ModelAttribute("role")
+    public String role() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
+//            return auth.getAuthorities();
+            return "ROLE_USER";
+        }
+        return null;
+    }
 }

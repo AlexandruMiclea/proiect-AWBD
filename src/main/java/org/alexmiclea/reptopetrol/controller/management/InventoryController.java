@@ -10,7 +10,7 @@ import org.alexmiclea.reptopetrol.model.management.keys.InventoryKey;
 import org.alexmiclea.reptopetrol.service.management.InventoryService;
 import org.alexmiclea.reptopetrol.service.management.ProductService;
 import org.alexmiclea.reptopetrol.service.management.StoreService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.alexmiclea.reptopetrol.service.monitoring.CRUDHistoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -28,13 +28,17 @@ public class InventoryController {
     private final StoreService storeService;
     private final ProductService productService;
 
-    @Autowired
     private final InventoryKeyMapper inventoryKeyMapper;
+
+    private final CRUDHistoryService crudHistoryService;
 
     @GetMapping("/all")
     //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
     public String getInventories(Model model) {
         log.debug("GET /all called");
+
+        // add call to history service
+        crudHistoryService.add("GET /all", InventoryRetrievalDto.class.getName(), "");
 
         model.addAttribute("inventories", inventoryService.getAll());
 
@@ -45,6 +49,9 @@ public class InventoryController {
     //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
     public String getInventoryCreatePage(Model model) {
         log.debug("GET /add called");
+
+        // add call to history service
+        crudHistoryService.add("GET /add", InventoryRetrievalDto.class.getName(), "");
 
         // creation Dto
         InventoryCreationDto inventoryCreationDto = new InventoryCreationDto();
@@ -60,6 +67,9 @@ public class InventoryController {
     //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
     public String getFuelSupplyUpdatePage(Model model, InventoryKeyDto inventoryKeyDto) {
         log.debug("GET /update called with ID {}", inventoryKeyDto);
+
+        // add call to history service
+        crudHistoryService.add("GET /update", InventoryCreationDto.class.getName(), inventoryKeyDto.toString());
 
         Optional<InventoryRetrievalDto> inventoryRetrievalDto =
                 inventoryService.getInventoryById(inventoryKeyMapper.toInventoryKey(inventoryKeyDto));
@@ -86,6 +96,10 @@ public class InventoryController {
     //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
     public String addInventory(@RequestBody @Validated InventoryCreationDto inventoryDto) {
         log.debug("POST /add called with payload {}", inventoryDto);
+
+        // add call to history service
+        crudHistoryService.add("POST /add", InventoryCreationDto.class.getName(), inventoryDto.toString());
+
         inventoryService.addInventory(inventoryDto);
 
         return "redirect:/api/inventory/all";
@@ -95,6 +109,10 @@ public class InventoryController {
     //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
     public String updateInventory(@RequestBody @Validated InventoryCreationDto inventoryDto) {
         log.debug("PUT /update called with payload {}", inventoryDto);
+
+        // add call to history service
+        crudHistoryService.add("PUT /update", InventoryCreationDto.class.getName(), inventoryDto.toString());
+
         inventoryService.updateInventory(inventoryDto, inventoryDto.getId());
 
         return "redirect:/api/inventory/all";
@@ -104,6 +122,9 @@ public class InventoryController {
     //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
     public String deleteInventory(InventoryKeyDto key) {
         log.debug("DELETE called with composed key {}", key);
+
+        // add call to history service
+        crudHistoryService.add("DELETE /delete", InventoryRetrievalDto.class.getName(), key.toString());
 
         InventoryKey inventoryKey = inventoryKeyMapper.toInventoryKey(key);
         Optional<InventoryKey> inventory = inventoryService.deleteInventory(inventoryKey);

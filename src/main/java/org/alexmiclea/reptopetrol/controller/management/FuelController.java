@@ -6,6 +6,7 @@ import org.alexmiclea.reptopetrol.dto.management.creation.FuelCreationDto;
 import org.alexmiclea.reptopetrol.dto.management.retrieval.FuelRetrievalDto;
 import org.alexmiclea.reptopetrol.service.management.FuelService;
 import org.alexmiclea.reptopetrol.service.management.StationService;
+import org.alexmiclea.reptopetrol.service.monitoring.CRUDHistoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -23,10 +24,15 @@ public class FuelController {
     private final FuelService fuelService;
     private final StationService stationService;
 
+    private final CRUDHistoryService crudHistoryService;
+
     @GetMapping("/all")
     //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN", "ROLE_MANAGER"})
     public String getFuels(Model model) {
         log.debug("GET /all called");
+
+        // add call to history service
+        crudHistoryService.add("GET /all", FuelRetrievalDto.class.getName(), "");
 
         model.addAttribute("fuels", fuelService.getAll());
 
@@ -37,6 +43,9 @@ public class FuelController {
     //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
     public String getFuelCreatePage(Model model) {
         log.debug("GET /add called");
+
+        // add call to history service
+        crudHistoryService.add("GET /add", FuelCreationDto.class.getName(), "");
 
         // creation Dto
         FuelCreationDto fuelCreationDto = new FuelCreationDto();
@@ -50,6 +59,9 @@ public class FuelController {
     //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
     public String getFuelUpdatePage(Model model, @PathVariable UUID uuid) {
         log.debug("GET /update called for UUID {}", uuid);
+
+        // add call to history service
+        crudHistoryService.add("GET /update", FuelCreationDto.class.getName(), uuid.toString());
 
         Optional<FuelRetrievalDto> fuelRetrievalDto = fuelService.getFuelById(uuid);
 
@@ -75,6 +87,9 @@ public class FuelController {
     public String addFuel(@RequestBody @Validated FuelCreationDto fuelDto) {
         log.debug("POST /add called with payload {}", fuelDto);
 
+        // add call to history service
+        crudHistoryService.add("POST /add", FuelCreationDto.class.getName(), fuelDto.toString());
+
         fuelService.addFuel(fuelDto);
 
         return "redirect:/api/fuel/all";
@@ -85,6 +100,9 @@ public class FuelController {
     public String updateFuel(@RequestBody @Validated FuelCreationDto fuelDto, @PathVariable UUID uuid) {
         log.debug("PUT /update called with payload {} for UUID {}", fuelDto, uuid);
 
+        // add call to history service
+        crudHistoryService.add("PUT /update", FuelCreationDto.class.getName(), fuelDto.toString());
+
         fuelService.updateFuel(fuelDto, uuid);
 
         return "redirect:/api/fuel/all";
@@ -94,6 +112,9 @@ public class FuelController {
     //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
     public String deleteFuel(@PathVariable UUID uuid) {
         log.debug("DELETE /delete called for UUID {}", uuid);
+
+        // add call to history service
+        crudHistoryService.add("DELETE /delete", FuelRetrievalDto.class.getName(), uuid.toString());
 
         Optional<UUID> response = fuelService.deleteFuel(uuid);
 

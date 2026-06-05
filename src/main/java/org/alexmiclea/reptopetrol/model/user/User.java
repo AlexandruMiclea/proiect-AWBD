@@ -26,7 +26,6 @@ public class User implements UserDetails {
 
     private String firstname;
     private String lastname;
-//    private String username;
     private String email;
 
     @ToString.Exclude

@@ -7,6 +7,7 @@ import org.alexmiclea.reptopetrol.dto.management.retrieval.ContractRetrievalDto;
 import org.alexmiclea.reptopetrol.service.management.ContractService;
 import org.alexmiclea.reptopetrol.service.management.FuelService;
 import org.alexmiclea.reptopetrol.service.management.SupplierService;
+import org.alexmiclea.reptopetrol.service.monitoring.CRUDHistoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -25,10 +26,15 @@ public class ContractController {
     private final SupplierService supplierService;
     private final FuelService fuelService;
 
+    private final CRUDHistoryService crudHistoryService;
+
     @GetMapping("/all")
     //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
     public String getContracts(Model model) {
         log.debug("GET /all called");
+
+        // add call to history service
+        crudHistoryService.add("GET /all", ContractRetrievalDto.class.getName(), "");
 
         model.addAttribute("contracts", contractService.getAll());
 
@@ -39,6 +45,9 @@ public class ContractController {
     //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
     public String getContractCreatePage(Model model) {
         log.debug("GET /add called");
+
+        // add call to history service
+        crudHistoryService.add("GET /add", ContractCreationDto.class.getName(), "");
 
         // creation Dto
         ContractCreationDto contractCreationDto = new ContractCreationDto();
@@ -53,7 +62,10 @@ public class ContractController {
     @GetMapping("/update/{uuid}")
     //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
     public String getContractUpdatePage(Model model, @PathVariable UUID uuid) {
-        log.debug("PUT /update called for UUID {}", uuid);
+        log.debug("GET /update called for UUID {}", uuid);
+
+        // add call to history service
+        crudHistoryService.add("GET /update", ContractCreationDto.class.getName(), uuid.toString());
 
         Optional<ContractRetrievalDto> contractRetrievalDto = contractService.getContractById(uuid);
 
@@ -81,6 +93,9 @@ public class ContractController {
     public String addContract(@RequestBody @Validated ContractCreationDto contractDto) {
         log.debug("POST /add called with payload {}", contractDto);
 
+        // add call to history service
+        crudHistoryService.add("POST /add", ContractCreationDto.class.getName(), contractDto.toString());
+
         contractService.addContract(contractDto);
 
         return "redirect:/api/contract/all";
@@ -91,6 +106,9 @@ public class ContractController {
     public String updateContract(@RequestBody @Validated ContractCreationDto contractDto, @PathVariable UUID uuid) {
         log.debug("PUT /update called with payload {} for UUID {}", contractDto, uuid);
 
+        // add call to history service
+        crudHistoryService.add("PUT /update", ContractCreationDto.class.getName(), contractDto.toString());
+
         contractService.updateContract(contractDto, uuid);
 
         return "redirect:/api/contract/all";
@@ -100,6 +118,9 @@ public class ContractController {
     //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
     public String deleteContract(@PathVariable UUID uuid) {
         log.debug("DELETE /delete called for UUID {}", uuid);
+
+        // add call to history service
+        crudHistoryService.add("DELETE /delete", ContractRetrievalDto.class.getName(), uuid.toString());
 
         Optional<UUID> response = contractService.deleteContract(uuid);
 

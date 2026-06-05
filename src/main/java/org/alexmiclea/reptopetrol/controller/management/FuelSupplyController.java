@@ -10,7 +10,7 @@ import org.alexmiclea.reptopetrol.model.management.keys.FuelSupplyKey;
 import org.alexmiclea.reptopetrol.service.management.FuelService;
 import org.alexmiclea.reptopetrol.service.management.FuelSupplyService;
 import org.alexmiclea.reptopetrol.service.management.StationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.alexmiclea.reptopetrol.service.monitoring.CRUDHistoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -30,10 +30,15 @@ public class FuelSupplyController {
 
     private final FuelSupplyKeyMapper fuelSupplyKeyMapper;
 
+    private final CRUDHistoryService crudHistoryService;
+
     @GetMapping("/all")
     //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN", "ROLE_MANAGER"})
     public String getFuelSupplies(Model model) {
         log.debug("GET /all called");
+
+        // add call to history service
+        crudHistoryService.add("GET /all", FuelSupplyRetrievalDto.class.getName(), "");
 
         model.addAttribute("fuelSupplies", fuelSupplyService.getAll());
 
@@ -44,6 +49,9 @@ public class FuelSupplyController {
     //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
     public String getFuelSupplyCreatePage(Model model) {
         log.debug("GET /add called");
+
+        // add call to history service
+        crudHistoryService.add("GET /add", FuelSupplyCreationDto.class.getName(), "");
 
         // creation Dto
         FuelSupplyCreationDto fuelSupplyCreationDto = new FuelSupplyCreationDto();
@@ -59,6 +67,9 @@ public class FuelSupplyController {
     //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
     public String getFuelSupplyUpdatePage(Model model, FuelSupplyKeyDto fuelSupplyKeyDto) {
         log.debug("GET /update called with ID {}", fuelSupplyKeyDto);
+
+        // add call to history service
+        crudHistoryService.add("GET /update", FuelSupplyCreationDto.class.getName(), fuelSupplyKeyDto.toString());
 
         Optional<FuelSupplyRetrievalDto> fuelSupplyRetrievalDto =
                 fuelSupplyService.getFuelSupplyById(fuelSupplyKeyMapper.toFuelSupplyKey(fuelSupplyKeyDto));
@@ -86,6 +97,9 @@ public class FuelSupplyController {
     public String addFuelSupply(@RequestBody @Validated FuelSupplyCreationDto fuelSupplyDto) {
         log.debug("POST /add called with payload {}", fuelSupplyDto);
 
+        // add call to history service
+        crudHistoryService.add("POST /add", FuelSupplyCreationDto.class.getName(), fuelSupplyDto.toString());
+
         fuelSupplyService.addFuelSupply(fuelSupplyDto);
 
         return "redirect:/api/fuelSupply/all";
@@ -96,6 +110,9 @@ public class FuelSupplyController {
     public String updateFuelSupply(@RequestBody @Validated FuelSupplyCreationDto fuelSupplyDto) {
         log.debug("PUT /update called with payload {}", fuelSupplyDto);
 
+        // add call to history service
+        crudHistoryService.add("PUT /update", FuelSupplyCreationDto.class.getName(), fuelSupplyDto.toString());
+
         fuelSupplyService.updateFuelSupply(fuelSupplyDto, fuelSupplyDto.getId());
 
         return "redirect:/api/fuelSupply/all";
@@ -105,6 +122,9 @@ public class FuelSupplyController {
     //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
     public String deleteFuelSupply(FuelSupplyKeyDto key) {
         log.debug("DELETE called with composed key {}", key);
+
+        // add call to history service
+        crudHistoryService.add("DELETE /delete", FuelSupplyRetrievalDto.class.getName(), key.toString());
 
         FuelSupplyKey fuelSupplyKey = fuelSupplyKeyMapper.toFuelSupplyKey(key);
         Optional<FuelSupplyKey> fuelSupply = fuelSupplyService.deleteFuelSupply(fuelSupplyKey);

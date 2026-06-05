@@ -9,6 +9,7 @@ import org.alexmiclea.reptopetrol.dto.user.TokenResponseDto;
 import org.alexmiclea.reptopetrol.dto.user.UserAuthenticationDto;
 import org.alexmiclea.reptopetrol.dto.user.UserCreationDto;
 import org.alexmiclea.reptopetrol.service.authentication.AuthenticationService;
+import org.alexmiclea.reptopetrol.service.monitoring.CRUDHistoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +23,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class AuthenticationController {
+
+    private final CRUDHistoryService crudHistoryService;
 
     // TODO assign role endpoint for Admin?
 
@@ -39,6 +42,7 @@ public class AuthenticationController {
             return "auth/auth";
         }
 
+        // check for logic errors (already used email, invalid password)
         List<String> errors = authenticationService.validateUserCreationDto(userCreationDto);
         if (!errors.isEmpty()) {
             UserAuthenticationDto userAuthenticationDto = new UserAuthenticationDto();
@@ -50,6 +54,9 @@ public class AuthenticationController {
         }
 
         authenticationService.registerUser(userCreationDto);
+
+        // add call to history service
+        crudHistoryService.add("POST", userCreationDto.getClass().getName(), userCreationDto.toString());
 
         model.addAttribute("userAuthenticationDto", new UserAuthenticationDto());
         model.addAttribute("userCreationDto", new UserCreationDto());
@@ -70,6 +77,7 @@ public class AuthenticationController {
             return "auth/auth";
         }
 
+        // check for logic errors (invalid email, wrong password for account)
         List<String> errors = authenticationService.validateUserAuthenticationDto(userAuthenticationDto);
         if (!errors.isEmpty()) {
             UserCreationDto userCreationDto = new UserCreationDto();
@@ -79,6 +87,9 @@ public class AuthenticationController {
             model.addAttribute("registerError", errors);
             return "auth/auth";
         }
+
+        // add call to history service
+        crudHistoryService.add("POST", userAuthenticationDto.getClass().getName(), userAuthenticationDto.toString());
 
         TokenResponseDto tokenResponse = authenticationService.authenticateUser(userAuthenticationDto);
         Cookie cookie = new Cookie("jwt", tokenResponse.getAccessToken());

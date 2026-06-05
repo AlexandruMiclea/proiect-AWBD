@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 public class MonitoringController {
 
-    private final CRUDHistoryService crudHistoryService;
     private final PurchaseService purchaseService;
     private final EventHistoryService eventHistoryService;
+
+    private final CRUDHistoryService crudHistoryService;
 
     @GetMapping("/crud")
     //@Secured({"ROLE_ADMIN"})

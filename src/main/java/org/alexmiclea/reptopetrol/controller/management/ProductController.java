@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.alexmiclea.reptopetrol.dto.management.creation.ProductCreationDto;
 import org.alexmiclea.reptopetrol.dto.management.retrieval.ProductRetrievalDto;
 import org.alexmiclea.reptopetrol.service.management.ProductService;
+import org.alexmiclea.reptopetrol.service.monitoring.CRUDHistoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -21,10 +22,15 @@ public class ProductController {
 
     private final ProductService productService;
 
+    private final CRUDHistoryService crudHistoryService;
+
     @GetMapping("/all")
     //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
     public String getProducts(Model model) {
         log.debug("GET /all called");
+
+        // add call to history service
+        crudHistoryService.add("GET /all", ProductRetrievalDto.class.getName(), "");
 
         model.addAttribute("products", productService.getAll());
 
@@ -35,6 +41,9 @@ public class ProductController {
     //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
     public String getProductCreatePage(Model model) {
         log.debug("GET /add called");
+
+        // add call to history service
+        crudHistoryService.add("GET /add", ProductCreationDto.class.getName(), "");
 
         // creation Dto
         ProductCreationDto productCreationDto = new ProductCreationDto();
@@ -48,6 +57,9 @@ public class ProductController {
     //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
     public String getProductUpdatePage(Model model, @PathVariable UUID uuid) {
         log.debug("GET /update called for UUID {}", uuid);
+
+        // add call to history service
+        crudHistoryService.add("GET /update", ProductCreationDto.class.getName(), uuid.toString());
 
         Optional<ProductRetrievalDto> productRetrievalDto = productService.getProductById(uuid);
 
@@ -73,6 +85,9 @@ public class ProductController {
     public String addProduct(@RequestBody @Validated ProductCreationDto productDto) {
         log.debug("POST /add called with payload {}", productDto);
 
+        // add call to history service
+        crudHistoryService.add("POST /add", ProductCreationDto.class.getName(), productDto.toString());
+
         productService.addProduct(productDto);
 
         return "redirect:/api/product/all";
@@ -83,6 +98,9 @@ public class ProductController {
     public String updateProduct(@RequestBody @Validated ProductCreationDto productDto, @PathVariable UUID uuid) {
         log.debug("PUT /update called with payload {} for UUID {}", productDto, uuid);
 
+        // add call to history service
+        crudHistoryService.add("PUT /update", ProductCreationDto.class.getName(), productDto.toString());
+
         productService.updateProduct(productDto, uuid);
 
         return "redirect:/api/product/all";
@@ -92,6 +110,9 @@ public class ProductController {
     //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
     public String deleteProduct(@PathVariable UUID uuid) {
         log.debug("DELETE /delete called for UUID {}", uuid);
+
+        // add call to history service
+        crudHistoryService.add("DELETE /delete", ProductRetrievalDto.class.getName(), uuid.toString());
 
         Optional<UUID> response = productService.deleteProduct(uuid);
 

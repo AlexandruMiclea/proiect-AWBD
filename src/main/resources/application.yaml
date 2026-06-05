@@ -25,7 +25,10 @@ spring:
     username: user
     password: password
   mongodb:
+    # TODO change database name
     uri: mongodb://mongouser:mongopassword@localhost:27017/teleleu?authSource=admin
+    representation:
+      uuid: standard
   mvc:
     hiddenmethod:
       filter:

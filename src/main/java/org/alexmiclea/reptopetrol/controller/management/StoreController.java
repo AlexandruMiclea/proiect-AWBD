@@ -6,6 +6,7 @@ import org.alexmiclea.reptopetrol.dto.management.creation.StoreCreationDto;
 import org.alexmiclea.reptopetrol.dto.management.retrieval.StoreRetrievalDto;
 import org.alexmiclea.reptopetrol.service.management.StationService;
 import org.alexmiclea.reptopetrol.service.management.StoreService;
+import org.alexmiclea.reptopetrol.service.monitoring.CRUDHistoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -24,10 +25,15 @@ public class StoreController {
 
     private final StationService stationService;
 
+    private final CRUDHistoryService crudHistoryService;
+
     @GetMapping("/all")
     //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
     public String getStores(Model model) {
         log.debug("GET /all called");
+
+        // add call to history service
+        crudHistoryService.add("GET /all", StoreRetrievalDto.class.getName(), "");
 
         model.addAttribute("stores", storeService.getAll());
 
@@ -38,6 +44,9 @@ public class StoreController {
     //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
     public String getStoreCreatePage(Model model) {
         log.debug("GET /add called");
+
+        // add call to history service
+        crudHistoryService.add("GET /add", StoreCreationDto.class.getName(), "");
 
         // creation Dto
         StoreCreationDto storeCreationDto = new StoreCreationDto();
@@ -52,6 +61,9 @@ public class StoreController {
     //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
     public String getStoreUpdatePage(Model model, @PathVariable UUID uuid) {
         log.debug("GET /update called for UUID {}", uuid);
+
+        // add call to history service
+        crudHistoryService.add("GET /update", StoreCreationDto.class.getName(), uuid.toString());
 
         Optional<StoreRetrievalDto> storeRetrievalDto = storeService.getStoreById(uuid);
 
@@ -75,6 +87,9 @@ public class StoreController {
     public String addStore(@RequestBody @Validated StoreCreationDto storeDto) {
         log.debug("POST /add called with payload {}", storeDto);
 
+        // add call to history service
+        crudHistoryService.add("POST /add", StoreCreationDto.class.getName(), storeDto.toString());
+
         storeService.addStore(storeDto);
 
         return "redirect:/api/store/all";
@@ -85,6 +100,9 @@ public class StoreController {
     public String updateStore(@RequestBody @Validated StoreCreationDto storeDto, @PathVariable UUID uuid) {
         log.debug("PUT /update called with payload {} for UUID {}", storeDto, uuid);
 
+        // add call to history service
+        crudHistoryService.add("PUT /update", StoreCreationDto.class.getName(), storeDto.toString());
+
         storeService.updateStore(storeDto, uuid);
 
         return "redirect:/api/store/all";
@@ -94,6 +112,9 @@ public class StoreController {
     //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
     public String deleteStore(@PathVariable UUID uuid) {
         log.debug("DELETE /delete called for UUID {}", uuid);
+
+        // add call to history service
+        crudHistoryService.add("DELETE /delete", StoreRetrievalDto.class.getName(), uuid.toString());
 
         Optional<UUID> response = storeService.deleteStore(uuid);
 
