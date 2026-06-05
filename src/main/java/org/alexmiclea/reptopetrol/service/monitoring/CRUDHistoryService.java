@@ -4,12 +4,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.alexmiclea.reptopetrol.model.monitoring.CRUDHistory;
 import org.alexmiclea.reptopetrol.repository.monitoring.CRUDHistoryRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -22,8 +23,8 @@ public class CRUDHistoryService {
 
     // TODO crud and GET with pageable and sortable request
 
-    public List<CRUDHistory> getAll() {
-        return crudHistoryRepository.findAll();
+    public Page<CRUDHistory> getAll(Pageable pageable) {
+        return crudHistoryRepository.findAll(pageable);
     }
 
     // create the crudHistory object here, leave the relevant data as parameters
