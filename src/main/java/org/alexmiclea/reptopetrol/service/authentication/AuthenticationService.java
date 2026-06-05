@@ -162,7 +162,7 @@ public class AuthenticationService {
         if (userEmail != null) {
             User user = userRepository.findByEmail(userEmail).orElseThrow();
 
-            // TODO what does this func do?
+            // VIEW what does this func do?
             if (jwtService.isTokenValid(refreshToken, user)) {
                 String accessToken = jwtService.generateToken(user);
                 revokeUserTokens(user);

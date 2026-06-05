@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 import java.util.UUID;
 
-// TODO you need to add the station service and update the station to link the store id
-// for the POST and PUT instructions
-
 @Controller
 @RequestMapping("/api/store")
 @RequiredArgsConstructor

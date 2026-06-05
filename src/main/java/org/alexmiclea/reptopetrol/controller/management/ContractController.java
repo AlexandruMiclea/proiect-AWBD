@@ -43,8 +43,6 @@ public class ContractController {
         // creation Dto
         ContractCreationDto contractCreationDto = new ContractCreationDto();
 
-        // TODO you need to add a list of other elements, so you can have a dropdown and select them
-
         model.addAttribute("suppliers", supplierService.getAll());
         model.addAttribute("fuels", fuelService.getAll());
         model.addAttribute("contractCreationDto", contractCreationDto);

@@ -21,7 +21,6 @@ public class LogoutService implements LogoutHandler {
 
     private final TokenRepository tokenRepository;
 
-    // TODO refactor so that you get the token from the coookies
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
 

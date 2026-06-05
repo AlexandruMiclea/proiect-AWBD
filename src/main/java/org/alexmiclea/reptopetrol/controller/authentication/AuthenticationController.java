@@ -49,8 +49,7 @@ public class AuthenticationController {
             return "auth/auth";
         }
 
-        // TODO wat to do with the token?
-        TokenResponseDto response = authenticationService.registerUser(userCreationDto);
+        authenticationService.registerUser(userCreationDto);
 
         model.addAttribute("userAuthenticationDto", new UserAuthenticationDto());
         model.addAttribute("userCreationDto", new UserCreationDto());

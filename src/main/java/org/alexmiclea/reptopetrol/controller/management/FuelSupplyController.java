@@ -48,7 +48,6 @@ public class FuelSupplyController {
         // creation Dto
         FuelSupplyCreationDto fuelSupplyCreationDto = new FuelSupplyCreationDto();
 
-        // TODO you need to add a list of other elements, so you can have a dropdown and select them
         model.addAttribute("stations", stationService.getAll());
         model.addAttribute("fuels", fuelService.getAll());
         model.addAttribute("fuelSupplyCreationDto", fuelSupplyCreationDto);

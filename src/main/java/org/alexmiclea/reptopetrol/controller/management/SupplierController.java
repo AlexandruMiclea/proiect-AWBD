@@ -39,8 +39,6 @@ public class SupplierController {
         // creation Dto
         SupplierCreationDto supplierCreationDto = new SupplierCreationDto();
 
-        // TODO you need to add a list of other elements, so you can have a dropdown and select them
-
         model.addAttribute("supplierCreationDto", supplierCreationDto);
 
         return "management/suppliers/add";

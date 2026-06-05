@@ -41,8 +41,6 @@ public class StationController {
         // creation Dto
         StationCreationDto stationCreationDto = new StationCreationDto();
 
-        // TODO you need to add a list of other elements, so you can have a dropdown and select them
-
         model.addAttribute("stationCreationDto", stationCreationDto);
 
         return "management/stations/add";
@@ -58,9 +56,6 @@ public class StationController {
         if (stationRetrievalDto.isPresent()) {
 
             StationRetrievalDto retrieved = stationRetrievalDto.get();
-
-            // TODO you need to get all fuelSupplyKeys by the station id and add them to the update
-            // (i.e. not update anything in the station service)
 
             StationCreationDto stationCreationDto = StationCreationDto.builder()
                     .id(uuid)

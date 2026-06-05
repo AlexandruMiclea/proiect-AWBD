@@ -41,8 +41,6 @@ public class FuelController {
         // creation Dto
         FuelCreationDto fuelCreationDto = new FuelCreationDto();
 
-        // TODO you need to add a list of other elements, so you can have a dropdown and select them
-
         model.addAttribute("fuelCreationDto", fuelCreationDto);
 
         return "management/fuels/add";
