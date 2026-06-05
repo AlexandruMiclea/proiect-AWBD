@@ -7,6 +7,8 @@ import org.alexmiclea.reptopetrol.dto.management.retrieval.StoreRetrievalDto;
 import org.alexmiclea.reptopetrol.service.management.StationService;
 import org.alexmiclea.reptopetrol.service.management.StoreService;
 import org.alexmiclea.reptopetrol.service.monitoring.CRUDHistoryService;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -28,7 +30,7 @@ public class StoreController {
     private final CRUDHistoryService crudHistoryService;
 
     @GetMapping("/all")
-    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public String getStores(Model model) {
         log.debug("GET /all called");
 
@@ -41,7 +43,7 @@ public class StoreController {
     }
 
     @GetMapping("/add")
-    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public String getStoreCreatePage(Model model) {
         log.debug("GET /add called");
 
@@ -58,7 +60,7 @@ public class StoreController {
     }
 
     @GetMapping("/update/{uuid}")
-    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public String getStoreUpdatePage(Model model, @PathVariable UUID uuid) {
         log.debug("GET /update called for UUID {}", uuid);
 
@@ -83,7 +85,7 @@ public class StoreController {
     }
 
     @PostMapping("/add")
-    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public String addStore(@RequestBody @Validated StoreCreationDto storeDto) {
         log.debug("POST /add called with payload {}", storeDto);
 
@@ -96,7 +98,7 @@ public class StoreController {
     }
 
     @PutMapping("/update/{uuid}")
-    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public String updateStore(@RequestBody @Validated StoreCreationDto storeDto, @PathVariable UUID uuid) {
         log.debug("PUT /update called with payload {} for UUID {}", storeDto, uuid);
 
@@ -109,7 +111,7 @@ public class StoreController {
     }
 
     @DeleteMapping("/delete/{uuid}")
-    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public String deleteStore(@PathVariable UUID uuid) {
         log.debug("DELETE /delete called for UUID {}", uuid);
 

@@ -8,6 +8,8 @@ import org.alexmiclea.reptopetrol.service.management.ContractService;
 import org.alexmiclea.reptopetrol.service.management.FuelService;
 import org.alexmiclea.reptopetrol.service.management.SupplierService;
 import org.alexmiclea.reptopetrol.service.monitoring.CRUDHistoryService;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -29,7 +31,7 @@ public class ContractController {
     private final CRUDHistoryService crudHistoryService;
 
     @GetMapping("/all")
-    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_ADMIN')")
     public String getContracts(Model model) {
         log.debug("GET /all called");
 
@@ -42,7 +44,7 @@ public class ContractController {
     }
 
     @GetMapping("/add")
-    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_ADMIN')")
     public String getContractCreatePage(Model model) {
         log.debug("GET /add called");
 
@@ -60,7 +62,7 @@ public class ContractController {
     }
 
     @GetMapping("/update/{uuid}")
-    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_ADMIN')")
     public String getContractUpdatePage(Model model, @PathVariable UUID uuid) {
         log.debug("GET /update called for UUID {}", uuid);
 
@@ -90,7 +92,7 @@ public class ContractController {
     }
 
     @PostMapping("/add")
-    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_ADMIN')")
     public String addContract(@RequestBody @Validated ContractCreationDto contractDto) {
         log.debug("POST /add called with payload {}", contractDto);
 
@@ -103,7 +105,7 @@ public class ContractController {
     }
 
     @PutMapping("/update/{uuid}")
-    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_ADMIN')")
     public String updateContract(@RequestBody @Validated ContractCreationDto contractDto, @PathVariable UUID uuid) {
         log.debug("PUT /update called with payload {} for UUID {}", contractDto, uuid);
 
@@ -116,7 +118,7 @@ public class ContractController {
     }
 
     @DeleteMapping("/delete/{uuid}")
-    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_ADMIN')")
     public String deleteContract(@PathVariable UUID uuid) {
         log.debug("DELETE /delete called for UUID {}", uuid);
 

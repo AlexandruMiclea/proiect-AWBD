@@ -6,6 +6,8 @@ import org.alexmiclea.reptopetrol.dto.management.creation.StationCreationDto;
 import org.alexmiclea.reptopetrol.dto.management.retrieval.StationRetrievalDto;
 import org.alexmiclea.reptopetrol.service.management.StationService;
 import org.alexmiclea.reptopetrol.service.monitoring.CRUDHistoryService;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +28,7 @@ public class StationController {
 
     // TODO OPERATIONAL sees all stations, ADMIN sees all stations, MANAGER sees only the station he has a claim over.
     @GetMapping("/all")
-    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN", "ROLE_MANAGER"})
+    @PreAuthorize("hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public String getStations(Model model) {
         log.debug("GET /all called");
 
@@ -39,7 +41,7 @@ public class StationController {
     }
 
     @GetMapping("/add")
-    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_ADMIN')")
     public String getStationCreatePage(Model model) {
         log.debug("GET /add called");
 
@@ -55,7 +57,7 @@ public class StationController {
     }
 
     @GetMapping("/update/{uuid}")
-    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_ADMIN')")
     public String getContractUpdatePage(Model model, @PathVariable UUID uuid) {
         log.debug("GET /update called for UUID {}", uuid);
 
@@ -83,6 +85,7 @@ public class StationController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_ADMIN')")
     public String addStation(@RequestBody @Validated StationCreationDto stationDto) {
         log.debug("POST /add called with payload {}", stationDto);
 
@@ -95,6 +98,7 @@ public class StationController {
     }
 
     @PutMapping("/update/{uuid}")
+    @PreAuthorize("hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_ADMIN')")
     public String updateStation(@RequestBody @Validated StationCreationDto stationDto, @PathVariable UUID uuid) {
         log.debug("PUT /update called with payload {} for UUID {}", stationDto, uuid);
 
@@ -107,6 +111,7 @@ public class StationController {
     }
 
     @DeleteMapping("/delete/{uuid}")
+    @PreAuthorize("hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_ADMIN')")
     public String deleteStation(@PathVariable UUID uuid) {
         log.debug("DELETE /delete called for UUID {}", uuid);
 

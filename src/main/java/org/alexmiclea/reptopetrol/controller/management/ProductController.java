@@ -6,6 +6,8 @@ import org.alexmiclea.reptopetrol.dto.management.creation.ProductCreationDto;
 import org.alexmiclea.reptopetrol.dto.management.retrieval.ProductRetrievalDto;
 import org.alexmiclea.reptopetrol.service.management.ProductService;
 import org.alexmiclea.reptopetrol.service.monitoring.CRUDHistoryService;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -25,7 +27,7 @@ public class ProductController {
     private final CRUDHistoryService crudHistoryService;
 
     @GetMapping("/all")
-    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public String getProducts(Model model) {
         log.debug("GET /all called");
 
@@ -38,7 +40,7 @@ public class ProductController {
     }
 
     @GetMapping("/add")
-    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public String getProductCreatePage(Model model) {
         log.debug("GET /add called");
 
@@ -54,7 +56,7 @@ public class ProductController {
     }
 
     @GetMapping("/update/{uuid}")
-    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public String getProductUpdatePage(Model model, @PathVariable UUID uuid) {
         log.debug("GET /update called for UUID {}", uuid);
 
@@ -81,7 +83,7 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public String addProduct(@RequestBody @Validated ProductCreationDto productDto) {
         log.debug("POST /add called with payload {}", productDto);
 
@@ -94,7 +96,7 @@ public class ProductController {
     }
 
     @PutMapping("/update/{uuid}")
-    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public String updateProduct(@RequestBody @Validated ProductCreationDto productDto, @PathVariable UUID uuid) {
         log.debug("PUT /update called with payload {} for UUID {}", productDto, uuid);
 
@@ -107,7 +109,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/delete/{uuid}")
-    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public String deleteProduct(@PathVariable UUID uuid) {
         log.debug("DELETE /delete called for UUID {}", uuid);
 

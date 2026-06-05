@@ -11,6 +11,8 @@ import org.alexmiclea.reptopetrol.service.management.FuelService;
 import org.alexmiclea.reptopetrol.service.management.FuelSupplyService;
 import org.alexmiclea.reptopetrol.service.management.StationService;
 import org.alexmiclea.reptopetrol.service.monitoring.CRUDHistoryService;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -33,7 +35,7 @@ public class FuelSupplyController {
     private final CRUDHistoryService crudHistoryService;
 
     @GetMapping("/all")
-    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN", "ROLE_MANAGER"})
+    @PreAuthorize("hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public String getFuelSupplies(Model model) {
         log.debug("GET /all called");
 
@@ -46,7 +48,7 @@ public class FuelSupplyController {
     }
 
     @GetMapping("/add")
-    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_ADMIN')")
     public String getFuelSupplyCreatePage(Model model) {
         log.debug("GET /add called");
 
@@ -64,7 +66,7 @@ public class FuelSupplyController {
     }
 
     @GetMapping("/update")
-    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_ADMIN')")
     public String getFuelSupplyUpdatePage(Model model, FuelSupplyKeyDto fuelSupplyKeyDto) {
         log.debug("GET /update called with ID {}", fuelSupplyKeyDto);
 
@@ -93,7 +95,7 @@ public class FuelSupplyController {
     }
 
     @PostMapping("/add")
-    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_ADMIN')")
     public String addFuelSupply(@RequestBody @Validated FuelSupplyCreationDto fuelSupplyDto) {
         log.debug("POST /add called with payload {}", fuelSupplyDto);
 
@@ -106,7 +108,7 @@ public class FuelSupplyController {
     }
 
     @PutMapping("/update")
-    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_ADMIN')")
     public String updateFuelSupply(@RequestBody @Validated FuelSupplyCreationDto fuelSupplyDto) {
         log.debug("PUT /update called with payload {}", fuelSupplyDto);
 
@@ -119,7 +121,7 @@ public class FuelSupplyController {
     }
 
     @DeleteMapping("/delete")
-    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_ADMIN')")
     public String deleteFuelSupply(FuelSupplyKeyDto key) {
         log.debug("DELETE called with composed key {}", key);
 

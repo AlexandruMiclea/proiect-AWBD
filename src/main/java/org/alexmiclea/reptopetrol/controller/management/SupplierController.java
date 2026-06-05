@@ -6,6 +6,8 @@ import org.alexmiclea.reptopetrol.dto.management.creation.SupplierCreationDto;
 import org.alexmiclea.reptopetrol.dto.management.retrieval.SupplierRetrievalDto;
 import org.alexmiclea.reptopetrol.service.management.SupplierService;
 import org.alexmiclea.reptopetrol.service.monitoring.CRUDHistoryService;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -25,7 +27,7 @@ public class SupplierController {
     private final CRUDHistoryService crudHistoryService;
 
     @GetMapping("/all")
-    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_ADMIN')")
     public String getSuppliers(Model model) {
         log.debug("GET /all called");
 
@@ -38,7 +40,7 @@ public class SupplierController {
     }
 
     @GetMapping("/add")
-    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_ADMIN')")
     public String getSupplierCreatePage(Model model) {
         log.debug("GET /add called");
 
@@ -54,7 +56,7 @@ public class SupplierController {
     }
 
     @GetMapping("/update/{uuid}")
-    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_ADMIN')")
     public String getSupplierUpdatePage(Model model, @PathVariable UUID uuid) {
         log.debug("GET /update called for UUID {}", uuid);
 
@@ -82,7 +84,7 @@ public class SupplierController {
     }
 
     @PostMapping("/add")
-    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_ADMIN')")
     public String addSupplier(@RequestBody @Validated SupplierCreationDto supplierDto) {
         log.debug("POST /add called with payload {}", supplierDto);
 
@@ -95,7 +97,7 @@ public class SupplierController {
     }
 
     @PutMapping("/update/{uuid}")
-    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_ADMIN')")
     public String updateSupplier(@RequestBody @Validated SupplierCreationDto supplierDto, @PathVariable UUID uuid) {
         log.debug("PUT /update called with payload {} for UUID {}", supplierDto, uuid);
 
@@ -108,7 +110,7 @@ public class SupplierController {
     }
 
     @DeleteMapping("/delete/{uuid}")
-    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_ADMIN')")
     public String deleteSupplier(@PathVariable UUID uuid) {
         log.debug("DELETE /update called for UUID {}", uuid);
 

@@ -6,6 +6,8 @@ import org.alexmiclea.reptopetrol.model.user.Role;
 import org.alexmiclea.reptopetrol.model.user.User;
 import org.alexmiclea.reptopetrol.service.authentication.AuthenticationService;
 import org.alexmiclea.reptopetrol.service.monitoring.CRUDHistoryService;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +25,7 @@ public class UsersController {
     private final AuthenticationService authenticationService;
 
     @GetMapping("/users")
-    //@Secured({"ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String getUsers(Model model) {
         log.debug("GET /users called");
 
@@ -37,7 +39,7 @@ public class UsersController {
     }
 
     @PutMapping("/user/{email}")
-    //@Secured({"ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String updateUser(@PathVariable("email") String email, @RequestParam Role role, Model model) {
         log.debug("PUT /user called with email {}", email);
 

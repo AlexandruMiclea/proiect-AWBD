@@ -11,6 +11,8 @@ import org.alexmiclea.reptopetrol.service.management.InventoryService;
 import org.alexmiclea.reptopetrol.service.management.ProductService;
 import org.alexmiclea.reptopetrol.service.management.StoreService;
 import org.alexmiclea.reptopetrol.service.monitoring.CRUDHistoryService;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -33,7 +35,7 @@ public class InventoryController {
     private final CRUDHistoryService crudHistoryService;
 
     @GetMapping("/all")
-    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public String getInventories(Model model) {
         log.debug("GET /all called");
 
@@ -46,7 +48,7 @@ public class InventoryController {
     }
 
     @GetMapping("/add")
-    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public String getInventoryCreatePage(Model model) {
         log.debug("GET /add called");
 
@@ -64,7 +66,7 @@ public class InventoryController {
     }
 
     @GetMapping("/update")
-    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public String getFuelSupplyUpdatePage(Model model, InventoryKeyDto inventoryKeyDto) {
         log.debug("GET /update called with ID {}", inventoryKeyDto);
 
@@ -93,7 +95,7 @@ public class InventoryController {
     }
 
     @PostMapping("/add")
-    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public String addInventory(@RequestBody @Validated InventoryCreationDto inventoryDto) {
         log.debug("POST /add called with payload {}", inventoryDto);
 
@@ -106,7 +108,7 @@ public class InventoryController {
     }
 
     @PutMapping("/update")
-    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public String updateInventory(@RequestBody @Validated InventoryCreationDto inventoryDto) {
         log.debug("PUT /update called with payload {}", inventoryDto);
 
@@ -119,7 +121,7 @@ public class InventoryController {
     }
 
     @DeleteMapping("/delete")
-    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public String deleteInventory(InventoryKeyDto key) {
         log.debug("DELETE called with composed key {}", key);
 

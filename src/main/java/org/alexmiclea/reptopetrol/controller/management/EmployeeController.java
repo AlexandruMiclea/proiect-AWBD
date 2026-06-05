@@ -7,6 +7,8 @@ import org.alexmiclea.reptopetrol.dto.management.retrieval.EmployeeRetrievalDto;
 import org.alexmiclea.reptopetrol.service.management.EmployeeService;
 import org.alexmiclea.reptopetrol.service.management.StationService;
 import org.alexmiclea.reptopetrol.service.monitoring.CRUDHistoryService;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -27,7 +29,7 @@ public class EmployeeController {
     private final CRUDHistoryService crudHistoryService;
 
     @GetMapping("/all")
-    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public String getEmployees(Model model) {
         log.debug("GET /all called");
 
@@ -40,7 +42,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/add")
-    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public String getEmployeeCreatePage(Model model) {
         log.debug("GET /add called");
 
@@ -57,7 +59,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/update/{uuid}")
-    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public String getEmployeeUpdatePage(Model model, @PathVariable UUID uuid) {
         log.debug("GET /update called for UUID {}", uuid);
 
@@ -89,7 +91,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/add")
-    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public String addEmployee(@RequestBody @Validated EmployeeCreationDto employeeDto) {
         log.debug("POST /add called with payload {}", employeeDto);
 
@@ -102,7 +104,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/update/{uuid}")
-    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public String updateEmployee(@RequestBody @Validated EmployeeCreationDto employeeDto, @PathVariable UUID uuid) {
         log.debug("PUT /update called with payload {} for UUID {}", employeeDto, uuid);
 
@@ -115,7 +117,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/delete/{uuid}")
-    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public String deleteEmployee(@PathVariable UUID uuid) {
         log.debug("DELETE /delete called for UUID {}", uuid);
 

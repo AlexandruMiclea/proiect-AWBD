@@ -8,6 +8,8 @@ import org.alexmiclea.reptopetrol.service.management.ContractService;
 import org.alexmiclea.reptopetrol.service.management.StationService;
 import org.alexmiclea.reptopetrol.service.management.TransportService;
 import org.alexmiclea.reptopetrol.service.monitoring.CRUDHistoryService;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -29,7 +31,7 @@ public class TransportController {
     private final CRUDHistoryService crudHistoryService;
 
     @GetMapping("/all")
-    //@Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public String getTransports(Model model) {
         log.debug("GET /all called");
 
@@ -42,7 +44,7 @@ public class TransportController {
     }
 
     @GetMapping("/add")
-    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_ADMIN')")
     public String getTransportCreatePage(Model model) {
         log.debug("GET /add called");
 
@@ -60,7 +62,7 @@ public class TransportController {
     }
 
     @GetMapping("/update/{uuid}")
-    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_ADMIN')")
     public String getTransportUpdatePage(Model model, @PathVariable UUID uuid) {
         log.debug("GET /update called for UUID {}", uuid);
 
@@ -90,7 +92,7 @@ public class TransportController {
     }
 
     @PostMapping("/add")
-    //@Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public String addTransport(@RequestBody @Validated TransportCreationDto transportDto) {
         log.debug("POST /add called with payload {}", transportDto);
 
@@ -103,7 +105,7 @@ public class TransportController {
     }
 
     @PutMapping("/update/{uuid}")
-    //@Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public String updateTransport(@RequestBody @Validated TransportCreationDto transportDto, @PathVariable UUID uuid) {
         log.debug("PUT /update called with payload {} for UUID {}", transportDto, uuid);
 
@@ -116,7 +118,7 @@ public class TransportController {
     }
 
     @DeleteMapping("/delete/{uuid}")
-    //@Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public String deleteTransport(@PathVariable UUID uuid) {
         log.debug("DELETE /delete called for UUID {}", uuid);
 

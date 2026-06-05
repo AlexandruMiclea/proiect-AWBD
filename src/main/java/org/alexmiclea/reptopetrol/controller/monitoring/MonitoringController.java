@@ -6,6 +6,8 @@ import org.alexmiclea.reptopetrol.model.monitoring.CRUDHistory;
 import org.alexmiclea.reptopetrol.service.monitoring.CRUDHistoryService;
 import org.alexmiclea.reptopetrol.service.monitoring.EventHistoryService;
 import org.alexmiclea.reptopetrol.service.monitoring.PurchaseService;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,7 +30,7 @@ public class MonitoringController {
     private final CRUDHistoryService crudHistoryService;
 
     @GetMapping("/crud")
-    //@Secured({"ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String getCruds(Model model, Pageable pageable) {
         log.debug("GET /crud called");
 
@@ -54,7 +56,7 @@ public class MonitoringController {
     // to ask for the relevant data
 
 //    @GetMapping("/purchase")
-//    //@Secured({"ROLE_ADMIN"})
+//    //@PreAuthorize("hasRole('ROLE_ADMIN')")
 //    public String getPurchases(Model model) {
 //        log.debug("GET /all called");
 //
@@ -64,7 +66,7 @@ public class MonitoringController {
 //    }
 //
 //    @GetMapping("/event")
-//    //@Secured({"ROLE_ADMIN"})
+//    //@PreAuthorize("hasRole('ROLE_ADMIN')")
 //    public String getEvents(Model model) {
 //        log.debug("GET /event called");
 //
@@ -74,7 +76,7 @@ public class MonitoringController {
 //    }
 
     @DeleteMapping("/crud/delete/{uuid}")
-    //@Secured({"ROLE_ADMIN"})
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String deleteCrud(@PathVariable UUID uuid) {
         log.debug("DELETE /crud/delete called for UUID {}", uuid);
 
@@ -87,7 +89,7 @@ public class MonitoringController {
     }
 
 //    @DeleteMapping("/purchase/delete/{uuid}")
-//    //@Secured({"ROLE_ADMIN"})
+//    //@PreAuthorize("hasRole('ROLE_ADMIN')")
 //    public String deletePurchase(@PathVariable UUID uuid) {
 //        log.debug("DELETE /delete called for UUID {}", uuid);
 //
@@ -102,7 +104,7 @@ public class MonitoringController {
 //    }
 //
 //    @DeleteMapping("/event/delete/{uuid}")
-//    //@Secured({"ROLE_ADMIN"})
+//    //@PreAuthorize("hasRole('ROLE_ADMIN')")
 //    public String deleteEvent(@PathVariable UUID uuid) {
 //        log.debug("DELETE /delete called for UUID {}", uuid);
 //
