@@ -64,7 +64,7 @@ public class InventoryController {
     }
 
     @GetMapping("/update")
-    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
     public String getFuelSupplyUpdatePage(Model model, InventoryKeyDto inventoryKeyDto) {
         log.debug("GET /update called with ID {}", inventoryKeyDto);
 

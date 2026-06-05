@@ -31,18 +31,18 @@
     <div class="drawer-overlay" id="drawerOverlay"></div>
     <nav class="nav-drawer" id="navDrawer" aria-label="Management navigation">
         <div class="nav-drawer-section">Management</div>
-<!--        <a sec:authorize="hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_ADMIN')" th:href="@{/api/contract/all}"    class="nav-link">Contracts</a>-->
-        <a th:href="@{/api/contract/all}"    class="nav-link">Contracts</a>
-        <a th:href="@{/api/employee/all}"    class="nav-link">Employees</a>
-        <a th:href="@{/api/fuelSupply/all}"  class="nav-link">Fuel Supplies</a>
-        <a th:href="@{/api/fuel/all}"        class="nav-link">Fuels</a>
-        <a th:href="@{/api/inventory/all}"   class="nav-link">Inventories</a>
-        <a th:href="@{/api/product/all}"     class="nav-link">Products</a>
-        <a th:href="@{/api/station/all}"     class="nav-link">Stations</a>
-        <a th:href="@{/api/store/all}"       class="nav-link">Stores</a>
-        <a th:href="@{/api/supplier/all}"    class="nav-link">Suppliers</a>
-        <a th:href="@{/api/transport/all}"   class="nav-link">Transports</a>
-        <a th:href="@{/api/monitoring/crud}"   class="nav-link">Monitoring CRUD</a>
+        <a sec:authorize="hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')" th:href="@{/api/fuelSupply/all}"  class="nav-link">Fuel Supplies</a>
+        <a sec:authorize="hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')" th:href="@{/api/fuel/all}"        class="nav-link">Fuels</a>
+        <a sec:authorize="hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')" th:href="@{/api/station/all}"     class="nav-link">Stations</a>
+        <a sec:authorize="hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_ADMIN')" th:href="@{/api/contract/all}"    class="nav-link">Contracts</a>
+        <a sec:authorize="hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_ADMIN')" th:href="@{/api/supplier/all}"    class="nav-link">Suppliers</a>
+        <a sec:authorize="hasRole('ROLE_OPERATIONAL') or hasRole('ROLE_ADMIN')" th:href="@{/api/transport/all}"   class="nav-link">Transports</a>
+        <a sec:authorize="hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')" th:href="@{/api/employee/all}"    class="nav-link">Employees</a>
+        <a sec:authorize="hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')" th:href="@{/api/inventory/all}"   class="nav-link">Inventories</a>
+        <a sec:authorize="hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')" th:href="@{/api/product/all}"     class="nav-link">Products</a>
+        <a sec:authorize="hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')" th:href="@{/api/store/all}"       class="nav-link">Stores</a>
+        <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/api/monitoring/crud}"   class="nav-link">Monitoring CRUD</a>
+        <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/api/users/users}"   class="nav-link">Users Manager</a>
     </nav>
 
 <!--    <div sec:authorize="isAuthenticated()">-->

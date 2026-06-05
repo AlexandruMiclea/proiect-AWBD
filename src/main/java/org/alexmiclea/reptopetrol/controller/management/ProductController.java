@@ -38,7 +38,7 @@ public class ProductController {
     }
 
     @GetMapping("/add")
-    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
     public String getProductCreatePage(Model model) {
         log.debug("GET /add called");
 

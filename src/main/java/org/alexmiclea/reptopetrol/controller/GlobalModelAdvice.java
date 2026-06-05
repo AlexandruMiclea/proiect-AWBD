@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 @ControllerAdvice
 public class GlobalModelAdvice {
 
-    // VIEW how does this work
-
     @ModelAttribute("username")
     public String username() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -20,15 +18,12 @@ public class GlobalModelAdvice {
         return null;
     }
 
-    // TODO modify after implementing roles
-
     @ModelAttribute("role")
     public String role() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
-//            return auth.getAuthorities();
-            return "ROLE_USER";
+            return auth.getAuthorities().stream().iterator().next().getAuthority();
         }
-        return null;
+        return "ROLE_UNASSIGNED";
     }
 }

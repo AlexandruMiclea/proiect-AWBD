@@ -60,8 +60,8 @@ public class TransportController {
     }
 
     @GetMapping("/update/{uuid}")
-    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
-    public String getEmployeeUpdatePage(Model model, @PathVariable UUID uuid) {
+    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    public String getTransportUpdatePage(Model model, @PathVariable UUID uuid) {
         log.debug("GET /update called for UUID {}", uuid);
 
         // add call to history service

@@ -8,13 +8,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.alexmiclea.reptopetrol.dto.user.TokenResponseDto;
 import org.alexmiclea.reptopetrol.dto.user.UserAuthenticationDto;
 import org.alexmiclea.reptopetrol.dto.user.UserCreationDto;
+import org.alexmiclea.reptopetrol.model.user.Role;
+import org.alexmiclea.reptopetrol.model.user.User;
 import org.alexmiclea.reptopetrol.service.authentication.AuthenticationService;
 import org.alexmiclea.reptopetrol.service.monitoring.CRUDHistoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,13 +26,11 @@ import java.util.List;
 public class AuthenticationController {
 
     private final CRUDHistoryService crudHistoryService;
-
-    // TODO assign role endpoint for Admin?
-
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
     public String registerUser(@Valid UserCreationDto userCreationDto, BindingResult result, Model model) {
+        log.debug("POST /register called");
 
         // check for field validation errors - if they exist, redirect to the register page
         if (result.hasErrors()) {
@@ -66,7 +65,7 @@ public class AuthenticationController {
 
     @PostMapping("/authenticate")
     public String authenticateUser(@Valid UserAuthenticationDto userAuthenticationDto, BindingResult result, Model model, HttpServletResponse response) {
-        log.debug("sal");
+        log.debug("POST /authenticate called");
 
         // check for field validation errors - if they exist, redirect to the register page
         if (result.hasErrors()) {

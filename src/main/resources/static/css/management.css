@@ -186,6 +186,29 @@
     pointer-events: none;
 }
 
+/* ── Role select (users table) ── */
+.mgmt-role-select {
+    border: 1.5px solid var(--border);
+    border-radius: 5px;
+    padding: 0.18rem 0.4rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    color: var(--ink);
+    background: transparent;
+    cursor: pointer;
+    outline: none;
+}
+
+.mgmt-role-select:focus {
+    border-color: var(--ink);
+}
+
+.btn-row-edit:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
 /* ── Sort links ── */
 .sort-link {
     color: inherit;

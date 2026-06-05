@@ -40,7 +40,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/add")
-    //@Secured({"ROLE_OPERATIONAL", "ROLE_ADMIN"})
+    //@Secured({"ROLE_MANAGER", "ROLE_ADMIN"})
     public String getEmployeeCreatePage(Model model) {
         log.debug("GET /add called");
 

@@ -3,6 +3,7 @@ package org.alexmiclea.reptopetrol.model.user;
 import jakarta.persistence.*;
 import lombok.*;
 import org.alexmiclea.reptopetrol.model.authentication.Token;
+import org.jspecify.annotations.NonNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -35,9 +36,12 @@ public class User implements UserDetails {
     @ToString.Exclude
     private List<Token> tokens;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+    public @NonNull Collection<? extends GrantedAuthority> getAuthorities() {
+        return role.getAuthorities();
     }
 
     @Override
@@ -46,7 +50,7 @@ public class User implements UserDetails {
     }
 
     @Override
-    public String getUsername() {
+    public @NonNull String getUsername() {
         return email;
     }
 }

@@ -1,6 +1,7 @@
 package org.alexmiclea.reptopetrol.configuration;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.alexmiclea.reptopetrol.repository.authentication.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @RequiredArgsConstructor
+@Slf4j
 public class ApplicationConfiguration {
 
     private final UserRepository userRepository;
@@ -24,7 +26,7 @@ public class ApplicationConfiguration {
     // override the default Spring Boot UserDetailsService with our implementation
     @Bean
     public UserDetailsService userDetailsService() {
-        return email -> userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Username not found!"));
+        return email -> userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Username " + email + " not found!"));
     }
 
     @Bean

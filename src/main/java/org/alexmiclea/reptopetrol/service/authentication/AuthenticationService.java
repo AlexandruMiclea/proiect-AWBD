@@ -9,6 +9,7 @@ import org.alexmiclea.reptopetrol.dto.user.TokenResponseDto;
 import org.alexmiclea.reptopetrol.dto.user.UserAuthenticationDto;
 import org.alexmiclea.reptopetrol.dto.user.UserCreationDto;
 import org.alexmiclea.reptopetrol.model.authentication.Token;
+import org.alexmiclea.reptopetrol.model.user.Role;
 import org.alexmiclea.reptopetrol.model.user.User;
 import org.alexmiclea.reptopetrol.repository.authentication.TokenRepository;
 import org.alexmiclea.reptopetrol.repository.authentication.UserRepository;
@@ -98,6 +99,7 @@ public class AuthenticationService {
             .lastname(userCreationDto.getLastName())
             .email(userCreationDto.getEmail())
             .password(passwordEncoder.encode(userCreationDto.getPassword()))
+            .role(Role.UNASSIGNED)
             .build();
 
         User savedUser = userRepository.save(user);
@@ -107,8 +109,8 @@ public class AuthenticationService {
         saveUserToken(savedUser, jwtToken);
 
         return TokenResponseDto.builder()
-                        .accessToken(jwtToken)
-                        .refreshToken(refreshToken)
+                .accessToken(jwtToken)
+                .refreshToken(refreshToken)
                 .build();
     }
 
@@ -132,6 +134,24 @@ public class AuthenticationService {
                     .accessToken(jwtToken)
                     .refreshToken(refreshToken)
                 .build();
+    }
+
+    public List<String> updateUserRole(String email, Role role) {
+        // TODO check that the user with given email exists
+        // TODO update role
+        List<String> errors = new ArrayList<>();
+
+        // validate that the email is used by any user
+        if (userRepository.findByEmail(email).isEmpty()) {
+            errors.add("Email not used by any account!");
+            return errors;
+        }
+
+        User user = userRepository.findByEmail(email).orElseThrow();
+        user.setRole(role);
+        userRepository.save(user);
+
+        return errors;
     }
 
     public Optional<UUID> deleteUser(UUID uuid) {
