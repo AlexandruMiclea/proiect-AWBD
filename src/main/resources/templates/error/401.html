@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>401 — Unauthorized</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/app.css">
+    <style>
+        body {
+            padding-top: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .error-logo {
+            margin-bottom: 2.5rem;
+        }
+        .error-logo img {
+            height: 44px;
+            width: auto;
+            filter: brightness(0);
+            opacity: 0.18;
+        }
+        .error-code {
+            font-family: 'DM Serif Display', serif;
+            font-size: 7rem;
+            line-height: 1;
+            color: var(--accent);
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+        }
+        .error-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.5rem;
+            color: var(--ink);
+            margin-bottom: 0.75rem;
+        }
+        .error-description {
+            font-size: 0.9rem;
+            color: var(--muted);
+            max-width: 380px;
+            text-align: center;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+        .error-path {
+            font-size: 0.78rem;
+            color: var(--muted);
+            background: var(--border);
+            border-radius: 4px;
+            padding: 0.25rem 0.65rem;
+            font-family: monospace;
+            margin-bottom: 2rem;
+        }
+        .btn-home {
+            background: var(--ink);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 0.6rem 1.4rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .btn-home:hover {
+            background: var(--accent);
+            color: #fff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-logo">
+        <img src="/images/main_logo.png" alt="Reptopetrol">
+    </div>
+    <div class="error-code">401</div>
+    <div class="error-title">Unauthorized</div>
+    <div class="error-description">
+        You need to be logged in to access this page. Please sign in and try again.
+    </div>
+    <div class="error-path" th:if="${path}" th:text="${path}"></div>
+    <a href="/" class="btn-home">Go to Login</a>
+</body>
+</html>

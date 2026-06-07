@@ -19,6 +19,8 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 import static org.alexmiclea.reptopetrol.model.user.Role.ADMIN;
 import static org.alexmiclea.reptopetrol.model.user.Role.MANAGER;
+import jakarta.servlet.http.HttpServletResponse;
+
 import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
@@ -35,6 +37,7 @@ public class SecurityConfiguration {
 
     private static final String[] WHITE_LIST_URL = {
             "/",
+            "/error",
             "/api/auth/**",
             "/static/**",
             "/v2/api-docs",
@@ -61,6 +64,12 @@ public class SecurityConfiguration {
                         .anyRequest().authenticated()
                 )
                 .anonymous(AnonymousConfigurer::disable)
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint((request, response, e) ->
+                                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized"))
+                        .accessDeniedHandler((request, response, e) ->
+                                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden"))
+                )
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
