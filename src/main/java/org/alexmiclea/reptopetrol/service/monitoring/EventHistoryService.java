@@ -8,6 +8,7 @@ import org.alexmiclea.reptopetrol.repository.monitoring.CRUDHistoryRepository;
 import org.alexmiclea.reptopetrol.repository.monitoring.EventHistoryRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,13 +19,20 @@ public class EventHistoryService {
 
     private final EventHistoryRepository eventHistoryRepository;
 
-    // TODO crud and GET with pageable and sortable request
-
     public List<EventHistory> getAll() {
         return eventHistoryRepository.findAll();
     }
 
-    public void add(EventHistory eventHistory) {
+    public void add(String eventType, String queueName, String eventContent) {
+
+        EventHistory eventHistory = EventHistory.builder()
+                .id(UUID.randomUUID())
+                .eventType(eventType)
+                .queueName(queueName)
+                .timestamp(Instant.now())
+                .eventContent(eventContent)
+                .build();
+
         eventHistoryRepository.save(eventHistory);
     }
 

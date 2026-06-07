@@ -18,7 +18,7 @@ public class GlobalModelAdvice {
         return null;
     }
 
-    @ModelAttribute("role")
+    @ModelAttribute("role")  
     public String role() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {

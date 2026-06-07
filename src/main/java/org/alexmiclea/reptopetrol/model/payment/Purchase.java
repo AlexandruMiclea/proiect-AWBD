@@ -1,5 +1,6 @@
 package org.alexmiclea.reptopetrol.model.payment;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -14,6 +15,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Document
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Purchase {
 
     @Id

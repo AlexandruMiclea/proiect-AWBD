@@ -21,8 +21,6 @@ public class CRUDHistoryService {
 
     private final CRUDHistoryRepository crudHistoryRepository;
 
-    // TODO crud and GET with pageable and sortable request
-
     public Page<CRUDHistory> getAll(Pageable pageable) {
         return crudHistoryRepository.findAll(pageable);
     }
@@ -36,8 +34,7 @@ public class CRUDHistoryService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (Objects.nonNull(authentication)) {
             username = authentication.getName();
-//            role = authentication.getAuthorities().iterator().next().getAuthority();
-            role = "role_user";
+            role = authentication.getAuthorities().iterator().next().getAuthority();
         } else {
             username = "unauthenticated_user";
             role = "unauthenticated_role";
