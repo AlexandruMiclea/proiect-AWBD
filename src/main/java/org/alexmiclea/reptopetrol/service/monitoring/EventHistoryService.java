@@ -6,6 +6,8 @@ import org.alexmiclea.reptopetrol.model.monitoring.CRUDHistory;
 import org.alexmiclea.reptopetrol.model.monitoring.EventHistory;
 import org.alexmiclea.reptopetrol.repository.monitoring.CRUDHistoryRepository;
 import org.alexmiclea.reptopetrol.repository.monitoring.EventHistoryRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -19,8 +21,8 @@ public class EventHistoryService {
 
     private final EventHistoryRepository eventHistoryRepository;
 
-    public List<EventHistory> getAll() {
-        return eventHistoryRepository.findAll();
+    public Page<EventHistory> getAll(Pageable pageable) {
+        return eventHistoryRepository.findAll(pageable);
     }
 
     public void add(String eventType, String queueName, String eventContent) {

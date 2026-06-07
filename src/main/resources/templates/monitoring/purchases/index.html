@@ -1,9 +1,8 @@
-<!-- TODO implement -->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Contracts</title>
+    <title>Purchases</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <th:block th:replace="~{fragments/header :: appHead}"></th:block>
@@ -11,51 +10,92 @@
 </head>
 <body>
 <th:block th:replace="~{fragments/header :: appHeader}"></th:block>
-<div class="container mgmt-container">
+<div class="container-fluid mgmt-container">
     <div class="mgmt-header">
-        <h1 class="mgmt-title">Contracts</h1>
-        <a href="/api/contract/add" class="btn-mgmt-add">+ Add New</a>
+        <h1 class="mgmt-title">Purchases</h1>
+        <div class="mgmt-header-controls">
+            <label class="mgmt-size-label" for="pageSize">Show</label>
+            <select id="pageSize" class="mgmt-size-select" onchange="changePageSize(this.value)">
+                <option value="10" th:selected="${purchaseList.size == 10}">10</option>
+                <option value="20" th:selected="${purchaseList.size == 20}">20</option>
+                <option value="50" th:selected="${purchaseList.size == 50}">50</option>
+            </select>
+            <label class="mgmt-size-label" for="pageSize">per page</label>
+        </div>
     </div>
     <div class="table-responsive">
         <table class="table mgmt-table">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Supplier ID</th>
-                    <th>Begin Date</th>
-                    <th>End Date</th>
-                    <th>Fuels</th>
-                    <th>Transports</th>
+                    <th>
+                        <a class="sort-link"
+                           th:href="@{/api/monitoring/purchase(page=0,size=${purchaseList.size},sort=${'id,' + (sortField == 'id' ? (sortDir == 'asc' ? 'desc' : 'asc') : 'asc')})}">
+                            ID
+                            <span class="sort-icon" th:if="${sortField == 'id'}" th:text="${sortDir == 'asc' ? '↑' : '↓'}"></span>
+                            <span class="sort-icon sort-icon-inactive" th:if="${sortField != 'id'}">↕</span>
+                        </a>
+                    </th>
+                    <th>
+                        <a class="sort-link"
+                           th:href="@{/api/monitoring/purchase(page=0,size=${purchaseList.size},sort=${'paymentType,' + (sortField == 'paymentType' ? (sortDir == 'asc' ? 'desc' : 'asc') : 'asc')})}">
+                            Payment Type
+                            <span class="sort-icon" th:if="${sortField == 'paymentType'}" th:text="${sortDir == 'asc' ? '↑' : '↓'}"></span>
+                            <span class="sort-icon sort-icon-inactive" th:if="${sortField != 'paymentType'}">↕</span>
+                        </a>
+                    </th>
+                    <th>
+                        <a class="sort-link"
+                           th:href="@{/api/monitoring/purchase(page=0,size=${purchaseList.size},sort=${'paymentTime,' + (sortField == 'paymentTime' ? (sortDir == 'asc' ? 'desc' : 'asc') : 'asc')})}">
+                            Payment Time
+                            <span class="sort-icon" th:if="${sortField == 'paymentTime'}" th:text="${sortDir == 'asc' ? '↑' : '↓'}"></span>
+                            <span class="sort-icon sort-icon-inactive" th:if="${sortField != 'paymentTime'}">↕</span>
+                        </a>
+                    </th>
+                    <th>Fuel Purchases</th>
+                    <th>Item Purchases</th>
                     <th class="col-actions">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="contract : ${contracts}">
-                    <td class="col-id" th:text="${contract.id}"></td>
-                    <td class="col-id" th:text="${contract.supplierId}"></td>
-                    <td th:text="${contract.beginDate}"></td>
-                    <td th:text="${contract.endDate}"></td>
-                    <td th:text="${contract.fuelIds}"></td>
-                    <td th:text="${contract.transportIds}"></td>
+                <tr th:each="entry : ${purchaseList.content}">
+                    <td class="col-id" th:text="${entry.id}"></td>
+                    <td th:text="${entry.paymentType}"></td>
+                    <td th:text="${entry.paymentTime}"></td>
+                    <td th:text="${entry.fuelPurchases != null ? entry.fuelPurchases.size() + ' item(s)' : '0 item(s)'}"></td>
+                    <td th:text="${entry.itemPurchases != null ? entry.itemPurchases.size() + ' item(s)' : '0 item(s)'}"></td>
                     <td class="col-actions">
-                        <a th:href="@{/api/contract/view/edit/{id}(id=${contract.id})}" class="btn-row-edit">Edit</a>
-                        <button class="btn-row-delete"
-                                th:onclick="'deleteEntry(\'' + ${contract.id} + '\')'">Delete</button>
+                        <form th:action="@{/api/monitoring/purchase/delete/{id}(id=${entry.id})}" method="post" class="d-inline">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" class="btn-row-delete">Delete</button>
+                        </form>
                     </td>
                 </tr>
-                <tr th:if="${#lists.isEmpty(contracts)}">
-                    <td colspan="7" class="mgmt-empty">No contracts found.</td>
+                <tr th:if="${purchaseList.totalElements == 0}">
+                    <td colspan="6" class="mgmt-empty">No entries found.</td>
                 </tr>
             </tbody>
         </table>
     </div>
+    <div class="mgmt-pagination">
+        <span class="mgmt-pagination-info"
+              th:text="|Page ${purchaseList.number + 1} of ${purchaseList.totalPages} &mdash; ${purchaseList.totalElements} entries|"></span>
+        <div class="mgmt-pagination-controls">
+            <a class="btn-page"
+               th:classappend="${purchaseList.first} ? ' disabled'"
+               th:href="@{/api/monitoring/purchase(page=${purchaseList.number - 1},size=${purchaseList.size},sort=${sortField + ',' + sortDir})}">Previous</a>
+            <a class="btn-page"
+               th:classappend="${purchaseList.last} ? ' disabled'"
+               th:href="@{/api/monitoring/purchase(page=${purchaseList.number + 1},size=${purchaseList.size},sort=${sortField + ',' + sortDir})}">Next</a>
+        </div>
+    </div>
 </div>
 <script>
-function deleteEntry(uuid) {
-    if (!confirm('Delete this contract?')) return;
-    fetch('/api/contract/delete/' + uuid, { method: 'DELETE' })
-        .then(function(r) { if (r.ok) location.reload(); else alert('Delete failed: ' + r.status); });
-}
+    function changePageSize(size) {
+        const url = new URL(window.location.href);
+        url.searchParams.set('size', size);
+        url.searchParams.set('page', '0');
+        window.location.href = url.toString();
+    }
 </script>
 </body>
 </html>

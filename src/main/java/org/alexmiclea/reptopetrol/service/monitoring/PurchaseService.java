@@ -22,6 +22,9 @@ public class PurchaseService {
     }
 
     public void add(Purchase purchase) {
+        if (purchase.getId() == null) {
+            purchase.setId(UUID.randomUUID());
+        }
         purchaseRepository.save(purchase);
     }
 

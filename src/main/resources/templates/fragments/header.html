@@ -41,8 +41,10 @@
         <a sec:authorize="hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')" th:href="@{/api/inventory/all}"   class="nav-link">Inventories</a>
         <a sec:authorize="hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')" th:href="@{/api/product/all}"     class="nav-link">Products</a>
         <a sec:authorize="hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')" th:href="@{/api/store/all}"       class="nav-link">Stores</a>
-        <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/api/monitoring/crud}"   class="nav-link">Monitoring CRUD</a>
-        <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/api/users/users}"   class="nav-link">Users Manager</a>
+        <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/api/monitoring/crud}"     class="nav-link">Monitoring CRUD</a>
+        <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/api/monitoring/event}"    class="nav-link">Monitoring Events</a>
+        <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/api/monitoring/purchase}" class="nav-link">Monitoring Purchases</a>
+        <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/api/users/users}"         class="nav-link">Users Manager</a>
     </nav>
 
 <!--    <div sec:authorize="isAuthenticated()">-->
