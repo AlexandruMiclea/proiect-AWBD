@@ -1,4 +1,48 @@
+application:
+  jwt:
+    secret: ${APPLICATION_JWT_SECRET}
+    expiration:
+      access: ${APPLICATION_JWT_EXPIRATION_ACCESS}
+      refresh: ${APPLICATION_JWT_EXPIRATION_REFRESH}
+
 logging:
   level:
     org:
       alexmiclea: WARN
+
+spring:
+  application:
+    name: reptopetrol-backend
+  datasource:
+    driver-class-name: org.postgresql.Driver
+#    url: jdbc:postgresql://localhost:5432/reptopetrol
+    url: ${POSTGRES_CONNECTION_URL}
+    username: ${POSTGRES_CONNECTION_USERNAME}
+    password: ${POSTGRES_CONNECTION_PASSWORD}
+  docker:
+    compose:
+      enabled: true
+      file: docker_compose.yaml
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+  rabbitmq:
+    host: ${RABBITMQ_CONNECTION_HOST}
+    port: ${RABBITMQ_CONNECTION_PORT}
+    username: ${RABBITMQ_CONNECTION_USERNAME}
+    password: ${RABBITMQ_CONNECTION_PASSWORD}
+  mongodb:
+    #uri: mongodb://mongouser:mongopassword@localhost:27017/teleleu?authSource=admin
+    uri: ${MONGODB_CONNECTION_RUL}
+    representation:
+      uuid: standard
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true # enabled so that I can set the hidden method to DELETE for the delete buttons in the index pages
