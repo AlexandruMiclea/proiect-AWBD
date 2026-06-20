@@ -39,7 +39,7 @@ spring:
     password: ${RABBITMQ_CONNECTION_PASSWORD}
   mongodb:
     #uri: mongodb://mongouser:mongopassword@localhost:27017/teleleu?authSource=admin
-    uri: ${MONGODB_CONNECTION_RUL}
+    uri: ${MONGODB_CONNECTION_URL}
     representation:
       uuid: standard
   mvc:
